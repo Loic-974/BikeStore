@@ -10,9 +10,5 @@ class staff extends Model
     use HasFactory;
     protected $table = 'sales.staffs';
 
-    public function titi () {
-
-echo('plop');
-    }
 
 }
