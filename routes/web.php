@@ -19,17 +19,18 @@ Route::get('/', function(){
     return view('login', ['error'=>''],['mail'=>'']);
 
 });
-// post la data du form, de connexion
-// Route::post('/validlogin', [App\Http\Controllers\validLogin::class,'loginCheck']);
+// post la data du form de connexion vers le controller
+//------------------------------------\nomdelaclasse----, nom de la methode
 Route::post('/', [App\Http\Controllers\validLogin::class,'loginCheck']);
 
 
 Route::get('/accueil', function() {
 
-return view('accueil');
+        return view('accueil');
 
-})->name('accueil');
+    })->name('accueil');
+
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class,'index'])->name('home');
 

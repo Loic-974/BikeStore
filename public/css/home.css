@@ -1,0 +1,33 @@
+.sub-container{
+
+    margin-top: 50px;
+    width: 80vw;
+    height: 80vh;
+    border-radius: 4px;
+    background-color:rgba(197, 197, 197, 0.95);
+    box-shadow: 0px 3px 9px rgba(50,50,50,0.7);
+    border: 1px solid #fff;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.card-container{
+
+width: 40%;
+height: 40%;
+border-radius: 6px;
+background-color: #fff;
+display: inline-block;
+text-align: center;
+
+}
+
+.card-container:hover{
+
+    width: 42%;
+    height: 42%;
+    box-shadow: 1px 3px 6px rgba(50,50,50,0.3);
+}
