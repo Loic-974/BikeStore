@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 
 class validLogin extends Controller
 {
-   public function loginCheck(){
+   public function loginCheck(Request $request){
 
  
      $staffData = staff::all();
@@ -20,34 +20,42 @@ class validLogin extends Controller
     
             if(!empty($mail) && (filter_var($mail,FILTER_VALIDATE_EMAIL))){    
 
-                foreach($staffData as $staffUser){
+                // foreach($staffData as $staffUser){
+                for($i=0; $i<count($staffData);$i++){
 
-                    if($staffUser ->{'email'}=== $mail){
+                    if($staffData[$i]->{'email'}=== $mail){
 
-                        if($staffUser->{'active'}== 1){
+                        if($staffData[$i]->{'active'}== 1){
 
-                            if($staffUser->{'password'} === $_POST['mdpLogin']){
+                            if($staffData[$i]->{'password'} === $_POST['mdpLogin']){
 
-                                $firstConnect=$staffUser->{'first_name'};
-
-                                return Redirect::route('accueil',['firstConnect'=>$firstConnect]);
+                                $name=$staffData[$i]->{'first_name'};
+                                session() -> regenerate();
+                                $request->session()->put('name', $name);
+                                $request->session()->put('roleManager', $staffData[$i]->{'role_user'});
+                                return Redirect::route('accueil');
 
                             }else{
-
+                                session() -> regenerate();
                                 $error = 'Votre mot de passe est incorrect';
-                                return view('login', ['error'=>$error]);
+                                return view('login', ['error'=>$error],['mail'=>$mail]);
                             }
 
                         }else {
-
+                            session() -> regenerate();
                             $error = ' Votre compte n\'existe pas ou n\'est pas activé';
-                            return view('login', ['error'=>$error]);
+                            return view('login', ['error'=>$error],['mail'=>$mail]);
                         }
 
+                     
                     }else{
+                         session() -> regenerate();
+                         $error = 'Adresse Mail incorrect';
+                         if($i >= (count($staffData)-1)){
 
-                        $error = 'Adresse Mail incorrect';
-                        return view('login', ['error'=>$error]);
+                            return view('login', ['error'=>$error],['mail'=>$mail]);
+                         }
+                        
                     }
                 }
             }

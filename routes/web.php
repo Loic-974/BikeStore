@@ -16,21 +16,20 @@ use App\Models\staff;
 // Route::get('/login',[App\Http\Controllers\Controller::class,'toto'])->name('toto');
 Route::get('/', function(){
     
-    return view('login', ['error'=>'']);
+    return view('login', ['error'=>''],['mail'=>'']);
 
 });
 // post la data du form, de connexion
-Route::post('/validlogin', [App\Http\Controllers\validLogin::class,'loginCheck']);
-// Route::post('/validlogin', function() {
+// Route::post('/validlogin', [App\Http\Controllers\validLogin::class,'loginCheck']);
+Route::post('/', [App\Http\Controllers\validLogin::class,'loginCheck']);
 
-//     $toto = staff::all();
-//     return $toto;
-
-// });
-// Route::post("/validlogin",[App\Models\staff]);
 
 Route::get('/accueil', function() {
 
-return view('accueil', ['firstConnect'=>'']);
+return view('accueil');
 
 })->name('accueil');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
