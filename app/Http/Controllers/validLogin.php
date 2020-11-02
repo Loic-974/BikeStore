@@ -12,7 +12,6 @@ class validLogin extends Controller
 {
    public function loginCheck(Request $request){
 
- 
      $staffData = staff::all();
      $mail= $_POST['emailLogin'];
      
@@ -30,10 +29,14 @@ class validLogin extends Controller
                             if($staffData[$i]->{'password'} === $_POST['mdpLogin']){
 
                                 $name=$staffData[$i]->{'first_name'};
+                                $firstConnect=number_format($staffData[$i]->{'first_connect'});
                                 session() -> regenerate();
                                 $request->session()->put('name', $name);
+                                $request->session()->put('id',$staffData[$i]->{'staff_id'});
                                 $request->session()->put('roleManager', $staffData[$i]->{'role_user'});
-                                return Redirect::route('accueil');
+                                // $request->session()->put('firstConnect', $staffData[$i]->{'first_connect'});
+                                // return Redirect::route('accueil',['firstConnect'=>$firstConnect]);
+                                return view('accueil',['firstConnect'=>$firstConnect]);
 
                             }else{
                                 session() -> regenerate();
@@ -58,6 +61,10 @@ class validLogin extends Controller
                         
                     }
                 }
+            }else{
+                $error = 'Adresse Mail incorrect';
+                return view('login', ['error'=>$error],['mail'=>$mail]);
+
             }
         }
     }

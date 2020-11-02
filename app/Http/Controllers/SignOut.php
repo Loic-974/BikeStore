@@ -1,14 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 
-class logout extends Controller
+class SignOut extends Controller
 {
-    public function logout(Request $request){
+    public function SignOut(Request $request){
 
         $request->session()->flush();
+
         return Redirect::route('/');
 
     }

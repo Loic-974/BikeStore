@@ -14,23 +14,41 @@ use App\Models\staff;
 */
 
 // Route::get('/login',[App\Http\Controllers\Controller::class,'toto'])->name('toto');
+
+// -------------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------- root -------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------
+
 Route::get('/', function(){
     
     return view('login', ['error'=>''],['mail'=>'']);
 
-});
+})->name('/');
 // post la data du form de connexion vers le controller
-//------------------------------------\nomdelaclasse----, nom de la methode
+//------------------------------------\nomdelaclasse----, nom de la methode(function)
 Route::post('/', [App\Http\Controllers\validLogin::class,'loginCheck']);
 
-
+// -------------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------- Accueil -------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------
 Route::get('/accueil', function() {
 
-        return view('accueil');
+        return view('accueil',['firstConnect'=>0]);
 
     })->name('accueil');
 
+// Route::post('/accueil/updatePwd', [App\Http\Controllers\updatePassword::class,'updatePassword'])->name('updatePwd');
+// Route::get('/accueil/updatePwd', [App\Http\Controllers\updatePassword::class,'getOldPassword'])->name('getpwd');
+Route::get('/accueil/updatePwd', [App\Http\Controllers\updatePassword::class,'getOldPassword']);
+Route::post('/accueil',[App\Http\Controllers\updatePassword::class,'updatePassword']);
+// -------------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------- Deconnexion ---------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------
+Route::any('/SignOut', [App\Http\Controllers\SignOut::class,'SignOut']);
+
 Auth::routes();
 
-// Route::get('/home', [App\Http\Controllers\HomeController::class,'index'])->name('home');
+// -------------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------- Production ---------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------
 
