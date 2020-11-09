@@ -13,6 +13,7 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
      '/accueil/updatePwd',
-     '/accueil'
+     '/accueil',
+     '/production'
     ];
 }

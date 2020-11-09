@@ -26,7 +26,7 @@ class updatePassword extends Controller
                 return view('accueil', ['firstConnect'=>1]);
 
             }else{
-                return view('accueil', ['firstConnect'=>'']);
+                return view('accueil', ['firstConnect'=>0]);
             }
         }
 

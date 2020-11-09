@@ -16,7 +16,7 @@
         @if($firstConnect==1)  
             <div class="sub-container">
                 @if(session('roleManager')<(5))
-                <a class='card-container' href="#"> 
+                <a class='card-container' href="/production"> 
                     <h3>Production</h3>
                    lorem ipsum           
                 </a>  

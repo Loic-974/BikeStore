@@ -52,3 +52,9 @@ Auth::routes();
 // --------------------------------------------------- Production ---------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------------
 
+Route::get('/production',function(){
+    return view('production');
+})->name('production');
+
+Route::get('/production/getBrand',[App\Http\Controllers\brandController::class,'listBrand']);
+Route::get('/production/getCat',[App\Http\Controllers\CategoryProdController::class,'getListCategories']);
