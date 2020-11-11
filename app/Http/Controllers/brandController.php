@@ -15,12 +15,11 @@ class brandController extends Controller
     }
 
     function listBrand(){
-    $listBrand = $this->modelBrand->selectBrandProduction();
 
+    $listBrand = $this->modelBrand->selectBrandProduction();
     $json=array();
 
     foreach($listBrand as $value){
-    
         array_push($json,json_decode($value->toJSONPrivate(),true));
     }
 

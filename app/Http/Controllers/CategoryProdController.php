@@ -19,11 +19,11 @@ class CategoryProdController extends Controller
 
         $listCat = $this->modelCat->getCategories();
         $json=array();
-       foreach($listCat as $value){
+        foreach($listCat as $value){
 
-        array_push($json, json_decode($value->toJSONPrivate(),true));
+            array_push($json, json_decode($value->toJSONPrivate(),true));
 
-       }
+        }
 
        return json_encode($json);
 

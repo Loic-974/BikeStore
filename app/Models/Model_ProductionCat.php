@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 // use App\Models\DAO\DAO_ProductionCat;
 use App\Models\DAO\DAO_ProductionCat;
-use App\Models\DAO\DAO_ProductionBrand;
 
 class Model_ProductionCat extends Model
 {
