@@ -82,7 +82,8 @@ body {
 
 
 #header{
-position: absolute;
+
+position: fixed;
 z-index: 100;
 top: 0;
   width: 100vw;
@@ -94,6 +95,7 @@ top: 0;
   justify-content: space-between;
   color: #fff;
   box-shadow: 1px 3px 6px rgba(50,50,50,0.7);
+  
 }
 
 #header h1{
