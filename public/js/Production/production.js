@@ -26,7 +26,7 @@ const formYearInput = document.querySelector('#newYearProduct');
 const formPriceInput = document.querySelector('#newPriceProduct');
 const formGroupSelect = document.querySelector('.group-selectProduct')
 
-
+const formSendButton = document.querySelector('#btnAddDataBrand')
 
 // -----------------------------------------------------------------------
 //--------------------------------- Get Data ------------------------------
@@ -137,7 +137,6 @@ LinkProduct.onclick = () => {
 function disabledSelectFilter(filter){
     
     for(let filtre of filter){
-        console.log(filtre)
         filtre.disabled=true
     }
 }
@@ -242,7 +241,6 @@ function buildArray(array) {
 }
 
 function filterArray(array, value) {
-    console.log(value);
     let result = [];
     for (let ref of array) {
         for (let prop in ref) {
@@ -251,7 +249,6 @@ function filterArray(array, value) {
             }
         }
     }
-    console.log(result);
     return result;
 }
 
@@ -262,3 +259,30 @@ function filterArray(array, value) {
 console.log(brands);
 console.log(categorie);
 console.log(produits);
+
+
+// ---------------------------- AJAX POST -------------------------------- //
+
+
+formSendButton.onclick= () => {
+
+    let brandName = {'brandName':formBrandName.value}
+    
+    fetch('/production/postBrand',{
+        method:'POST',
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "X-Requested-With": "XMLHttpRequest",
+        body: JSON.stringify(brandName)
+    })
+    .then(response => {
+
+        return response.json()
+    })
+    .then(response =>{
+        for (let brand of response) {
+            brands.push(brand);
+        }
+        buildArray(brands)
+    })
+}

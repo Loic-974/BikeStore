@@ -23,4 +23,17 @@ class Model_ProductionBrands extends Model
 
         return $listBrand;
     }
+
+    function addBrandProduction($newBrandName){
+        
+        DB::insert('INSERT INTO production.brands (brand_name) values (?)',[$newBrandName]);
+        $results = DB::select('SELECT brand_id, brand_name from production.brands where brand_name=?',[$newBrandName]);
+        $listBrand= array();
+
+        foreach ($results as $value){
+            $brand=new DAO_ProductionBrand($value->brand_id,$value->brand_name);
+            array_push($listBrand, $brand);
+        }
+        return $listBrand;
+    }
 }
