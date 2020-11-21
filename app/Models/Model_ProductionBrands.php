@@ -36,4 +36,18 @@ class Model_ProductionBrands extends Model
         }
         return $listBrand;
     }
-}
+
+    function updateBrandProduction($newBrandName,$idSource){
+
+        DB::update('UPDATE production.brands set brand_name = ? where brand_id = ?',[$newBrandName,$idSource]);
+        $results = DB::select('SELECT * from production.brands');
+        $listBrand=array();
+
+        foreach($results as $value){
+            $brand=new DAO_ProductionBrand($value->brand_id, $value->brand_name);
+            array_push($listBrand,$brand);
+        }
+
+        return $listBrand;
+    }
+};

@@ -29,7 +29,7 @@ class DAO_ProductionCat extends Model
    public function toJSONPrivate(){
 
     return json_encode([
-        'categoryId'=>$this->category_id,
+        'category_id'=>$this->category_id,
         'categoryName'=>$this->category_name
     ]);
    }

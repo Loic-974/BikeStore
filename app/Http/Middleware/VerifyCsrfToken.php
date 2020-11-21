@@ -15,6 +15,7 @@ class VerifyCsrfToken extends Middleware
      '/accueil/updatePwd',
      '/accueil',
      '/production',
-     '/production/postBrand'
+     '/production/postBrand',
+     '/production/updateBrand'
     ];
 }

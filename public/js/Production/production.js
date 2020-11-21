@@ -3,30 +3,43 @@ const categorie = [];
 const produits = [];
 const stocks = [];
 
+let modalValue = null; // useIt For Modal Ajax
+
 const LinkBrand = document.querySelector("#brandLink");
 const LinkCategorie = document.querySelector("#CategorieLink");
 const LinkProduct = document.querySelector("#ProductLink");
+const LinkStock = document.querySelector("#StockLink");
 
-const containerArray = document.querySelector('.table-content-left')
+const containerArray = document.querySelector(".table-content-left");
 const ArrayOfItems = document.querySelector("#ArrayProduction");
 
 const selectBrand = document.querySelector("#SelectBrand");
 const selectCategorie = document.querySelector("#SelectCategorie");
 const selectYear = document.querySelector("#SelectAnnee");
+const selectStore = document.querySelector("#SelectStore");
 const inputRange = document.querySelector("#SelectPrice");
 const selectBrandForm = document.querySelector("#SelectBrandForm");
 const selectCatForm = document.querySelector("#SelectCategorieForm");
 
 const filterGroup = document.querySelectorAll(".filter-container")[0];
-
+// --- Form DOM --//
 const formBrandName = document.querySelector("#newBrandName");
 const formCatName = document.querySelector("#newCatName");
 const formProductName = document.querySelector("#newProductName");
-const formYearInput = document.querySelector('#newYearProduct');
-const formPriceInput = document.querySelector('#newPriceProduct');
-const formGroupSelect = document.querySelector('.group-selectProduct')
+const formYearInput = document.querySelector("#newYearProduct");
+const formPriceInput = document.querySelector("#newPriceProduct");
+const formGroupSelect = document.querySelector(".group-selectProduct");
 
-const formSendButton = document.querySelector('#btnAddDataBrand')
+const formSendButton = document.querySelector("#btnAddDataBrand");
+
+// --- Modal DOM --//
+const backModal = document.querySelector("#backgroundModal");
+const modalProduction = document.querySelector("#modalProduction");
+const modalForm = document.querySelector("#modalProduction form");
+const modalUpdateButton = document.querySelector("#validUpdateModal");
+const modalError = document.querySelector("#modalErrorProduction");
+
+const dontShowString = "_id";
 
 // -----------------------------------------------------------------------
 //--------------------------------- Get Data ------------------------------
@@ -78,30 +91,48 @@ fetch("/production/getProduct", {
         }
     });
 
+fetch("/production/getStock", {
+    method: "GET",
+    "content-type": "application/json",
+    Accept: "application/json"
+})
+    .then(response => {
+        return response.json();
+    })
+    .then(response => {
+        for (let stock of response) {
+            stocks.push(stock);
+        }
+    });
+
 // ----------------------------------------------------------------------------
 // --------------------------------- Build View -------------------------------
 // ----------------------------------------------------------------------------
 
-    containerArray.style.display='none';
-    formBrandName.style.display = "inline";
-    formCatName.style.display = "none";
-    formProductName.style.display = "none";
-    formYearInput.style.display ='none'
-    formPriceInput.style.display='none'
-    formGroupSelect.style.display='none'
-    disabledSelectFilter([selectCategorie,selectYear,selectBrand,inputRange])
-
-
+containerArray.style.display = "none";
+formBrandName.style.display = "inline";
+formCatName.style.display = "none";
+formProductName.style.display = "none";
+formYearInput.style.display = "none";
+formPriceInput.style.display = "none";
+formGroupSelect.style.display = "none";
+disabledSelectFilter([selectCategorie, selectYear, selectBrand, inputRange]);
+// backModal.onclick = () => (backModal.style.display = "none");
 
 LinkBrand.onclick = () => {
     buildArray(brands);
     formBrandName.style.display = "inline-block";
     formCatName.style.display = "none";
     formProductName.style.display = "none";
-    formYearInput.style.display ='none'
-    formPriceInput.style.display='none'
-    formGroupSelect.style.display='none'
-    disabledSelectFilter([selectCategorie,selectYear,selectBrand,inputRange])
+    formYearInput.style.display = "none";
+    formPriceInput.style.display = "none";
+    formGroupSelect.style.display = "none";
+    disabledSelectFilter([
+        selectCategorie,
+        selectYear,
+        selectBrand,
+        inputRange
+    ]);
 };
 
 LinkCategorie.onclick = () => {
@@ -109,44 +140,63 @@ LinkCategorie.onclick = () => {
     formBrandName.style.display = "none";
     formCatName.style.display = "inline-block";
     formProductName.style.display = "none";
-    formYearInput.style.display ='none'
-    formPriceInput.style.display='none'
-    formGroupSelect.style.display='none'
-    disabledSelectFilter([selectCategorie,selectYear,selectBrand,inputRange])
+    formYearInput.style.display = "none";
+    formPriceInput.style.display = "none";
+    formGroupSelect.style.display = "none";
+    disabledSelectFilter([
+        selectCategorie,
+        selectYear,
+        selectBrand,
+        inputRange
+    ]);
 };
 
 LinkProduct.onclick = () => {
     insertSelectBrand([selectBrand, selectBrandForm]), buildArray(produits);
     insertSelectCategorie([selectCategorie, selectCatForm]),
         insertSelectYears();
-        formBrandName.style.display = "none";
-        formCatName.style.display = "none";
-        formProductName.style.display = "inline-block";
-        formYearInput.style.display ='inline-block'
-        formPriceInput.style.display='inline-block'
-        formGroupSelect.style.display='block'
-        selectBrand.disabled=false
-        selectCategorie.disabled=false
-        allowSelectFilter([selectCategorie,selectYear,selectBrand,inputRange])
+    formBrandName.style.display = "none";
+    formCatName.style.display = "none";
+    formProductName.style.display = "inline-block";
+    formYearInput.style.display = "inline-block";
+    formPriceInput.style.display = "inline-block";
+    formGroupSelect.style.display = "block";
+    selectBrand.disabled = false;
+    selectCategorie.disabled = false;
+    allowSelectFilter([selectCategorie, selectYear, selectBrand, inputRange]);
+};
+
+LinkStock.onclick = () => {
+    buildArray(stocks), insertSelectStore();
+    formBrandName.style.display = "none";
+    formCatName.style.display = "none";
+    formProductName.style.display = "none";
+    formYearInput.style.display = "none";
+    formPriceInput.style.display = "none";
+    formGroupSelect.style.display = "none";
+    selectBrand.disabled = true;
+    selectCategorie.disabled = true;
 };
 
 // ---------------------------------------------------------------------------- //
 // ---------------------------- Add Data to Select Or input ------------------- //
 // ---------------------------------------------------------------------------- //
 
-function disabledSelectFilter(filter){
-    
-    for(let filtre of filter){
-        filtre.disabled=true
+function disabledSelectFilter(filter) {
+    for (let filtre of filter) {
+        filtre.disabled = true;
     }
 }
 
-function allowSelectFilter(filter){
-    for(let filtre of filter){
-        filtre.disabled=false
+function allowSelectFilter(filter) {
+    for (let filtre of filter) {
+        filtre.disabled = false;
     }
 }
-
+/**
+ * Insert option brand in the correct html select
+ * @param {*} select - array of objects
+ */
 function insertSelectBrand(select) {
     for (let input of select) {
         input.innerHTML = "";
@@ -162,7 +212,10 @@ function insertSelectBrand(select) {
         }
     }
 }
-
+/**
+ * Insert option in the correct html select
+ * @param {*} select - array of objects
+ */
 function insertSelectCategorie(select) {
     for (let input of select) {
         input.innerHTML = "";
@@ -179,7 +232,9 @@ function insertSelectCategorie(select) {
         console.log("------- Loaded Select --------");
     }
 }
-
+/**
+ * filter distinct year and set year option in the correct html select
+ */
 function setYearPresentInProduct() {
     let arrayOfYear = [];
     // recupere distinctement les dates en fonction des produits
@@ -189,6 +244,16 @@ function setYearPresentInProduct() {
         }
     }
     return arrayOfYear;
+}
+
+function setStoreOptionInStock() {
+    let arrayOfStore = [];
+    for (let store of stocks) {
+        if (!arrayOfStore.includes(store.Magasin)) {
+            arrayOfStore.push(store.Magasin);
+        }
+    }
+    return arrayOfStore;
 }
 
 function insertSelectYears() {
@@ -202,25 +267,42 @@ function insertSelectYears() {
     }
 }
 
+function insertSelectStore() {
+    selectStore.innerHTML = "";
+    array = setStoreOptionInStock();
+    for (let store of array) {
+        selectStore.insertAdjacentHTML(
+            "beforeend",
+            '<option value="' + store + '">' + store
+        ) + "</option>";
+    }
+}
 //--------------------------------------------------------------//
 //----------------------- Build Array --------------------------//
 //--------------------------------------------------------------//
 
 function buildArray(array) {
-    containerArray.style.display='block'
-    const dontShowString = "_id";
+    containerArray.style.display = "block";
     ArrayOfItems.innerHTML = "";
     let thead = document.createElement("thead");
     let tbody = document.createElement("tbody");
     let i = 0;
+    let index = 1;
     for (let ref of array) {
         let tr = document.createElement("tr");
+        tr.onclick = () => buildModalOnClick(ref, array);
+        let y = 0;
         for (let propriete in ref) {
             if (i === 0) {
                 // limit 1 header
                 if (!propriete.includes(dontShowString)) {
                     let th = document.createElement("th");
                     let thText = document.createTextNode(propriete);
+                    th.appendChild(thText);
+                    thead.appendChild(th);
+                } else if (y === 0) {
+                    let th = document.createElement("th");
+                    let thText = document.createTextNode("Index");
                     th.appendChild(thText);
                     thead.appendChild(th);
                 }
@@ -230,59 +312,138 @@ function buildArray(array) {
                 let tdText = document.createTextNode(ref[propriete]);
                 td.appendChild(tdText);
                 tr.appendChild(td);
+            } else if (y === 0) {
+                let td = document.createElement("td");
+                let tdText = document.createTextNode(index);
+                td.appendChild(tdText);
+                tr.appendChild(td);
             }
+            y++;
         }
         tbody.appendChild(tr);
         i++;
+        index++;
     }
     ArrayOfItems.appendChild(thead);
     ArrayOfItems.appendChild(tbody);
     console.log("------- Array Build --------");
 }
 
-function filterArray(array, value) {
-    let result = [];
-    for (let ref of array) {
-        for (let prop in ref) {
-            if (ref[prop] == value) {
-                result.push(ref);
+function checkDataAndValidInput(data, item) {
+    let result = true;
+    for (let ref of data) {
+        for (let property in ref) {
+            if (ref[property] === item) {
+                result = false;
             }
         }
     }
     return result;
 }
 
+function validInputValue(data, item) {
+    checkDataAndValidInput(data, item)
+        ? (modalErrorProduction.innerHTML = "")
+        : (modalErrorProduction.innerHTML = "La référence existe déjà");
+}
+
 // ----------------------------------------------------------------------- //
 // ---------------------------- Display ---------------------------------- //
 // ----------------------------------------------------------------------- //
 
-console.log(brands);
-console.log(categorie);
-console.log(produits);
-
+function buildModalOnClick(item, array) {
+    modalValue = item;
+    // backModal.style.display = "block";
+    modalProduction.style.display = "flex";
+    let titleModal = modalProduction.getElementsByClassName("titreModal");
+    titleModal[0].innerHTML = "Action concernant : ";
+    titleModal[0].insertAdjacentHTML(
+        "beforeend",
+        item.brandName || item.categoryName
+    );
+    modalForm.innerHTML = "";
+    for (let ref in item) {
+        if (!ref.includes(dontShowString)) {
+            modalForm.insertAdjacentHTML(
+                "afterbegin",
+                '<input type="text" name="' +
+                    ref +
+                    '" value="' +
+                    item[ref] +
+                    '" placeholder="' +
+                    item[ref] +
+                    '" >'
+            );
+            modalForm.insertAdjacentHTML(
+                "afterbegin",
+                "<label>Modifier " + ref + "</label>"
+            );
+        }
+    }
+}
 
 // ---------------------------- AJAX POST -------------------------------- //
 
+//-------- New Brand ----------//
 
-formSendButton.onclick= () => {
-
-    let brandName = {'brandName':formBrandName.value}
-    
-    fetch('/production/postBrand',{
-        method:'POST',
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "X-Requested-With": "XMLHttpRequest",
-        body: JSON.stringify(brandName)
-    })
-    .then(response => {
-
-        return response.json()
-    })
-    .then(response =>{
-        for (let brand of response) {
-            brands.push(brand);
+formSendButton.onclick = () => {
+    let brandName = { brandName: formBrandName.value };
+    for (let brand of brands) {
+        if (brand.brandName === formBrandName.value) {
+            brandName = null;
         }
-        buildArray(brands)
-    })
-}
+    }
+    console.log(brandName);
+    if (brandName) {
+        fetch("/production/postBrand", {
+            method: "POST",
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "X-Requested-With": "XMLHttpRequest",
+            body: JSON.stringify(brandName)
+        })
+            .then(response => {
+                return response.json();
+            })
+            .then(response => {
+                for (let brand of response) {
+                    brands.push(brand);
+                }
+                buildArray(brands);
+            });
+    } else {
+        document.querySelector("#errorFormProduction").innerHTML =
+            "La marque existe déjà !";
+    }
+};
+
+//------ Modification Brand --------//
+
+modalUpdateButton.onclick = () => {
+    modalError.innerHTML = "";
+    let source = modalValue;
+    let input = modalForm.getElementsByTagName("input");
+    let data = null;
+    for (let int of input) {
+        if (checkDataAndValidInput(brands, int.value)) {
+            data={ [int.name]: int.value,
+            sourceId : modalValue.brand_id};
+        }
+    }
+    if (data) {
+        fetch("/production/updateBrand", {
+            method: "POST",
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(response => buildArray(response))
+        .then(  modalProduction.style.display = "none")
+        
+    } else {
+        modalError.innerHTML = "La marque existe déjà";
+    }
+};
+
+// ----- Suppression Brand ------- //

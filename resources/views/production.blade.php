@@ -31,6 +31,28 @@
                     </table>
                 </div>
         </div>
+        <!-- <div id='backgroundModal'> -->
+        <div class='form-modal-table' id='modalProduction'>  
+            <div class="modal-header">
+                <h4 class='titreModal'></h4>
+            </div>
+            <div class="modal-body">
+                <p id="modalErrorProduction" class='warning'></p>
+                <form>
+               
+                </form>
+                <input type="button" class="btn btn-primary" id="validUpdateModal" value="Valider les modifications">
+                <div class="modal-header">
+                    <h4>Suppimer la référence</h4>
+                 </div>
+                 <div class="modal-body">
+                     <p><span class='warning'>Attention cette action est définitive</span></p>
+                    <input type='button' class="btn btn-danger" value='Supprimer la référence'>
+                </div>
+            </div>
+        </div>
+        <!-- </div> -->
+
         <div class='content-right'>
 
                 <h4>Filtres</h4>
@@ -38,6 +60,7 @@
                 <select id='SelectBrand'></select>
                 <select id='SelectCategorie'></select>
                 <select id='SelectAnnee'><select>
+                <select id='SelectStore'></select>
             
                 <input type='range' class='form-control-range' id="SelectPrice" value="2500" step="10" min="0" max="12000" oninput="valueRange.value = SelectPrice.value +'€'">
                 <output id="valueRange">2500€</output>
@@ -45,12 +68,13 @@
             <div class='form-container'>
               <h4> Ajouts </h4>
                 <form>
-                    <div class='form-row'>
+                    <p id='errorFormProduction'><p>
+                    <!-- <div class='form-row'> -->
                             <input type='texte' id='newBrandName' class='form-control' value='' placeholder='Nouvelle Marque'>
-                    </div>
-                    <div class='form-row'>
+                    <!-- </div> -->
+                    <!-- <div class='form-row'> -->
                             <input type='texte' id='newCatName' class='form-control' value='' placeholder='Nouvelle Catégorie'>              
-                    </div>
+                    <!-- </div> -->
                     <div class='form-row'>
                             <input type='texte' id='newProductName' class='form-control' value='' placeholder='Nouveau Produit'>
                     </div>

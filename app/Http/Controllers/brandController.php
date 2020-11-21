@@ -45,4 +45,18 @@ class brandController extends Controller
 
     }
 
+    function updateBrand(Request $request){
+
+    $result = $request ->getContent();
+    $data = json_decode($result);
+    $listBrand = $this->modelBrand->updateBrandProduction($data->brandName, $data->sourceId);
+
+    $json = array();
+
+    foreach($listBrand as $value){
+        array_push($json, json_decode($value->toJSONPrivate(),true));
+    }
+    echo json_encode($json);
+    }
+
 }

@@ -8,19 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class DAO_ProductionBrand extends Model
 {
     
-private $brandId = 0;
+private $brand_id = 0;
 private $brandName = null;
 
 
-    function __construct($brandId,$brandName){
+    function __construct($brand_id,$brandName){
 
-        $this->brandId = $brandId;
+        $this->brand_id = $brand_id;
         $this->brandName = $brandName;
     }
 
     function getBrandId(){
 
-        return $this->$brandId;
+        return $this->$brand_id;
     }
 
     function getBrandName() {
@@ -31,7 +31,7 @@ private $brandName = null;
 
         return json_encode(
            [
-                'brandId'=>$this->brandId,
+                'brand_id'=>$this->brand_id,
                 'brandName' => $this->brandName
             ]
         );

@@ -8,7 +8,7 @@
 
 .sub-container {
     width: 90%;
-    height:90%;
+    height: 90%;
     margin-top: 2% !important;
     margin-left: 5%;
     bottom: 0;
@@ -54,7 +54,7 @@
     width: 100%;
     max-width: 80%;
     height: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .table {
@@ -66,8 +66,19 @@
     table-layout: fixed;
 }
 
+.table tr th {
+    padding-top: 1%;
+}
+.table th {
+    position: sticky;
+    top: 0;
+    background-color: #343a40;
+    z-index: 98;
+}
+
 .table tbody tr:hover {
     background-color: rgb(69, 91, 139);
+    cursor: pointer;
 }
 
 .content-right {
@@ -96,19 +107,17 @@
     justify-content: space-around;
 }
 
-
-.filter-container select,input[type=range]{
-width: 90%;
-margin-top:2%;
+.filter-container select,
+input[type="range"] {
+    width: 90%;
+    margin-top: 2%;
 }
 
-h4{
-
-    margin-top:3% !important;
+h4 {
+    margin-top: 3% !important;
 }
 
-.form-container{
-
+.form-container {
     width: 90%;
     height: 50%;
     display: flex;
@@ -118,7 +127,7 @@ h4{
     margin-bottom: 2%;
 }
 
-.form-container form{ 
+.form-container form {
     height: 100%;
     width: 95%;
     display: flex;
@@ -128,18 +137,69 @@ h4{
     background-color: #454d55;
 }
 
-.form-container form .form-row{
- width: 90%;   
+.form-container form .form-row {
+    width: 90%;
 }
 
-.form-container select{
-    width: 100%;
-    margin-top:2%;
+.form-container select,
+input {
+    width: 90%;
+    margin-top: 2%;
+}
+.form-control {
+    width: 90% !important;
 }
 
-#btnAddDataBrand{
-
-    min-height: 12% ;
+#btnAddDataBrand {
+    min-height: 12%;
     height: 12%;
-    
+}
+#backgroundModal{
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+    background-color: #454d55ab;
+    display: none;
+    position: fixed;
+}
+.form-modal-table {
+    left: 0;
+    margin-left: 10.5%;
+    margin-top: 8%;
+    z-index: 1000 !important;
+    width: 40%;
+    min-height: 50%;
+    height: fit-content;
+    background-color: #65707a;
+    border-radius: 5px;
+    position: fixed;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    text-align: center;
+}
+
+.warning{
+    color: rgb(255, 138, 95);
+    font-size: medium;
+    font-weight: bold;
+}
+
+#modalErrorProduction{
+    width: 100%;
+    height: 8%;
+}
+.form-modal-table h4, p {
+    color: #fff;
+    width: 100%;
+    text-align: center;
+}
+.form-modal-table form {
+    min-height: 60%;
+   
+}
+
+.form-modal-table input[type="button"] {
+    margin-top: 3%;
 }
