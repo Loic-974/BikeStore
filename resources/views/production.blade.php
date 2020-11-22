@@ -47,7 +47,7 @@
                  </div>
                  <div class="modal-body">
                      <p><span class='warning'>Attention cette action est définitive</span></p>
-                    <input type='button' class="btn btn-danger" value='Supprimer la référence'>
+                    <input type='button' class="btn btn-danger" value='Supprimer la référence' id='modalDeleteProduction'>
                 </div>
             </div>
         </div>
@@ -67,29 +67,30 @@
             </div>
             <div class='form-container'>
               <h4> Ajouts </h4>
-                <form>
+                <form id='formProductionAdd'>
                     <p id='errorFormProduction'><p>
                     <!-- <div class='form-row'> -->
-                            <input type='texte' id='newBrandName' class='form-control' value='' placeholder='Nouvelle Marque'>
+                            <input type='texte' id='newBrandName' class='form-control' name='brandName' value='' placeholder='Nouvelle Marque'>
                     <!-- </div> -->
                     <!-- <div class='form-row'> -->
-                            <input type='texte' id='newCatName' class='form-control' value='' placeholder='Nouvelle Catégorie'>              
+                            <input type='texte' id='newCatName' name='category_name' class='form-control' value='' placeholder='Nouvelle Catégorie'>              
                     <!-- </div> -->
                     <div class='form-row'>
-                            <input type='texte' id='newProductName' class='form-control' value='' placeholder='Nouveau Produit'>
+                            <input type='texte' id='newProductName' name='product_name' class='form-control' value='' placeholder='Nouveau Produit'>
                     </div>
                     <div class='form-row'>
-                            <input type='number' id='newYearProduct' class='form-control' value='' placeholder='Année du Modèle'>
+                            <input type='number' id='newYearProduct' name='model_year'class='form-control' value='' placeholder='Année du Modèle'>
                     </div>
                     <div class='form-row'>
-                            <input type='number' id='newPriceProduct' class='form-control' value='' placeholder='Prix du Modèle'>
+                            <input type='number' id='newPriceProduct' name='list_price' class='form-control' value='' placeholder='Prix du Modèle'>
                     </div>
                     <div class='form-row group-selectProduct'>
-                    <select id='SelectBrandForm'></select>
-                    <select id='SelectCategorieForm'></select>
+                        <select id='SelectBrandForm'></select>
+                        <select id='SelectCategorieForm'></select>
                     </div>
-                    <input type='button' value='Confirmer' class='btn-primary' id='btnAddDataBrand'>
                 </form>
+
+                <input type='button' value='Confirmer' class='btn-primary' id='btnAddDataBrand'>
             </div>
         </div>
      

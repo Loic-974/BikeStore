@@ -10,20 +10,37 @@ use App\Models\DAO\DAO_ProductionCat;
 
 class Model_ProductionCat extends Model
 {
- function getCategories(){
+    function getCategories(){
 
-    $categories=DB::select('SELECT category_id, category_name from production.categories');
-    $listCat = array();
-    
-    foreach($categories as $value){
+        $categories=DB::select('SELECT category_id, category_name from production.categories');
+        $listCat = array();
         
-        $cat = new DAO_ProductionCat($value->category_id,$value->category_name);
+        foreach($categories as $value){
+            
+            $cat = new DAO_ProductionCat($value->category_id,$value->category_name);
 
-        array_push($listCat, $cat);
+            array_push($listCat, $cat);
 
+        }
+
+        return $listCat;
     }
 
-    return $listCat;
-}
+    function addCategory($catName){
+
+        DB::insert('INSERT INTO production.categories (category_name) values (?)',[$catName]);
+        $listCat = DB::select ('SELECT * From production.categories');
+
+        $pushArray = array();
+
+        foreach($listCat as $value){
+
+            $temp = new DAO_ProductionCat($value->category_id, $value->category_name);
+            array_push($pushArray, $temp);
+        }
+
+        return $pushArray;
+        
+    }
 
 }

@@ -14,8 +14,16 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
      '/accueil/updatePwd',
      '/accueil',
+
+ //----------------------------------------------------------//
+ //------------------- PRODUCTION ---------------------------//    
+ //----------------------------------------------------------//
      '/production',
+// -------------- Production Brand --------------------//
      '/production/postBrand',
-     '/production/updateBrand'
+     '/production/updateBrand',
+     '/production/deleteBrand',
+// -------------- Production Categorie --------------------//
+     '/production/postCategory'
     ];
 }

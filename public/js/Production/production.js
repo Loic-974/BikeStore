@@ -4,6 +4,7 @@ const produits = [];
 const stocks = [];
 
 let modalValue = null; // useIt For Modal Ajax
+let modalFrom = null;
 
 const LinkBrand = document.querySelector("#brandLink");
 const LinkCategorie = document.querySelector("#CategorieLink");
@@ -38,6 +39,7 @@ const modalProduction = document.querySelector("#modalProduction");
 const modalForm = document.querySelector("#modalProduction form");
 const modalUpdateButton = document.querySelector("#validUpdateModal");
 const modalError = document.querySelector("#modalErrorProduction");
+const modalDeleteButton = document.querySelector("#modalDeleteProduction");
 
 const dontShowString = "_id";
 
@@ -121,6 +123,7 @@ disabledSelectFilter([selectCategorie, selectYear, selectBrand, inputRange]);
 
 LinkBrand.onclick = () => {
     buildArray(brands);
+    modalFrom = "brands"; // set the modalInformation for use in Ajax
     formBrandName.style.display = "inline-block";
     formCatName.style.display = "none";
     formProductName.style.display = "none";
@@ -137,6 +140,7 @@ LinkBrand.onclick = () => {
 
 LinkCategorie.onclick = () => {
     buildArray(categorie);
+    modalFrom = "category"; // set the modalInformation for use in Ajax
     formBrandName.style.display = "none";
     formCatName.style.display = "inline-block";
     formProductName.style.display = "none";
@@ -382,68 +386,118 @@ function buildModalOnClick(item, array) {
     }
 }
 
+formBrandName.onchange = () => {
+    checkDataAndValidInput(brands, formBrandName.value)
+        ? ((document.querySelector("#errorFormProduction").innerHTML = ""),
+          (formSendButton.disabled = false),
+          (formSendButton.style.backgroundColor = "#007bff"))
+        : ((document.querySelector("#errorFormProduction").innerHTML =
+              "La marque existe déjà !"),
+          (formSendButton.disabled = true),
+          (formSendButton.style.backgroundColor = "grey"));
+};
+
+formCatName.onchange = () => {
+    checkDataAndValidInput(categorie, formCatName.value)
+        ? ((document.querySelector("#errorFormProduction").innerHTML = ""),
+          (formSendButton.disabled = false),
+          (formSendButton.style.backgroundColor = "#007bff"))
+        : ((document.querySelector("#errorFormProduction").innerHTML =
+              "La Categorie existe déjà !"),
+          (formSendButton.disabled = true),
+          (formSendButton.style.backgroundColor = "grey"));
+};
+
+
 // ---------------------------- AJAX POST -------------------------------- //
 
-//-------- New Brand ----------//
+const urlAdd = () => {
+    if (modalFrom === "brands") {
+        return "/production/postBrand";
+    } else if (modalFrom === "category") {
+        return "/production/postCategory";
+    }
+};
+const urlUpdate = () => {
+    if (modalFrom === "brands") {
+        return "/production/updateBrand";
+    }
+};
+
+const urlDelete = () => {
+    if (modalFrom === "brands") {
+        return "/production/deleteBrand";
+    }
+};
+
+//-------- New Ajout Référence ----------//
 
 formSendButton.onclick = () => {
-    let brandName = { brandName: formBrandName.value };
-    for (let brand of brands) {
-        if (brand.brandName === formBrandName.value) {
-            brandName = null;
+    let input = document
+        .querySelector("#formProductionAdd")
+        .getElementsByTagName("input");
+    let data = {};
+    for (let ref of input) {
+        if (ref.value) {
+            data[ref.name] = ref.value;
         }
     }
-    console.log(brandName);
-    if (brandName) {
-        fetch("/production/postBrand", {
+    if (data) {
+        fetch(urlAdd(), {
             method: "POST",
             "Content-Type": "application/json",
             Accept: "application/json",
             "X-Requested-With": "XMLHttpRequest",
-            body: JSON.stringify(brandName)
+            body: JSON.stringify(data)
         })
             .then(response => {
                 return response.json();
             })
             .then(response => {
-                for (let brand of response) {
-                    brands.push(brand);
-                }
-                buildArray(brands);
+                buildArray(response);
             });
-    } else {
-        document.querySelector("#errorFormProduction").innerHTML =
-            "La marque existe déjà !";
     }
 };
 
-//------ Modification Brand --------//
+//------ Modification Référence --------//
 
 modalUpdateButton.onclick = () => {
     modalError.innerHTML = "";
+
     let source = modalValue;
     let input = modalForm.getElementsByTagName("input");
-    let data = null;
+    let data = {};
     for (let int of input) {
-        if (checkDataAndValidInput(brands, int.value)) {
-            data={ [int.name]: int.value,
-            sourceId : modalValue.brand_id};
+        if (int.value) {
+            data[int.name] = int.value;
         }
     }
+    data["sourceId"] = modalValue[Object.keys(modalValue)[0]];
     if (data) {
-        fetch("/production/updateBrand", {
+        fetch(urlUpdate(), {
             method: "POST",
             "Content-Type": "application/json",
             Accept: "application/json",
             body: JSON.stringify(data)
         })
-        .then(response => response.json())
-        .then(response => buildArray(response))
-        .then(  modalProduction.style.display = "none")
-        
+            .then(response => response.json())
+            .then(response => buildArray(response))
+            .then((modalProduction.style.display = "none"));
     } else {
         modalError.innerHTML = "La marque existe déjà";
     }
 };
 
-// ----- Suppression Brand ------- //
+// ----- Suppression Référence ------- //
+
+modalDeleteButton.onclick = () => {
+    fetch(urlDelete(), {
+        method: "POST",
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        body: JSON.stringify(modalValue)
+    })
+        .then(response => response.json())
+        .then(response => buildArray(response))
+        .then((modalProduction.style.display = "none"));
+};

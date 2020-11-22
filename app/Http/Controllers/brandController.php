@@ -31,9 +31,11 @@ class brandController extends Controller
     function addBrand(Request $request){
        
         $result = $request->getContent();
-        $brandName= json_decode($result);
-        $listBrand=$this->modelBrand->addBrandProduction($brandName->brandName);
-
+        $temp = json_decode($result);
+       
+            
+            $listBrand=$this->modelBrand->addBrandProduction($temp->brandName);
+        
         $json=array();
         
         foreach($listBrand as $value){
@@ -57,6 +59,22 @@ class brandController extends Controller
         array_push($json, json_decode($value->toJSONPrivate(),true));
     }
     echo json_encode($json);
+    }
+
+    function deleteBrand(Request $request){
+
+        $result = $request->getContent();
+        $data = json_decode($result);
+      
+         $listBrand = $this->modelBrand->deleteBrandProduction($data->brand_id);
+         $json = array();
+
+         foreach($listBrand as $value){
+
+            array_push($json, json_decode($value->toJSONPrivate(),true));
+         }
+
+        echo json_encode($json);
     }
 
 }

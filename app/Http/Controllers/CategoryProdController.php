@@ -28,4 +28,20 @@ class CategoryProdController extends Controller
        return json_encode($json);
 
     }
+
+    function addCategoryProduction(Request $request){
+
+        $result = $request->getContent();
+        $category = json_decode($result);
+
+        $listCat = $this->modelCat->addCategory($category->category_name);
+
+        $json = array();
+
+        foreach($listCat as $value){
+
+            array_push($json,json_decode($value->toJSONPRivate(),true));
+        }
+        echo json_encode($json);
+    }
 }

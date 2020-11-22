@@ -60,5 +60,11 @@ Route::get('/production/getBrand',[App\Http\Controllers\brandController::class,'
 Route::get('/production/getCat',[App\Http\Controllers\CategoryProdController::class,'getListCategories']);
 Route::get('/production/getProduct',[App\Http\Controllers\ProductProdController::class,'getListProduct']);
 Route::get('/production/getStock',[App\Http\Controllers\StockProdController::class,'getListStock']);
+// ------------- Brand -------------- //
 Route::post('/production/postBrand',[App\Http\Controllers\brandController::class,'addBrand']);
 Route::post('/production/updateBrand',[App\Http\Controllers\brandController::class,'updateBrand']);
+Route::post('/production/deleteBrand',[App\Http\Controllers\brandController::class,'deleteBrand']);
+
+// ------------- Categorie ---------------//
+
+Route::post('/production/postCategory',[App\Http\Controllers\CategoryProdController::class,'addCategoryProduction']);
