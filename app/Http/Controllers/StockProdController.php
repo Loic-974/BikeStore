@@ -22,4 +22,6 @@ class StockProdController extends Controller
         }
         echo json_encode($json);
     }
+
+   
 }

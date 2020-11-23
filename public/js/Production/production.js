@@ -159,6 +159,7 @@ LinkProduct.onclick = () => {
     insertSelectBrand([selectBrand, selectBrandForm]), buildArray(produits);
     insertSelectCategorie([selectCategorie, selectCatForm]),
         insertSelectYears();
+    modalFrom = "product";
     formBrandName.style.display = "none";
     formCatName.style.display = "none";
     formProductName.style.display = "inline-block";
@@ -172,6 +173,7 @@ LinkProduct.onclick = () => {
 
 LinkStock.onclick = () => {
     buildArray(stocks), insertSelectStore();
+    modalFrom = "stock";
     formBrandName.style.display = "none";
     formCatName.style.display = "none";
     formProductName.style.display = "none";
@@ -204,11 +206,13 @@ function allowSelectFilter(filter) {
 function insertSelectBrand(select) {
     for (let input of select) {
         input.innerHTML = "";
+        input.innerHTML =
+            "<option disabled selected>Marque du produit</option>";
         for (let ref of brands) {
             input.insertAdjacentHTML(
                 "beforeend",
                 '<option value="' +
-                    ref.brandId +
+                    ref.brand_id +
                     '">' +
                     ref.brandName +
                     "</option>"
@@ -223,11 +227,13 @@ function insertSelectBrand(select) {
 function insertSelectCategorie(select) {
     for (let input of select) {
         input.innerHTML = "";
+        input.innerHTML =
+            "<option disabled selected>Categorie du produit</option>";
         for (let ref of categorie) {
             input.insertAdjacentHTML(
                 "beforeend",
                 '<option value="' +
-                    ref.categoryId +
+                    ref.category_id +
                     '">' +
                     ref.categoryName +
                     "</option>"
@@ -262,6 +268,8 @@ function setStoreOptionInStock() {
 
 function insertSelectYears() {
     selectYear.innerHTML = "";
+    selectYear.innerHTML =
+        "<option disabled selected>Année du produit</option>";
     array = setYearPresentInProduct();
     for (let annee of array) {
         selectYear.insertAdjacentHTML(
@@ -273,6 +281,8 @@ function insertSelectYears() {
 
 function insertSelectStore() {
     selectStore.innerHTML = "";
+    selectStore.innerHTML =
+        "<option disabled selected>Libellé du magasin</option>";
     array = setStoreOptionInStock();
     for (let store of array) {
         selectStore.insertAdjacentHTML(
@@ -333,6 +343,14 @@ function buildArray(array) {
     console.log("------- Array Build --------");
 }
 
+// --------------------------------------------------------/
+// -------------------- ARRAY filter ----------------------/
+// --------------------------------------------------------/
+
+// --------------------------------------------------------/
+// -------------------- check INput ----------------------/
+// --------------------------------------------------------/
+
 function checkDataAndValidInput(data, item) {
     let result = true;
     for (let ref of data) {
@@ -356,14 +374,15 @@ function validInputValue(data, item) {
 // ----------------------------------------------------------------------- //
 
 function buildModalOnClick(item, array) {
+    console.log(item);
     modalValue = item;
-    // backModal.style.display = "block";
+    backModal.style.display = "block";
     modalProduction.style.display = "flex";
     let titleModal = modalProduction.getElementsByClassName("titreModal");
     titleModal[0].innerHTML = "Action concernant : ";
     titleModal[0].insertAdjacentHTML(
         "beforeend",
-        item.brandName || item.categoryName
+        item.brandName || item.categoryName || item.product_name
     );
     modalForm.innerHTML = "";
     for (let ref in item) {
@@ -385,6 +404,11 @@ function buildModalOnClick(item, array) {
         }
     }
 }
+
+backModal.onclick = () => {
+    backModal.style.display = "none";
+    modalProduction.style.display = "none";
+};
 
 formBrandName.onchange = () => {
     checkDataAndValidInput(brands, formBrandName.value)
@@ -408,6 +432,16 @@ formCatName.onchange = () => {
           (formSendButton.style.backgroundColor = "grey"));
 };
 
+formProductName.onchange = () => {
+    checkDataAndValidInput(produits, formProductName.value)
+        ? ((document.querySelector("#errorFormProduction").innerHTML = ""),
+          (formSendButton.disabled = false),
+          (formSendButton.style.backgroundColor = "#007bff"))
+        : ((document.querySelector("#errorFormProduction").innerHTML =
+              "Le produit existe déjà !"),
+          (formSendButton.disabled = true),
+          (formSendButton.style.backgroundColor = "grey"));
+};
 
 // ---------------------------- AJAX POST -------------------------------- //
 
@@ -416,17 +450,23 @@ const urlAdd = () => {
         return "/production/postBrand";
     } else if (modalFrom === "category") {
         return "/production/postCategory";
+    }else if (modalFrom === "product"){
+        return '/production/postProduct'
     }
 };
 const urlUpdate = () => {
     if (modalFrom === "brands") {
         return "/production/updateBrand";
+    } else if (modalFrom === "category") {
+        return "/production/updateCategory";
     }
 };
 
 const urlDelete = () => {
     if (modalFrom === "brands") {
         return "/production/deleteBrand";
+    } else if (modalFrom === "category") {
+        return "/production/deleteCategory";
     }
 };
 
@@ -436,13 +476,26 @@ formSendButton.onclick = () => {
     let input = document
         .querySelector("#formProductionAdd")
         .getElementsByTagName("input");
+    let select = document
+        .querySelector("#formProductionAdd")
+        .getElementsByTagName("select");
+
     let data = {};
+    console.log(input.length);
+
     for (let ref of input) {
         if (ref.value) {
             data[ref.name] = ref.value;
         }
     }
-    if (data) {
+
+    for (let tag of select) {
+        if (tag.value) {
+            data[tag.name] = tag.value;
+        }
+    }
+    console.log(data)
+    if (Object.keys(data).length > 0) {
         fetch(urlAdd(), {
             method: "POST",
             "Content-Type": "application/json",
@@ -462,7 +515,6 @@ formSendButton.onclick = () => {
 //------ Modification Référence --------//
 
 modalUpdateButton.onclick = () => {
-    modalError.innerHTML = "";
 
     let source = modalValue;
     let input = modalForm.getElementsByTagName("input");
@@ -473,7 +525,7 @@ modalUpdateButton.onclick = () => {
         }
     }
     data["sourceId"] = modalValue[Object.keys(modalValue)[0]];
-    if (data) {
+    if (Object.keys(data).length > 0) {
         fetch(urlUpdate(), {
             method: "POST",
             "Content-Type": "application/json",
@@ -482,9 +534,10 @@ modalUpdateButton.onclick = () => {
         })
             .then(response => response.json())
             .then(response => buildArray(response))
-            .then((modalProduction.style.display = "none"));
-    } else {
-        modalError.innerHTML = "La marque existe déjà";
+            .then(
+                (modalProduction.style.display = "none"),
+                (backModal.style.display = "none")
+            );
     }
 };
 
@@ -499,5 +552,8 @@ modalDeleteButton.onclick = () => {
     })
         .then(response => response.json())
         .then(response => buildArray(response))
-        .then((modalProduction.style.display = "none"));
+        .then(
+            (modalProduction.style.display = "none"),
+            (backModal.style.display = "none")
+        );
 };

@@ -31,7 +31,8 @@
                     </table>
                 </div>
         </div>
-        <!-- <div id='backgroundModal'> -->
+        <div id='backgroundModal'> 
+        </div>
         <div class='form-modal-table' id='modalProduction'>  
             <div class="modal-header">
                 <h4 class='titreModal'></h4>
@@ -51,7 +52,7 @@
                 </div>
             </div>
         </div>
-        <!-- </div> -->
+      
 
         <div class='content-right'>
 
@@ -85,11 +86,10 @@
                             <input type='number' id='newPriceProduct' name='list_price' class='form-control' value='' placeholder='Prix du Modèle'>
                     </div>
                     <div class='form-row group-selectProduct'>
-                        <select id='SelectBrandForm'></select>
-                        <select id='SelectCategorieForm'></select>
+                        <select name='brandSelected' id='SelectBrandForm'></select>
+                        <select name='catSelected' id='SelectCategorieForm'></select>
                     </div>
                 </form>
-
                 <input type='button' value='Confirmer' class='btn-primary' id='btnAddDataBrand'>
             </div>
         </div>

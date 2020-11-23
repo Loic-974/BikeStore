@@ -24,6 +24,11 @@ class VerifyCsrfToken extends Middleware
      '/production/updateBrand',
      '/production/deleteBrand',
 // -------------- Production Categorie --------------------//
-     '/production/postCategory'
+     '/production/postCategory',
+     '/production/updateCategory',
+     '/production/deleteCategory',
+
+ // -------------- Production Categorie --------------------//
+    '/production/postProduct'    
     ];
 }

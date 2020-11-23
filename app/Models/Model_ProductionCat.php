@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-// use App\Models\DAO\DAO_ProductionCat;
 use App\Models\DAO\DAO_ProductionCat;
 
 class Model_ProductionCat extends Model
@@ -18,9 +17,7 @@ class Model_ProductionCat extends Model
         foreach($categories as $value){
             
             $cat = new DAO_ProductionCat($value->category_id,$value->category_name);
-
             array_push($listCat, $cat);
-
         }
 
         return $listCat;
@@ -43,4 +40,37 @@ class Model_ProductionCat extends Model
         
     }
 
+
+    function updateCategory($newName, $sourceId){
+
+        DB::update('UPDATE production.categories set category_name = ? where category_id =?',[$newName,$sourceId]);
+        $listCat = DB::select('SELECT * FROM production.categories');
+        
+        $pushArray = array();
+
+        foreach($listCat as  $value){
+
+            $temp = new DAO_ProductionCat($value->category_id, $value->category_name);
+            array_push($pushArray,$temp);
+        }
+
+        return $pushArray;
+    }
+
+    function deleteCategory($catId){
+        
+        DB::delete('DELETE FROM production.categories where category_id = ?',[$catId]);
+
+        $listCat = DB::select('SELECT * FROM production.categories');
+        
+        $pushArray = array();
+
+        foreach($listCat as  $value){
+
+            $temp = new DAO_ProductionCat($value->category_id, $value->category_name);
+            array_push($pushArray,$temp);
+        }
+
+        return $pushArray;
+    }
 }
