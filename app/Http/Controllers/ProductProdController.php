@@ -26,10 +26,44 @@ class ProductProdController extends Controller
         $result= $request->getContent();
         $temp = json_decode($result);
 
-        $listProduct= $this->modelProduct->addProductProduction($temp->product_name,$temp->brandSelected,$temp->catSelected,$temp->model_year,$temp->list_price);
+        $listProduct= $this->modelProduct->addProductProduction(htmlspecialchars($temp->product_name),htmlspecialchars($temp->brandSelected),htmlspecialchars($temp->catSelected),htmlspecialchars($temp->model_year),htmlspecialchars($temp->list_price));
         $json=array();
         foreach($listProduct as $value){
             array_push($json, json_decode($value->toJSONPrivate(),true));    
+        }
+
+        echo json_encode($json);
+    }
+
+    function updateProductProduction(Request $request){
+
+        $result = $request->getContent();
+        $temp=json_decode($result);
+
+        $this->modelProduct->updateProductProduction(htmlspecialchars($temp->product_name),htmlspecialchars($temp->model_year),htmlspecialchars($temp->list_price),$temp->sourceId);
+
+        $listProduct = $this->modelProduct->getProductionProduct();
+        $json = array();
+
+        foreach( $listProduct as $value){
+            array_push($json, json_decode($value->toJSONPrivate(),true));
+
+        }
+
+        echo json_encode($json);
+    }
+
+    function deleteProductProduction(Request $request){
+
+        $result = $request->getContent();
+        $temp = json_decode($result);
+        $this->modelProduct->deleteProductProduction($temp->product_id);
+        $listProduct = $this->modelProduct->getProductionProduct();
+        $json = array();
+
+        foreach( $listProduct as $value){
+            array_push($json, json_decode($value->toJSONPrivate(),true));
+
         }
 
         echo json_encode($json);

@@ -450,8 +450,8 @@ const urlAdd = () => {
         return "/production/postBrand";
     } else if (modalFrom === "category") {
         return "/production/postCategory";
-    }else if (modalFrom === "product"){
-        return '/production/postProduct'
+    } else if (modalFrom === "product") {
+        return "/production/postProduct";
     }
 };
 const urlUpdate = () => {
@@ -459,6 +459,8 @@ const urlUpdate = () => {
         return "/production/updateBrand";
     } else if (modalFrom === "category") {
         return "/production/updateCategory";
+    } else if (modalFrom === "product") {
+        return '/production/updateProduct'
     }
 };
 
@@ -467,6 +469,8 @@ const urlDelete = () => {
         return "/production/deleteBrand";
     } else if (modalFrom === "category") {
         return "/production/deleteCategory";
+    } else if (modalFrom === "product") {
+        return "/production/deleteProduct";
     }
 };
 
@@ -494,7 +498,7 @@ formSendButton.onclick = () => {
             data[tag.name] = tag.value;
         }
     }
-    console.log(data)
+    console.log(data);
     if (Object.keys(data).length > 0) {
         fetch(urlAdd(), {
             method: "POST",
@@ -515,7 +519,6 @@ formSendButton.onclick = () => {
 //------ Modification Référence --------//
 
 modalUpdateButton.onclick = () => {
-
     let source = modalValue;
     let input = modalForm.getElementsByTagName("input");
     let data = {};
@@ -525,6 +528,7 @@ modalUpdateButton.onclick = () => {
         }
     }
     data["sourceId"] = modalValue[Object.keys(modalValue)[0]];
+    console.log(JSON.stringify(data))
     if (Object.keys(data).length > 0) {
         fetch(urlUpdate(), {
             method: "POST",
@@ -544,6 +548,7 @@ modalUpdateButton.onclick = () => {
 // ----- Suppression Référence ------- //
 
 modalDeleteButton.onclick = () => {
+    console.log( JSON.stringify(modalValue))
     fetch(urlDelete(), {
         method: "POST",
         "Content-Type": "application/json",

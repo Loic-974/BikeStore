@@ -24,7 +24,7 @@ class Model_ProductionProduct extends Model
 
     function addProductProduction($productName,$brandId,$catId,$modelYear,$price){
 
-        $product=DB::insert('INSERT INTO production.products values (?,?,?,?,?)',[$productName,$brandId,$catId,$modelYear,$price]);
+       DB::insert('INSERT INTO production.products values (?,?,?,?,?)',[$productName,$brandId,$catId,$modelYear,$price]);
         $listProd = DB::select('SELECT * from production.products');
         $products=array();
 
@@ -34,6 +34,17 @@ class Model_ProductionProduct extends Model
             array_push($products,$prod);
         }
         return $products;
+
+    }
+
+    function updateProductProduction($productName,$modelYear,$price,$sourceId){
+
+        DB::update('UPDATE production.products set product_name=? , model_year=?, list_price=? where product_id=?',[$productName,$modelYear,$price,$sourceId]);
+    }
+
+    function deleteProductProduction($productId){
+
+        DB::delete('DELETE from production.products where product_id = ?',[$productId]);
 
     }
 
