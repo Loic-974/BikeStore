@@ -28,4 +28,15 @@ class Model_ProductionStock extends Model
         return $stockList;
     }
 
+    function insertNewStock($storeName, $productName,$quantity){
+        DB::insert('INSERT INTO production.stocks values ((SELECT store_id FROM sales.stores where store_name =?), 
+        (SELECT product_id FROM production.products where product_name =?),
+        ?)',[$storeName,$productName,$quantity]);
+    }
+
+    function updateProductStock($store_id,$product_id,$quantity){
+        
+        DB::update('UPDATE production.stocks set quantity=? where store_id=? AND product_id=?',[$quantity,$store_id,$product_id]);
+    }
+
 }

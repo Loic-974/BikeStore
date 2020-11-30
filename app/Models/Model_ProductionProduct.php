@@ -24,7 +24,7 @@ class Model_ProductionProduct extends Model
 
     function addProductProduction($productName,$brandId,$catId,$modelYear,$price){
 
-       DB::insert('INSERT INTO production.products values (?,?,?,?,?)',[$productName,$brandId,$catId,$modelYear,$price]);
+       DB::insert('INSERT INTO production.products (product_name,brand_id,category_id,model_year,list_price) values (?,?,?,?,?)',[$productName,$brandId,$catId,$modelYear,$price]);
         $listProd = DB::select('SELECT * from production.products');
         $products=array();
 

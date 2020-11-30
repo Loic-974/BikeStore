@@ -72,3 +72,6 @@ Route::post('/production/deleteCategory',[App\Http\Controllers\CategoryProdContr
 Route::post('/production/postProduct',[App\Http\Controllers\ProductProdController::class,'addProductProduction']);
 Route::post('/production/updateProduct',[App\Http\Controllers\ProductProdController::class,'updateProductProduction']);
 Route::post('/production/deleteProduct',[App\Http\Controllers\ProductProdController::class,'deleteProductProduction']);
+//-------------- Stock ---------------- //
+Route::post('/production/insertStock', [App\Http\Controllers\StockProdController::class,'insertNewStock']);
+Route::post('/production/updateStock', [App\Http\Controllers\StockProdController::class,'updateProductStock']);

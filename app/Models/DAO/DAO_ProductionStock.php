@@ -26,10 +26,10 @@ class DAO_ProductionStock extends Model
     public function toJSONPRivate(){
         return json_encode([
             'store_id'=>$this->store_id,
-            'Magasin'=>$this->store_name,      
+            'magasin'=>$this->store_name,      
             'product_id'=>$this->product_id,
-            'Produit'=>$this->product_name,
-            'Quantité'=>$this->quantity
+            'produit'=>$this->product_name,
+            'quantity'=>$this->quantity
         ]);
     }
 }
