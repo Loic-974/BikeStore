@@ -4,6 +4,29 @@ let produits = [];
 let stocks = [];
 let filters = [];
 
+const setBrands = (value) => {
+    brands=value
+    insertSelectBrand([selectBrand, selectBrandForm]);
+}
+
+const setCategory = (value)=>{
+    categorie=value
+    insertSelectCategorie([selectCategorie, selectCatForm])
+
+}
+const setProduct = (value)=>{
+    produits=value
+    insertSelectYears(produits);
+    insertSelectCategorie([selectCategorie, selectCatForm])
+    insertSelectBrand([selectBrand, selectBrandForm]);
+}
+
+const setStock =  (value) => {
+    stocks=value
+    insertSelectStore(selectStore)
+    insertSelectStore(selectedStore);
+
+}
 let modalValue = null; // useIt For Modal Ajax
 let modalFrom = null;
 
@@ -622,13 +645,13 @@ formProductName.onchange = () => {
 
 const setArray = () => {
     if (modalFrom === "brands") {
-        return getBrands();
+        return brands;
     } else if (modalFrom === "category") {
         return getCategory();
     } else if (modalFrom === "product") {
         return getProduct();
     } else if (modalFrom === "stock") {
-        return getStock();
+        return ;
     }
 };
 
@@ -667,11 +690,17 @@ const urlDelete = () => {
 
 //-------- New Ajout Référence ----------//
 
-formSendButton.onclick = () => {
-    insertAjax(setArray());
+formSendButton.onclick =async () => {
+   let data= await insertAjax();
+   buildArray(data)
+   modalFrom==='brands'? setBrands(data) : null;
+   modalFrom==='category'? setCategory(data):null;
+   modalFrom==='product'? setProduct(data) : null;
+   modalFrom==='stock'? setStock(data): null;
+
 };
 
-function insertAjax(array) {
+async function insertAjax(array) {
     let input = document
         .querySelector("#formProductionAdd")
         .getElementsByTagName("input");
@@ -691,28 +720,32 @@ function insertAjax(array) {
         }
     }
     if (Object.keys(data).length > 0) {
-        fetch(urlAdd(), {
+       const newData = await fetch(urlAdd(), {
             method: "POST",
             "Content-Type": "application/json",
             Accept: "application/json",
             "X-Requested-With": "XMLHttpRequest",
             body: JSON.stringify(data)
         })
-            .then(response => {
-                return response.json();
-            })
-            .then(response => buildArray(response))
-            .then(response => array);
+        return await newData.json()
     }
 }
 
 //------ Modification Référence --------//
 
-modalUpdateButton.onclick = () => {
-    updateAjax(setArray());
+modalUpdateButton.onclick = async() => {
+    let data = await updateAjax();
+    buildArray(data)
+    modalProduction.style.display = "none";
+    backModal.style.display = "none";
+    modalFrom==='brands'? setBrands(data) : null
+    modalFrom==='category'? setCategory(data):null
+    modalFrom==='product'? setProduct(data) : null
+    modalFrom==='stock'? setStock(data): null
+
 };
 
-function updateAjax(array) {
+async function updateAjax(array) {
     let source = modalValue;
     let input = modalForm.getElementsByTagName("input");
     let data = {};
@@ -724,40 +757,39 @@ function updateAjax(array) {
     data["sourceId"] = modalValue[Object.keys(modalValue)[0]];
     console.log(JSON.stringify(data));
     if (Object.keys(data).length > 0) {
-        fetch(urlUpdate(), {
+        const newData = await fetch(urlUpdate(), {
             method: "POST",
             "Content-Type": "application/json",
             Accept: "application/json",
             body: JSON.stringify(data)
         })
-            .then(response => response.json())
-            .then(response => buildArray(response))
-            .then(
-                (modalProduction.style.display = "none"),
-                (backModal.style.display = "none")
-            );
-         
+       return await newData.json()
     }
 }
 
 // ----- Suppression Référence ------- //
 
-modalDeleteButton.onclick = () => {
-    deleteAjax(setArray());
+modalDeleteButton.onclick = async () => {
+    let data = await deleteAjax();
+    buildArray(data)
+    modalProduction.style.display = "none";
+    backModal.style.display = "none";
+    modalFrom==='brands'? setBrands(data) : null
+    modalFrom==='category'? setCategory(data):null
+    modalFrom==='product'? setProduct(data) : null
+    modalFrom==='stock'? setStock(data): null
 };
 
-function deleteAjax(array) {
-    fetch(urlDelete(), {
+async function deleteAjax() {
+    const newArray = await fetch(urlDelete(), {
         method: "POST",
         "Content-Type": "application/json",
         Accept: "application/json",
         body: JSON.stringify(modalValue)
-    })
-        .then(response => response.json())
-        .then(response => buildArray(response))
-        .then(response => (array = response))
-        .then(
-            (modalProduction.style.display = "none"),
-            (backModal.style.display = "none")
-        );
+    });
+    const array = await newArray.json();
+    return array;
 }
+
+
+
