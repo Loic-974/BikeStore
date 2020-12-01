@@ -28,7 +28,7 @@ class StockProdController extends Controller
         $result= $request->getContent();
         $temp = json_decode($result);
 
-        $this->modelStock->insertNewStock($temp->selectedStore,$temp->selectedProduct,$temp->quantity);
+        $this->modelStock->insertNewStock(htmlspecialchars($temp->selectedStore),htmlspecialchars($temp->selectedProduct),htmlspecialchars($temp->quantity));
         
         $listStock = $this->modelStock->selectProductionStock();
         $json = array();
@@ -45,7 +45,7 @@ class StockProdController extends Controller
         $result= $request->getContent();
         $temp = json_decode($result);
 
-        $this->modelStock->updateProductStock($temp->sourceId,$temp->product_id,$temp->quantity);
+        $this->modelStock->updateProductStock(htmlspecialchars($temp->sourceId),htmlspecialchars($temp->product_id),htmlspecialchars($temp->quantity));
 
         $listStock = $this->modelStock->selectProductionStock();
         $json = array();
@@ -62,7 +62,7 @@ class StockProdController extends Controller
         $result = $request->getContent();
         $temp = json_decode($result);
 
-        $this->modelStock->deleteProductStock($temp->sourceId,$temp->product_id);
+        $this->modelStock->deleteProductStock(htmlspecialchars($temp->sourceId),htmlspecialchars($temp->product_id));
         $listStock = $this->modelStock->selectProductionStock();
         $json = array();
         foreach($listStock as $value){

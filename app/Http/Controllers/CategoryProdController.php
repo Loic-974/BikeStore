@@ -30,7 +30,7 @@ class CategoryProdController extends Controller
         $result = $request->getContent();
         $category = json_decode($result);
 
-        $listCat = $this->modelCat->addCategory($category->category_name);
+        $listCat = $this->modelCat->addCategory(htmlspecialchars($category->category_name));
 
         $json = array();
 
@@ -46,7 +46,7 @@ class CategoryProdController extends Controller
         $result = $request->getContent();
         $category = json_decode($result);
       
-        $listCat = $this->modelCat->updateCategory($category->categoryName, $category->sourceId);
+        $listCat = $this->modelCat->updateCategory(htmlspecialchars($category->categoryName),htmlspecialchars($category->sourceId));
 
         $json = array();
 
@@ -61,7 +61,7 @@ class CategoryProdController extends Controller
         $result = $request -> getContent();
         $category = json_decode($result);
       
-        $listCat = $this->modelCat->deleteCategory($category->category_id);
+        $listCat = $this->modelCat->deleteCategory(htmlspecialchars($category->category_id));
 
         $json = array();
 

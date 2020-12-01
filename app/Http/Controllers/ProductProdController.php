@@ -40,7 +40,7 @@ class ProductProdController extends Controller
         $result = $request->getContent();
         $temp=json_decode($result);
 
-        $this->modelProduct->updateProductProduction(htmlspecialchars($temp->product_name),htmlspecialchars($temp->model_year),htmlspecialchars($temp->list_price),$temp->sourceId);
+        $this->modelProduct->updateProductProduction(htmlspecialchars($temp->product_name),htmlspecialchars($temp->model_year),htmlspecialchars($temp->list_price),htmlspecialchars($temp->sourceId));
 
         $listProduct = $this->modelProduct->getProductionProduct();
         $json = array();
@@ -57,7 +57,7 @@ class ProductProdController extends Controller
 
         $result = $request->getContent();
         $temp = json_decode($result);
-        $this->modelProduct->deleteProductProduction($temp->product_id);
+        $this->modelProduct->deleteProductProduction(htmlspecialchars($temp->product_id));
         $listProduct = $this->modelProduct->getProductionProduct();
         $json = array();
 

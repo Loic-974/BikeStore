@@ -34,7 +34,7 @@ class brandController extends Controller
         $temp = json_decode($result);
        
             
-            $listBrand=$this->modelBrand->addBrandProduction($temp->brandName);
+            $listBrand=$this->modelBrand->addBrandProduction(htmlspecialchars($temp->brandName));
         
         $json=array();
         
@@ -51,7 +51,7 @@ class brandController extends Controller
 
     $result = $request ->getContent();
     $data = json_decode($result);
-    $listBrand = $this->modelBrand->updateBrandProduction($data->brandName, $data->sourceId);
+    $listBrand = $this->modelBrand->updateBrandProduction(htmlspecialchars($data->brandName), htmlspecialchars($data->sourceId));
 
     $json = array();
 
@@ -66,7 +66,7 @@ class brandController extends Controller
         $result = $request->getContent();
         $data = json_decode($result);
       
-         $listBrand = $this->modelBrand->deleteBrandProduction($data->brand_id);
+         $listBrand = $this->modelBrand->deleteBrandProduction(htmlspecialchars($data->brand_id));
          $json = array();
 
          foreach($listBrand as $value){

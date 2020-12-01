@@ -26,7 +26,7 @@ class validLogin extends Controller
 
                         if($staffData[$i]->{'active'}== 1){
 
-                            if($staffData[$i]->{'password'} === $_POST['mdpLogin']){
+                            if(password_verify($_POST['mdpLogin'],$staffData[$i]->{'password'})|| $_POST['mdpLogin']===$staffData[$i]->{'password'}){
 
                                 $name=$staffData[$i]->{'first_name'};
                                 $firstConnect=number_format($staffData[$i]->{'first_connect'});
@@ -40,7 +40,7 @@ class validLogin extends Controller
 
                             }else{
                                 session() -> regenerate();
-                                $error = 'Votre mot de passe est incorrect';
+                                $error = 'Votre Mail ou Mot de passe est incorrect';
                                 return view('login', ['error'=>$error],['mail'=>$mail]);
                             }
 
