@@ -1,7 +1,8 @@
 .container-content {
-    width: 100vw;
-    height: 95vh;
-    margin-top: 50px;
+    width: 95vw;
+    height: 87.5vh;
+    margin-left:2.5vw;
+    margin-top: 2.5vh;
     background-color: rgb(97, 115, 136);
     display: inline-block;
 }

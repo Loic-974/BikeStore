@@ -55,6 +55,9 @@ html {
 
 
 body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
   margin: 0;
   font-family: "Nunito", sans-serif;
   font-size: 0.9rem;
@@ -63,6 +66,7 @@ body {
   color: #212529;
   text-align: left;
   background-color: #f8fafc;
+  background-image: url('../media/background.jpg');
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -254,6 +258,7 @@ textarea {
 button,
 input {
   overflow: visible;
+  text-transform: capitalize;
 }
 
 button,
@@ -10893,3 +10898,11 @@ a.text-dark:focus {
   }
 }
 
+#header{
+  height:60px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #1d68a7;
+}

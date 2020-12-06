@@ -110,5 +110,5 @@
      
      </div>
     </body>
-
-    <script src="js/Production/production.js"></script>
+    <script type='module' src='js/lib/buildFunction.js'></script>
+    <script type='module' src="js/Production/production.js"></script>

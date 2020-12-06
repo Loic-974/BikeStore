@@ -1,32 +1,32 @@
+import { buildModalOnClick, buildArray } from "../lib/buildFunction.js";
+
 let brands = [];
 let categorie = [];
 let produits = [];
 let stocks = [];
-let filters = [];
 
-const setBrands = (value) => {
-    brands=value
+//------------------------------------ SETTER -------------------------------------------//
+const setBrands = value => {
+    brands = value;
     insertSelectBrand([selectBrand, selectBrandForm]);
-}
+};
 
-const setCategory = (value)=>{
-    categorie=value
-    insertSelectCategorie([selectCategorie, selectCatForm])
-
-}
-const setProduct = (value)=>{
-    produits=value
+const setCategory = value => {
+    categorie = value;
+    insertSelectCategorie([selectCategorie, selectCatForm]);
+};
+const setProduct = value => {
+    produits = value;
     insertSelectYears(produits);
-    insertSelectCategorie([selectCategorie, selectCatForm])
+    insertSelectCategorie([selectCategorie, selectCatForm]);
     insertSelectBrand([selectBrand, selectBrandForm]);
-}
+};
 
-const setStock =  (value) => {
-    stocks=value
-    insertSelectStore(selectStore)
+const setStock = value => {
+    stocks = value;
+    insertSelectStore(selectStore);
     insertSelectStore(selectedStore);
-
-}
+};
 let modalValue = null; // useIt For Modal Ajax
 let modalFrom = null;
 
@@ -34,21 +34,17 @@ const LinkBrand = document.querySelector("#brandLink");
 const LinkCategorie = document.querySelector("#CategorieLink");
 const LinkProduct = document.querySelector("#ProductLink");
 const LinkStock = document.querySelector("#StockLink");
-
-const containerArray = document.querySelector(".table-content-left");
 const ArrayOfItems = document.querySelector("#ArrayProduction");
 
 const selectBrand = document.querySelector("#SelectBrand");
 const selectCategorie = document.querySelector("#SelectCategorie");
 const selectYear = document.querySelector("#SelectAnnee");
 const selectStore = document.querySelector("#SelectStore");
-const inputRange = document.querySelector("#SelectPrice");
 const selectBrandForm = document.querySelector("#SelectBrandForm");
 const selectCatForm = document.querySelector("#SelectCategorieForm");
 const searchInput = document.querySelector("#searchInput");
 const searchList = document.querySelectorAll(".searchList");
 
-const filterGroup = document.querySelectorAll(".filter-container")[0];
 // --- Form DOM --//
 const formBrandName = document.querySelector("#newBrandName");
 const formCatName = document.querySelector("#newCatName");
@@ -65,7 +61,9 @@ const formSendButton = document.querySelector("#btnAddDataBrand");
 
 // --- Modal DOM --//
 const backModal = document.querySelector("#backgroundModal");
+
 const modalProduction = document.querySelector("#modalProduction");
+const titleModal = modalProduction.querySelectorAll(".titreModal")[0];
 const modalForm = document.querySelector("#modalProduction form");
 const modalUpdateButton = document.querySelector("#validUpdateModal");
 const modalError = document.querySelector("#modalErrorProduction");
@@ -151,7 +149,6 @@ window.onload = () => {
 // --------------------------------- Build View -------------------------------
 // ----------------------------------------------------------------------------
 
-containerArray.style.display = "none";
 formBrandName.style.display = "inline";
 formCatName.style.display = "none";
 formProductName.style.display = "none";
@@ -161,7 +158,7 @@ formPriceInput.style.display = "none";
 disabledSelectFilter([selectCategorie, selectYear, selectBrand]);
 
 LinkBrand.onclick = () => {
-    buildArray(brands);
+    buildArray(brands, ArrayOfItems, openModal, dontShowString);
     insertSelectBrand([selectBrand, selectBrandForm]);
     modalFrom = "brands"; // set the modalInformation for use in Ajax
     formBrandName.style.display = "inline-block";
@@ -184,7 +181,7 @@ LinkBrand.onclick = () => {
 };
 
 LinkCategorie.onclick = () => {
-    buildArray(categorie);
+    buildArray(categorie, ArrayOfItems, openModal, dontShowString);
     insertSelectCategorie([selectCategorie, selectCatForm]),
         (modalFrom = "category"); // set the modalInformation for use in Ajax
     formBrandName.style.display = "none";
@@ -202,9 +199,10 @@ LinkCategorie.onclick = () => {
 };
 
 LinkProduct.onclick = () => {
-    insertSelectBrand([selectBrand, selectBrandForm]), buildArray(produits);
+    insertSelectBrand([selectBrand, selectBrandForm]);
     insertSelectCategorie([selectCategorie, selectCatForm]),
         insertSelectYears(produits);
+    buildArray(produits, ArrayOfItems, openModal, dontShowString);
     modalFrom = "product";
     formBrandName.style.display = "none";
     formCatName.style.display = "none";
@@ -224,9 +222,8 @@ LinkProduct.onclick = () => {
 };
 
 LinkStock.onclick = () => {
-    buildArray(stocks),
-        insertSelectStore(selectStore),
-        insertSelectStore(selectedStore);
+    buildArray(stocks, ArrayOfItems, openModal, dontShowString);
+    insertSelectStore(selectStore), insertSelectStore(selectedStore);
     modalFrom = "stock";
     formBrandName.style.display = "none";
     formCatName.style.display = "none";
@@ -333,7 +330,7 @@ function setStoreOptionInStock() {
     return arrayOfStore;
 }
 
-function insertSelectYears() {
+function insertSelectYears(array) {
     selectYear.innerHTML = "";
     selectYear.innerHTML = "<option value=''>Année du produit</option>";
     array = setYearPresentInProduct();
@@ -348,7 +345,7 @@ function insertSelectYears() {
 function insertSelectStore(cible) {
     cible.innerHTML = "";
     cible.innerHTML = "<option value=''>Libellé du magasin</option>";
-    array = setStoreOptionInStock();
+   let array = setStoreOptionInStock();
     for (let store of array) {
         cible.insertAdjacentHTML(
             "beforeend",
@@ -393,58 +390,6 @@ function insertProductList(array, cible, input) {
         filterArray();
         cible.style.display = "none";
     }
-}
-
-//--------------------------------------------------------------//
-//----------------------- Build Array --------------------------//
-//--------------------------------------------------------------//
-
-function buildArray(array) {
-    containerArray.style.display = "block";
-    ArrayOfItems.innerHTML = "";
-    let thead = document.createElement("thead");
-    let tbody = document.createElement("tbody");
-    let i = 0;
-    let index = 1;
-    for (let ref of array) {
-        let tr = document.createElement("tr");
-        tr.onclick = () => buildModalOnClick(ref, array);
-        let y = 0;
-        for (let propriete in ref) {
-            if (i === 0) {
-                // limit 1 header
-                if (!propriete.includes(dontShowString)) {
-                    let th = document.createElement("th");
-                    let thText = document.createTextNode(propriete);
-                    th.appendChild(thText);
-                    thead.appendChild(th);
-                } else if (y === 0) {
-                    let th = document.createElement("th");
-                    let thText = document.createTextNode("Index");
-                    th.appendChild(thText);
-                    thead.appendChild(th);
-                }
-            }
-            if (!propriete.includes(dontShowString)) {
-                let td = document.createElement("td");
-                let tdText = document.createTextNode(ref[propriete]);
-                td.appendChild(tdText);
-                tr.appendChild(td);
-            } else if (y === 0) {
-                let td = document.createElement("td");
-                let tdText = document.createTextNode(index);
-                td.appendChild(tdText);
-                tr.appendChild(td);
-            }
-            y++;
-        }
-        tbody.appendChild(tr);
-        i++;
-        index++;
-    }
-    ArrayOfItems.appendChild(thead);
-    ArrayOfItems.appendChild(tbody);
-    console.log("------- Array Build --------");
 }
 
 // --------------------------------------------------------/
@@ -531,9 +476,7 @@ function filterArray() {
             result.push(ref);
         }
     }
-
-    // result.length > 0 ? null : (result = array);
-    buildArray(result);
+    buildArray(result, ArrayOfItems, openModal, dontShowString);
 }
 
 // --------------------------------------------------------/
@@ -544,7 +487,8 @@ function checkDataAndValidInput(data, item) {
     let result = true;
     for (let ref of data) {
         for (let property in ref) {
-            if (ref[property] === item) {
+            if (ref[property] === item||ref[property] === (item[0].toUpperCase()+item.substring(1))) {
+                console.log("toto");
                 result = false;
             }
         }
@@ -554,53 +498,23 @@ function checkDataAndValidInput(data, item) {
 
 function validInputValue(data, item) {
     checkDataAndValidInput(data, item)
-        ? (modalErrorProduction.innerHTML = "")
-        : (modalErrorProduction.innerHTML = "La référence existe déjà");
+        ? ((modalErrorProduction.innerHTML = ""),
+          (formSendButton.disabled = false),
+          (formSendButton.style.backgroundColor = "#007bff"))
+        : ((modalErrorProduction.innerHTML = "La référence existe déjà"),
+          (formSendButton.disabled = true),
+          (formSendButton.style.backgroundColor = "grey"));
 }
 
 // ----------------------------------------------------------------------- //
 // ---------------------------- Display ---------------------------------- //
 // ----------------------------------------------------------------------- //
 
-function buildModalOnClick(item, array) {
-    console.log(item);
-    modalValue = item;
+function openModal(item) {
     backModal.style.display = "block";
     modalProduction.style.display = "flex";
-    let titleModal = modalProduction.getElementsByClassName("titreModal");
-    titleModal[0].innerHTML = "Action concernant : ";
-    titleModal[0].insertAdjacentHTML(
-        "beforeend",
-        item.brandName || item.categoryName || item.product_name
-    );
-    modalForm.innerHTML = "";
-    for (let ref in item) {
-        if (ref.includes(dontShowString)) {
-            modalForm.insertAdjacentHTML(
-                "afterbegin",
-                '<input type="hidden" name="' +
-                    ref +
-                    '"value="' +
-                    item[ref] +
-                    '">'
-            );
-        } else {
-            modalForm.insertAdjacentHTML(
-                "afterbegin",
-                '<input type="text" name="' +
-                    ref +
-                    '" value="' +
-                    item[ref] +
-                    '" placeholder="' +
-                    item[ref] +
-                    '" >'
-            );
-            modalForm.insertAdjacentHTML(
-                "afterbegin",
-                "<label>Modifier " + ref + "</label>"
-            );
-        }
-    }
+    buildModalOnClick(item, titleModal, modalForm, dontShowString);
+    modalValue = item;
 }
 
 backModal.onclick = () => {
@@ -609,36 +523,37 @@ backModal.onclick = () => {
 };
 
 formBrandName.onchange = () => {
-    checkDataAndValidInput(brands, formBrandName.value)
-        ? ((document.querySelector("#errorFormProduction").innerHTML = ""),
-          (formSendButton.disabled = false),
-          (formSendButton.style.backgroundColor = "#007bff"))
-        : ((document.querySelector("#errorFormProduction").innerHTML =
-              "La marque existe déjà !"),
-          (formSendButton.disabled = true),
-          (formSendButton.style.backgroundColor = "grey"));
+    console.log(formBrandName.value);
+    validInputValue(brands, formBrandName.value)
+        // ? ((document.querySelector("#errorFormProduction").innerHTML = ""),
+        //   (formSendButton.disabled = false),
+        //   (formSendButton.style.backgroundColor = "#007bff"))
+        // : ((document.querySelector("#errorFormProduction").innerHTML =
+        //       "La marque existe déjà !"),
+        //   (formSendButton.disabled = true),
+        //   (formSendButton.style.backgroundColor = "grey"));
 };
 
 formCatName.onchange = () => {
-    checkDataAndValidInput(categorie, formCatName.value)
-        ? ((document.querySelector("#errorFormProduction").innerHTML = ""),
-          (formSendButton.disabled = false),
-          (formSendButton.style.backgroundColor = "#007bff"))
-        : ((document.querySelector("#errorFormProduction").innerHTML =
-              "La Categorie existe déjà !"),
-          (formSendButton.disabled = true),
-          (formSendButton.style.backgroundColor = "grey"));
+    validInputValue(categorie, formCatName.value)
+        // ? ((document.querySelector("#errorFormProduction").innerHTML = ""),
+        //   (formSendButton.disabled = false),
+        //   (formSendButton.style.backgroundColor = "#007bff"))
+        // : ((document.querySelector("#errorFormProduction").innerHTML =
+        //       "La Categorie existe déjà !"),
+        //   (formSendButton.disabled = true),
+        //   (formSendButton.style.backgroundColor = "grey"));
 };
 
 formProductName.onchange = () => {
-    checkDataAndValidInput(produits, formProductName.value)
-        ? ((document.querySelector("#errorFormProduction").innerHTML = ""),
-          (formSendButton.disabled = false),
-          (formSendButton.style.backgroundColor = "#007bff"))
-        : ((document.querySelector("#errorFormProduction").innerHTML =
-              "Le produit existe déjà !"),
-          (formSendButton.disabled = true),
-          (formSendButton.style.backgroundColor = "grey"));
+    validInputValue(produits, formProductName.value)
+        // ? ((document.querySelector("#errorFormProduction").innerHTML = ""),
+        //   (formSendButton.disabled = false),
+        //   (formSendButton.style.backgroundColor = "#007bff"))
+        // : ((document.querySelector("#errorFormProduction").innerHTML =
+        //       "Le produit existe déjà !"),
+        //   (formSendButton.disabled = true),
+        //   (formSendButton.style.backgroundColor = "grey"));
 };
 
 // ---------------------------- AJAX POST -------------------------------- //
@@ -651,7 +566,7 @@ const setArray = () => {
     } else if (modalFrom === "product") {
         return getProduct();
     } else if (modalFrom === "stock") {
-        return ;
+        return;
     }
 };
 
@@ -690,14 +605,13 @@ const urlDelete = () => {
 
 //-------- New Ajout Référence ----------//
 
-formSendButton.onclick =async () => {
-   let data= await insertAjax();
-   buildArray(data)
-   modalFrom==='brands'? setBrands(data) : null;
-   modalFrom==='category'? setCategory(data):null;
-   modalFrom==='product'? setProduct(data) : null;
-   modalFrom==='stock'? setStock(data): null;
-
+formSendButton.onclick = async () => {
+    let data = await insertAjax();
+    buildArray(data, ArrayOfItems, openModal, dontShowString);
+    modalFrom === "brands" ? setBrands(data) : null;
+    modalFrom === "category" ? setCategory(data) : null;
+    modalFrom === "product" ? setProduct(data) : null;
+    modalFrom === "stock" ? setStock(data) : null;
 };
 
 async function insertAjax(array) {
@@ -720,29 +634,28 @@ async function insertAjax(array) {
         }
     }
     if (Object.keys(data).length > 0) {
-       const newData = await fetch(urlAdd(), {
+        const newData = await fetch(urlAdd(), {
             method: "POST",
             "Content-Type": "application/json",
             Accept: "application/json",
             "X-Requested-With": "XMLHttpRequest",
             body: JSON.stringify(data)
-        })
-        return await newData.json()
+        });
+        return await newData.json();
     }
 }
 
 //------ Modification Référence --------//
 
-modalUpdateButton.onclick = async() => {
+modalUpdateButton.onclick = async () => {
     let data = await updateAjax();
-    buildArray(data)
+    buildArray(data, ArrayOfItems, openModal, dontShowString);
     modalProduction.style.display = "none";
     backModal.style.display = "none";
-    modalFrom==='brands'? setBrands(data) : null
-    modalFrom==='category'? setCategory(data):null
-    modalFrom==='product'? setProduct(data) : null
-    modalFrom==='stock'? setStock(data): null
-
+    modalFrom === "brands" ? setBrands(data) : null;
+    modalFrom === "category" ? setCategory(data) : null;
+    modalFrom === "product" ? setProduct(data) : null;
+    modalFrom === "stock" ? setStock(data) : null;
 };
 
 async function updateAjax(array) {
@@ -762,8 +675,8 @@ async function updateAjax(array) {
             "Content-Type": "application/json",
             Accept: "application/json",
             body: JSON.stringify(data)
-        })
-       return await newData.json()
+        });
+        return await newData.json();
     }
 }
 
@@ -771,13 +684,13 @@ async function updateAjax(array) {
 
 modalDeleteButton.onclick = async () => {
     let data = await deleteAjax();
-    buildArray(data)
+    buildArray(data, ArrayOfItems, openModal, dontShowString);
     modalProduction.style.display = "none";
     backModal.style.display = "none";
-    modalFrom==='brands'? setBrands(data) : null
-    modalFrom==='category'? setCategory(data):null
-    modalFrom==='product'? setProduct(data) : null
-    modalFrom==='stock'? setStock(data): null
+    modalFrom === "brands" ? setBrands(data) : null;
+    modalFrom === "category" ? setCategory(data) : null;
+    modalFrom === "product" ? setProduct(data) : null;
+    modalFrom === "stock" ? setStock(data) : null;
 };
 
 async function deleteAjax() {
@@ -790,6 +703,3 @@ async function deleteAjax() {
     const array = await newArray.json();
     return array;
 }
-
-
-
