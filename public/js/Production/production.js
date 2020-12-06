@@ -5,6 +5,7 @@ let categorie = [];
 let produits = [];
 let stocks = [];
 
+
 //------------------------------------ SETTER -------------------------------------------//
 const setBrands = value => {
     brands = value;
@@ -74,6 +75,36 @@ const dontShowString = "_id";
 // -----------------------------------------------------------------------
 //--------------------------------- Get Data ------------------------------
 //------------------------------------------------------------------------
+
+
+const setUser = async () => {
+    const userId = await fetch('/session',{})
+    let result = await userId.text()
+    return (result*1)
+}
+
+const getUser = async () =>{
+    const result = await setUser()
+    console.log(result)
+    if(result === 4){
+        formSendButton.style.backgroundColor = "grey";
+    formBrandName.disabled = true
+    formCatName.disabled = true
+    formProductName.disabled = true
+    formYearInput.disabled = true
+    formPriceInput.disabled = true
+    formGroupSelect.disabled = true
+    formQuantity.disabled = true
+    formSelectStock.disabled = true
+    formSendButton.disabled = true
+    selectedStore.disabled = true
+    selectedProduct.disabled = true
+    selectBrandForm.disabled = true
+    selectCatForm.disabled = true
+    }
+}
+
+
 function getBrands() {
     fetch("/production/getBrand", {
         method: "GET",
@@ -144,16 +175,31 @@ function getStock() {
 }
 window.onload = () => {
     getBrands(), getCategory(), getProduct(), getStock();
+    formSendButton.style.backgroundColor = "grey";
 };
 // ----------------------------------------------------------------------------
 // --------------------------------- Build View -------------------------------
 // ----------------------------------------------------------------------------
+
 
 formBrandName.style.display = "inline";
 formCatName.style.display = "none";
 formProductName.style.display = "none";
 formYearInput.style.display = "none";
 formPriceInput.style.display = "none";
+formBrandName.style.display = "none"
+formCatName.style.display = "none"
+formProductName.style.display = "none"
+formYearInput.style.display = "none"
+formPriceInput.style.display = "none"
+formGroupSelect.style.display = "none"
+formQuantity.style.display = "none"
+formSelectStock.style.display = "none"
+formSendButton.style.display = "none"
+selectedStore.style.display = "none"
+selectedProduct.style.display = "none"
+selectBrandForm.style.display = "none"
+selectCatForm.style.display = "none"
 
 disabledSelectFilter([selectCategorie, selectYear, selectBrand]);
 
@@ -178,6 +224,7 @@ LinkBrand.onclick = () => {
     allowSelectFilter([selectBrand]);
     // formSendButton.disabled = false;
     // formSendButton.style.backgroundColor = "#007bff";
+    getUser()
 };
 
 LinkCategorie.onclick = () => {
@@ -196,6 +243,7 @@ LinkCategorie.onclick = () => {
     // formSendButton.disabled = false;
     // formSendButton.style.backgroundColor = "#007bff";
     formSelectStock.style.display = "none";
+    getUser()
 };
 
 LinkProduct.onclick = () => {
@@ -219,6 +267,7 @@ LinkProduct.onclick = () => {
     // formSendButton.disabled = false;
     // formSendButton.style.backgroundColor = "#007bff";
     formSelectStock.style.display = "none";
+    getUser()
 };
 
 LinkStock.onclick = () => {
@@ -244,7 +293,9 @@ LinkStock.onclick = () => {
         insertProductList(stocks, searchList[0], searchInput);
     selectedProduct.oninput = () =>
         insertProductList(produits, searchList[1], selectedProduct);
+        getUser()
 };
+
 
 // ---------------------------------------------------------------------------- //
 // ---------------------------- Add Data to Select Or input ------------------- //

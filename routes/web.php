@@ -41,6 +41,7 @@ Route::get('/accueil', function() {
 // Route::get('/accueil/updatePwd', [App\Http\Controllers\updatePassword::class,'getOldPassword'])->name('getpwd');
 Route::get('/accueil/updatePwd', [App\Http\Controllers\updatePassword::class,'getOldPassword']);
 Route::post('/accueil',[App\Http\Controllers\updatePassword::class,'updatePassword']);
+Route::get('/session',[App\Http\Controllers\getSessionId::class,'getId']);
 // -------------------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------- Deconnexion ---------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------------
@@ -75,3 +76,11 @@ Route::post('/production/deleteProduct',[App\Http\Controllers\ProductProdControl
 //-------------- Stock ---------------- //
 Route::post('/production/insertStock', [App\Http\Controllers\StockProdController::class,'insertNewStock']);
 Route::post('/production/updateStock', [App\Http\Controllers\StockProdController::class,'updateProductStock']);
+
+// -------------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------- Vente ---------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------
+
+Route::get('/vente', function(){
+    return view('section');
+})->name('vente');

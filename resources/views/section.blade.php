@@ -19,10 +19,10 @@
         <div class='sub-container'>
         <div class='nav'>
             <div class="btn-group" role="group">
-                <button type="button" class="btn btn-secondary" id="brandLink">Marques</button>
+                <!-- <button type="button" class="btn btn-secondary" id="brandLink">Marques</button>
                 <button type="button" class="btn btn-secondary"  id="CategorieLink">Categories</button>
                 <button type="button" class="btn btn-secondary" id="ProductLink">Produits</button>
-                <button type="button" class="btn btn-secondary" id="StockLink">Stock</button>
+                <button type="button" class="btn btn-secondary" id="StockLink">Stock</button> -->
             </div>
         </div>
         <div class='view-content'>
@@ -59,21 +59,20 @@
 
                 <h4>Filtres</h4>
                 <div class='filter-container'>
-                <select id='SelectBrand'></select>
-                <select id='SelectCategorie'></select>
-                <select id='SelectAnnee'><select>
-                <select id='SelectStore'></select>
-                <input type='text' value='' id='searchInput' placeholder='Chercher un produit'>
-                <span class='searchList'></span>
-               
-            </div>
+                    <!-- <select id='SelectBrand'></select>
+                    <select id='SelectCategorie'></select>
+                    <select id='SelectAnnee'><select>
+                    <select id='SelectStore'></select>
+                    <input type='text' value='' id='searchInput' placeholder='Chercher un produit'>
+                    <span class='searchList'></span> -->
+                </div>
          
             <div class='form-container'>
               <h4> Ajouts </h4>
                 <form id='formProductionAdd'>
                     <p id='errorFormProduction'></p>
                   
-                            <input type='texte' id='newBrandName' class='form-control' name='brandName' value='' placeholder='Nouvelle Marque'>
+                            <!-- <input type='texte' id='newBrandName' class='form-control' name='brandName' value='' placeholder='Nouvelle Marque'>
                   
                   
                             <input type='texte' id='newCatName' name='category_name' class='form-control' value='' placeholder='Nouvelle Catégorie'>              
@@ -88,17 +87,17 @@
                             <input type='number' id='newPriceProduct' name='list_price' class='form-control' value='' placeholder='Prix du Modèle'>
               
                   
-                            <input type='number' id='newQuantity' name='quantity' class='form-control' value='' placeholder='Quantité du modèle'>
+                            <input type='number' id='newQuantity' name='quantity' class='form-control' value='' placeholder='Quantité du modèle'> -->
                   
                    
                     <div class='form-row group-selectProduct'>
-                        <select name='brandSelected' id='SelectBrandForm'></select>
-                        <select name='catSelected' id='SelectCategorieForm'></select>
+                        <!-- <select name='brandSelected' id='SelectBrandForm'></select>
+                        <select name='catSelected' id='SelectCategorieForm'></select> -->
                     </div>
-                    <div class='form-row group-selectProduct groupStock'>
-                        <input type='text' name='selectedProduct' id='selectProduct'></select>
+                    <div class='form-row group-selectProduct'>
+                        <!-- <input type='text' name='selectedProduct' id='selectProduct'></select>
                         <span id = 'searchList' class='searchList'></span>
-                        <select name='selectedStore' id='selectStore'></select>
+                        <select name='selectedStore' id='selectStore'></select> -->
                     </div>
                 </form>
                 <input type='button' value='Confirmer' class='btn-primary' id='btnAddDataBrand'>

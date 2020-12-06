@@ -7,7 +7,7 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/home.css') }}" rel="stylesheet">
     </head>
-   
+  
     <body>
         @include('header')
 
@@ -17,15 +17,14 @@
             <div class="sub-container">
                 @if(session('roleManager')<(5))
                 <a class='card-container' href="/production"> 
-                    <h3>Production</h3>
-                   lorem ipsum           
+                 
+               <h3> Production </h3>        
                 </a>  
                 @endif
                 @if(session('roleManager')<(5))
-                <div class="card-container">
-                    <h3>Vente</h3>
-                    <a href="#">lorem ipsum</a> 
-                </div>
+                <a  class="card-container"  href="/vente">
+                <h3> Vente</h3>
+                </a>
                @endif
                @if(session('roleManager')<(3))
                 <div class="card-container">
