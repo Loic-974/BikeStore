@@ -12,7 +12,6 @@
         @include('header')
 
         <div class="container">  
-        {{$firstConnect}}
         @if($firstConnect==1)  
             <div class="sub-container">
                 @if(session('roleManager')<(5))

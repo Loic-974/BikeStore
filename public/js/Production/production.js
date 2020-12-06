@@ -87,7 +87,7 @@ const getUser = async () =>{
     const result = await setUser()
     console.log(result)
     if(result === 4){
-        formSendButton.style.backgroundColor = "grey";
+    formSendButton.style.backgroundColor = "grey";
     formBrandName.disabled = true
     formCatName.disabled = true
     formProductName.disabled = true
@@ -195,11 +195,11 @@ formPriceInput.style.display = "none"
 formGroupSelect.style.display = "none"
 formQuantity.style.display = "none"
 formSelectStock.style.display = "none"
-formSendButton.style.display = "none"
-selectedStore.style.display = "none"
-selectedProduct.style.display = "none"
-selectBrandForm.style.display = "none"
-selectCatForm.style.display = "none"
+
+// selectedStore.style.display = "none"
+// selectedProduct.style.display = "none"
+// selectBrandForm.style.display = "none"
+// selectCatForm.style.display = "none"
 
 disabledSelectFilter([selectCategorie, selectYear, selectBrand]);
 
@@ -658,11 +658,13 @@ const urlDelete = () => {
 
 formSendButton.onclick = async () => {
     let data = await insertAjax();
+    if(data){
     buildArray(data, ArrayOfItems, openModal, dontShowString);
     modalFrom === "brands" ? setBrands(data) : null;
     modalFrom === "category" ? setCategory(data) : null;
     modalFrom === "product" ? setProduct(data) : null;
     modalFrom === "stock" ? setStock(data) : null;
+    }
 };
 
 async function insertAjax(array) {
