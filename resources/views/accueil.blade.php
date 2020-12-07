@@ -26,10 +26,9 @@
                 </a>
                @endif
                @if(session('roleManager')<(3))
-                <div class="card-container">
-                    <h3>Reporting</h3>
-                    <a href="#">lorem ipsum</a>             
-                </div>
+                <a class="card-container" href="/reporting">
+                    <h3>Reporting</h3>        
+                </a>
                 @endif
                 @if(session('roleManager')<(2))
                 <div class="card-container">
