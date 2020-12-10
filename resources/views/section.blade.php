@@ -32,29 +32,7 @@
                             </table>
                         </div>
                 
-                <div id='backgroundModal'> 
-
-                    <div class='form-modal-table' id='modalProduction'>  
-                        <div class="modal-header">
-                            <h4 class='titreModal'></h4>
-                        </div>
-                        <div class="modal-body">
-                            <p id="modalErrorProduction" class='warning'></p>
-                            <form>
-                        
-                            </form>
-                            <input type="button" class="btn btn-primary" id="validUpdateModal" value="Valider les modifications">
-                            <div class="modal-header">
-                                <h4>Suppimer la référence</h4>
-                            </div>
-                            <div class="modal-body">
-                                <p><span class='warning'>Attention cette action est définitive</span></p>
-                                <input type='button' class="btn btn-danger" value='Supprimer la référence' id='modalDeleteProduction'>
-                            </div>
-                        </div>    
-                    </div>
                 
-                </div>
 
             </div>
                 <div class='sub-container-right'>   
@@ -108,11 +86,34 @@
             </div>   
      
      </div>
+
+     
+     <div class='form-modal-table' id='modalProduction'>  
+                        <div class="modal-header">
+                            <h4 class='titreModal'></h4>
+                        </div>
+                        <div class="modal-body">
+                            <p id="modalErrorProduction" class='warning'></p>
+                            <form>
+                        
+                            </form>
+                            <input type="button" class="btn btn-primary" id="validUpdateModal" value="Valider les modifications">
+                            <div class="modal-header">
+                                <h4>Suppimer la référence</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p><span class='warning'>Attention cette action est définitive</span></p>
+                                <input type='button' class="btn btn-danger" value='Supprimer la référence' id='modalDeleteProduction'>
+                            </div>
+                        </div>    
+                    </div>
+                    <div id='backgroundModal'></div>
     </body>
     <script type='module' src='js/lib/buildFunction.js'></script>
-    if (\Request::is('vente')) { 
+    if (\Request::is('vente')) {
+    <script type='module' src="js/Vente/vente_setter.js"></script> 
     <script type='module' src="js/Vente/vente_ui.js"></script>
-    <script type='module' src="js/Vente/vente_setter.js"></script>
+
     }
 
 

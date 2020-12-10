@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Models\DAO\Vente;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,7 +29,7 @@ class DAO_saleOrders extends Model{
     }
 
     function toJSONPrivate(){
-        json_encode([
+        return json_encode([
         'order_id'=>$this->order_id,
         'customer_id'=> $this->customer_id,
         'OrderStatus'=>$this->order_status,

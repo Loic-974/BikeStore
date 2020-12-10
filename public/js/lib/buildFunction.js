@@ -6,6 +6,7 @@ export function buildArray(array,cible,functionOnClick,ignoreString) {
     let i = 0;
     let index = 1;
     for (let ref of array) {
+        
         let tr = document.createElement("tr");
         tr.onclick = () => functionOnClick(ref);
         let y = 0;
@@ -89,4 +90,6 @@ export function buildModalOnClick(item,title,cible,ignore) {
         }
     }
 }
+
+
 

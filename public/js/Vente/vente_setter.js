@@ -15,8 +15,8 @@ export const customers = {
     getCustomers(){
         return this.value
     },
-    setCustomers(newValue){
-        this.value=newValue
+   async setCustomers(newValue){
+        this.value= newValue
            // Ajout de fonction en cas de changement de valeur
     }
 }
@@ -27,11 +27,32 @@ export const factures = {
     getFacture(){
         return this.value
     },
-    setCustomers(newValue){
+    setFacture(newValue){
         this.value=newValue
+        // Ajout de fonction en cas de changement de valeur
     }
 }
 
 // -------------------------------------------- AJAX GETTER ------------------------------------------------------- //
 
-fetch('')
+async function setCustomerData(){
+const result = await fetch('/vente/getCustomer',{
+    method:'GET'
+})
+    const resultReturn = await result.json()
+    return resultReturn
+}
+
+async function setOrderData(){
+    const result = fetch('/vente/getOrder', {method:'GET'})
+    const jsonResult = await result.json()
+    console.log(jsonResult)
+    return jsonResult
+    
+}
+
+window.onload = async() => {
+   customers.setCustomers(await setCustomerData())
+   vente.setVente(await setOrderData())
+}
+

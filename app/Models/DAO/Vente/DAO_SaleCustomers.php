@@ -1,10 +1,12 @@
 <?php
 
+namespace App\Models\DAO\Vente;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DAO_SaleCustomer extends Model {
-
+class DAO_SaleCustomers extends Model
+{
     private $customer_id = 0;
     private $first_name ='';
     private $last_name = '';
@@ -47,4 +49,3 @@ class DAO_SaleCustomer extends Model {
         );
     }
 }
-

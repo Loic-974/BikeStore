@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Models\DAO\Vente;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,8 +14,6 @@ class DAO_SaleOrderItems extends Model{
     private $quantity;
     private $list_price;
     private $discount;
-
-
 
     function __construct($order_id,$item_id,$product_id,$quantity,$list_price,$discount){
 

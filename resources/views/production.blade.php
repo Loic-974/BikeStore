@@ -33,7 +33,7 @@
                             </table>
                         </div>
                 
-                <div id='backgroundModal'> 
+                <div id='backgroundModal'></div>
 
                     <div class='form-modal-table' id='modalProduction'>  
                         <div class="modal-header">
@@ -55,7 +55,7 @@
                         </div>    
                     </div>
                 
-                </div>
+               
 
             </div>
                 <div class='sub-container-right'>   

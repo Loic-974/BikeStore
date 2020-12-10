@@ -85,7 +85,8 @@ Route::get('/vente', function(){
     return view('section');
 })->name('vente');
 
-
+Route::get('/vente/getCustomer',[App\Http\Controllers\Vente\customers_Controller::class,'getCustomers']);
+Route::get('/vente/getOrder',[App\Http\Controllers\Vente\orders_Controller::class,'getOrderData']);
 
 // -------------------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------- Reporting ---------------------------------------------------------
