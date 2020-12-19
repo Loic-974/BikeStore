@@ -17,7 +17,12 @@ class Model_SaleOrder extends Model
     
     
         foreach($listOrder as $value){
-            $temp = new DAO_SaleOrders($value->order_id,$value->customer_id,$value->order_status,$value->order_date,$value->required_date,$value->shipped_date,$value->store_id,$value->staff_id);
+            $nameClient = DB::select('SELECT last_name, first_name from sales.customers where customer_id= ?',[$value->customer_id]);
+            foreach($nameClient as $info){
+                $lastName=$info->last_name;
+                $firstName=$info->first_name;
+            }
+            $temp = new DAO_SaleOrders($value->order_id,$value->customer_id,$lastName,$firstName,$value->order_status,$value->order_date,$value->required_date,$value->shipped_date,$value->store_id,$value->staff_id);
             array_push($list, $temp);
         }
       

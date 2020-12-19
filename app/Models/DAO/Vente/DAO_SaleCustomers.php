@@ -37,14 +37,14 @@ class DAO_SaleCustomers extends Model
         return json_encode(
             [
             'customer_id'=> $this->customer_id,
-            'firstName'=>$this->first_name,
-            'lastName' =>  $this->last_name,
-            'phone'=> $this->phone,
-            'email'=>$this->email,
-            'street'=>$this->street,
-            'city'=>$this->city,
-            'state'=> $this->state,
-            'zipCode'=>$this->zip_code
+            'FirstName'=>$this->first_name,
+            'LastName' =>  $this->last_name,
+            'Phone'=> $this->phone,
+            'Email'=>$this->email,
+            'Street'=>$this->street,
+            'City'=>$this->city,
+            'State'=> $this->state,
+            'ZipCode'=>$this->zip_code
         ]
         );
     }

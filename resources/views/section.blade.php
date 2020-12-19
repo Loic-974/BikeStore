@@ -22,7 +22,7 @@
                                 <button type="button" class="btn btn-secondary" id="customersLink">Clients</button>
                                 <button type="button" class="btn btn-secondary"  id="venteLink">Ventes</button>
                                 <button type="button" class="btn btn-secondary" id="factureLink">Factures</button>
-                                <button type="button" class="btn btn-secondary" id="livraisonLink">Livraison</button>
+                              <!-- <button type="button" class="btn btn-secondary" id="livraisonLink">Livraison</button> -->
                             @endif
                             </div>
                         </div>
@@ -53,23 +53,28 @@
                             <h4> Ajouts </h4>
                             <form id='formProductionAdd'>
                                 <p id='errorFormProduction'></p>
-                                        <div class='group-input-form' id='addCustomerForm'>
-                                            <input type='texte' id='newBrandName' class='form-control' name='brandName' value='' placeholder='Nouvelle Marque'>                         
-                                            <input type='texte' id='newCatName' name='category_name' class='form-control' value='' placeholder='Nouvelle Catégorie'>              
-                                            <input type='texte' id='newProductName' name='product_name' class='form-control' value='' placeholder='Nouveau Produit'>
-                                            <input type='number' id='newYearProduct' name='model_year'class='form-control' value='' placeholder='Année du Modèle'>   
-                                            <input type='number' id='newPriceProduct' name='list_price' class='form-control' value='' placeholder='Prix du Modèle'>     
-                                            <input type='number' id='newQuantity' name='quantity' class='form-control' value='' placeholder='Quantité du modèle'>
+
+                                <div id="modalVente" class='modal'>
+                                        <!-- <div class='group-input-form' id='newCustomer'>
+                                            <input type='texte' id='LastNameClient' class='form-control' name='LastName' value='' placeholder='Nom Client' required>                         
+                                            <input type='texte' id='FirstNameClient' name='FirstName' class='form-control' value='' placeholder='Prénom Client' required>              
+                                            <input type='number' id='Phone' name='Phone' class='form-control' value='' placeholder='Téléphone CLient' required>
+                                            <input type='email' id='Email' name='Email'class='form-control' value='' placeholder='Email Client'required>   
+                                            <input type='texte' id='adresse' name='adresse' class='form-control' value='' placeholder='Adresse Client'required>     
+                                            <input type='texte' id='ville' name='ville' class='form-control' value='' placeholder='Ville Adresse'required>
+                                            <input type='number' id='codePostal' name='codePostal' class='form-control' value='' placeholder='Code Postal'required>
+                                            <input type='texte' id='pays' name='pays' class='form-control' value='' placeholder='Pays'>
                                         </div>
-                                <div class='form-row group-selectProduct'>
-                                    <select name='brandSelected' id='SelectBrandForm'></select>
-                                    <select name='catSelected' id='SelectCategorieForm'></select>
-                                </div>
-                                <div class='form-row group-selectProduct groupStock'>
-                                    <input type='text' name='selectedProduct' id='selectProduct'></select>
-                                    <span id = 'searchList' class='searchList'></span>
-                                    <select name='selectedStore' id='selectStore'></select>
-                                </div>
+
+                                        <div class='group-input-form' id='newOrder'>  
+                                            <input type='texte' id='pays' name='pays' class='form-control' value='' placeholder='Pays'>
+                                            <input type='texte' id='pays' name='pays' class='form-control' value='' placeholder='Pays'>
+                                            <input type='texte' id='pays' name='pays' class='form-control' value='' placeholder='Pays'>
+                                            <input type='texte' id='pays' name='pays' class='form-control' value='' placeholder='Pays'>
+                                            
+                                        </div> -->
+                                    </div>
+            
                                 <input type='button' value='Confirmer' class='btn-primary' id='btnAddDataBrand'>
                             </form>
                         @endif
@@ -110,11 +115,11 @@
                     <div id='backgroundModal'></div>
     </body>
     <script type='module' src='js/lib/buildFunction.js'></script>
-    if (\Request::is('vente')) {
+    @if (\Request::is('vente')) 
     <script type='module' src="js/Vente/vente_setter.js"></script> 
     <script type='module' src="js/Vente/vente_ui.js"></script>
-
-    }
+@endif
+    
 
 
     @elseif(!session('id'))

@@ -44,9 +44,8 @@ const result = await fetch('/vente/getCustomer',{
 }
 
 async function setOrderData(){
-    const result = fetch('/vente/getOrder', {method:'GET'})
+    const result = await fetch('/vente/getOrder', {method:'GET'})
     const jsonResult = await result.json()
-    console.log(jsonResult)
     return jsonResult
     
 }
