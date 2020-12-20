@@ -11,7 +11,7 @@ class Model_ProductionStock extends Model
 {
    function selectProductionStock(){
 
-        $result= DB::select('SELECT production.stocks.store_id, sales.stores.store_name, production.stocks.product_id, product_name, quantity
+        $result= DB::select('SELECT production.stocks.store_id, sales.stores.store_name, production.stocks.product_id, product_name, quantity, production.products.list_price
         From production.stocks
         LEFT JOIN sales.stores
         ON (production.stocks.store_id = sales.stores.store_id)
@@ -21,7 +21,8 @@ class Model_ProductionStock extends Model
         $stockList= array();
 
         foreach($result as $value){
-                $temp= new DAO_ProductionStock($value->store_id,$value->store_name,$value->product_id,$value->product_name,$value->quantity);
+          
+                $temp= new DAO_ProductionStock($value->store_id,$value->store_name,$value->product_id,$value->product_name,$value->quantity,$value->list_price);
                 array_push($stockList,$temp);
         }
 
@@ -37,6 +38,24 @@ class Model_ProductionStock extends Model
     function updateProductStock($store_id,$product_id,$quantity){
         
         DB::update('UPDATE production.stocks set quantity=? where store_id=? AND product_id=?',[$quantity,$store_id,$product_id]);
+    }
+
+    function getStockItemByStore(){
+       $result = DB::select('SELECT production.stocks.store_id, sales.stores.store_name, production.stocks.product_id, product_name, quantity,production.products.list_price
+       From production.stocks
+       LEFT JOIN sales.stores
+       ON (production.stocks.store_id = sales.stores.store_id)
+       LEFT JOIN production.products
+       ON (production.stocks.product_id = production.products.product_id) where production.stocks.store_id = (SELECT store_id from sales.staffs where staff_id = ?) ',[session()->get('id')]);
+       $stockList= array();
+
+       foreach($result as $value){
+               $temp= new DAO_ProductionStock($value->store_id,$value->store_name,$value->product_id,$value->product_name,$value->quantity,$value->list_price);
+               array_push($stockList,$temp);
+       }
+
+       return $stockList;
+
     }
 
 }

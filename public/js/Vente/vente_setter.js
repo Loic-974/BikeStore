@@ -33,6 +33,14 @@ export const factures = {
     }
 }
 
+export const stock = {
+
+    value: [],
+    setStock(newValue){
+        this.value=newValue
+    }
+}
+
 // -------------------------------------------- AJAX GETTER ------------------------------------------------------- //
 
 async function setCustomerData(){
@@ -50,8 +58,27 @@ async function setOrderData(){
     
 }
 
+async function setStockItem(){
+    const result = await fetch('/vente/getStock', {method:'GET'})
+    const jsonResult = await result.json()
+    return jsonResult
+}
+
 window.onload = async() => {
    customers.setCustomers(await setCustomerData())
    vente.setVente(await setOrderData())
+   stock.setStock(await setStockItem())
 }
 
+
+
+// ------------------------------------------------  AJAX SETTER  ------------------------------------- //
+
+export async function newOrder(newCommandObject){
+
+    const result = await fetch('',{
+        method: 'POST',
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        body:null})
+    }

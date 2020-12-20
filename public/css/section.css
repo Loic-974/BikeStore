@@ -248,7 +248,58 @@ h4 {
     font-size: medium;
     font-weight: bold;
 }
+#modalVente {
+    width: 90%;
+    height: 85%;
+    margin-left: 5%;
+    margin-top: 5%;
+    background-color: #0b1f31;
+    display:none;
+    align-items: center;
+   
+}
 
+.containerInfoModalVente{
+    width: 45%;
+    height: 90%;
+    margin-left: 2%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.containerItem {
+    width: 48%;
+    height: 90%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#searchProductOrder{
+    display: none;
+}
+.orderItemTable {
+    margin-top: 1%;
+    width: 95%;
+    height: 75%;
+    background-color: #051420;
+    border-radius: 5px;
+}
+#orderItem{
+  
+    width: 95%;
+    margin-left: 2.5%;
+    text-align: center;
+    table-layout: fixed;
+}
+#modalVente input {
+   height: 8%;
+   margin-top : 3%;
+   width: 100%;
+}
 #modalErrorProduction {
     width: 100%;
     height: 8%;
@@ -258,8 +309,13 @@ p {
     color: #fff;
     width: 100%;
     text-align: center;
+    height: auto;
 }
+.modal-body{
 
+    display: flex;
+    flex-direction: column;
+}
 
 .form-modal-table .modal-body, .form-modal-table .modal-body form {
     height: 80%;

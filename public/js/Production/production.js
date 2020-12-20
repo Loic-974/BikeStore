@@ -201,7 +201,7 @@ formSelectStock.style.display = "none"
 // selectBrandForm.style.display = "none"
 // selectCatForm.style.display = "none"
 
-disabledSelectFilter([selectCategorie, selectYear, selectBrand]);
+// disabledSelectFilter([selectCategorie, selectYear, selectBrand]);
 
 LinkBrand.onclick = () => {
     buildArray(brands, ArrayOfItems, openModal, dontShowString);
