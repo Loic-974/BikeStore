@@ -28,7 +28,7 @@
                         </div>
 
                         <div class='table-content-left'>
-                            <table  class ='table table-dark' id="ArrayProduction">
+                            <table  class ='table table-dark' id="ArrayVente">
                             </table>
                         </div>                
             </div>
@@ -52,13 +52,6 @@
                                     <p id='errorFormProduction'></p>                          
                                     <input type='button' value='Nouvelle Vente' class='btn-primary' id='btnAddDataBrand'>                          
                                 </form>
-
-                            
-                                <div id="modalVente" class='modal'>
-                                    @include ('/Vente/ModalVente')
-                                </div>
-                         
-                          
                         </div>
                 
                         <div class='notification-container'>
@@ -90,12 +83,16 @@
             </div>    
         </div> 
         <div id='backgroundModal'></div>
-
+        @if (\Request::is('vente')) 
+            <div id="modalVente" class='modal'>
+                @include ('/Vente/ModalVente')
+            </div>
+        @endif
     </body>
     <script type='module' src='js/lib/buildFunction.js'></script>
     @if (\Request::is('vente')) 
-    <script type='module' src="js/Vente/vente_setter.js"></script> 
-    <script type='module' src="js/Vente/vente_ui.js"></script>
+        <script type='module' src="js/Vente/vente_setter.js"></script> 
+        <script type='module' src="js/Vente/vente_ui.js"></script>
     @endif
     
 

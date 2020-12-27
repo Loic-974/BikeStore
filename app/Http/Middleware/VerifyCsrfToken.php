@@ -34,6 +34,13 @@ class VerifyCsrfToken extends Middleware
     '/production/deleteProduct',
  // -------------- Production Stock --------------------//
     '/production/insertStock',
-    '/production/updateStock'
+    '/production/updateStock',
+
+// ---------------- Vente ---------------------
+
+'/vente/newOrder',
+
+
+
     ];
 }

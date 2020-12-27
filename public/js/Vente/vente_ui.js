@@ -1,10 +1,22 @@
-import { vente, customers, stock } from "./vente_setter.js";
+import { vente, customers, stock, newOrder } from "./vente_setter.js";
 import { buildModalOnClick, buildArray } from "../lib/buildFunction.js";
 // import { indexOf } from "lodash";
 // import {isEqual} from "lodash/isEqual";
 
 const orderItem = {
     value: [],
+    customer: {},
+
+    getCustomer() {
+        return this.customer;
+    },
+
+    setCustomer(value, prop) {
+        orderItem.customer[prop] = value;
+
+        console.log(orderItem.customer);
+    },
+
     getOrderItem() {
         return this.value;
     },
@@ -19,9 +31,7 @@ const orderItem = {
     },
 
     setNewQuantity(newQuantity, ref) {
-        console.log(ref);
         ref.orderQuantity = newQuantity;
-        console.log(this.value);
         buildArrayOrderItem(orderItem.value);
     },
 
@@ -59,7 +69,7 @@ const venteLink = document.querySelector("#venteLink");
 
 const ignoredString = "_id";
 
-const arrayVente = document.querySelector("#ArrayProduction");
+const arrayVente = document.querySelector("#ArrayVente");
 const newVenteButton = document.querySelector("#btnAddDataBrand");
 
 let modalValue = "";
@@ -69,6 +79,7 @@ const titleModal = document.querySelector(".titreModal");
 const modalForm = document.querySelector("#modalProduction form");
 
 const modalVente = document.querySelector("#modalVente");
+const infoClient = document.querySelectorAll("#infoClient input");
 const inputModalVente = document.querySelectorAll("#modalVente input");
 const lastNameClient = document.querySelector("#LastNameClient");
 const searchListName = document.querySelector("#searchListName");
@@ -76,19 +87,16 @@ const productOrder = document.querySelector("#ProductOrder");
 const searchProductOrder = document.querySelector("#searchProductOrder");
 const tableOrder = document.querySelector("#orderItem tbody");
 
+const validOrder = document.querySelector("#validOrder");
 // const formClient =  document.querySelector('#newCustomer')
 // const formOrder = document.querySelector('#newOrder')
 
 customerLink.onclick = () => {
     buildArray(customers.value, arrayVente, openModal, ignoredString);
-    // formClient.style.display='flex'
-    // formOrder.style.display='none'
 };
 
 venteLink.onclick = () => {
     buildArray(vente.value, arrayVente, openModal, ignoredString);
-    // formClient.style.display='none'
-    // formOrder.style.display='flex'
 };
 
 function openModal(item) {
@@ -99,6 +107,7 @@ function openModal(item) {
 }
 
 newVenteButton.onclick = () => {
+    setFunctionToInput(infoClient, setCustomerInfoToOrder);
     backModal.style.display = "block";
     modalVente.style.display = "flex";
 };
@@ -158,20 +167,13 @@ function createSearchList(
     setter
 ) {
     origin.value = "";
-
-    let result = [];
-    for (let ref of arrayRef.value) {
-        if (ref[propriete].includes(valueInput)) {
-            result.push(ref);
-        }
-    }
     valueInput
         ? (origin.style.display = "block")
         : (origin.style.display = "none");
     origin.innerHTML = "";
 
-    for (let ref of result) {
-        if (ref[propriete].includes(valueInput)) {
+    for (let ref of arrayRef.value) {
+        if (ref[propriete].toLowerCase().includes(valueInput)) {
             let option = document.createElement("option");
             option.setAttribute(
                 "label",
@@ -186,7 +188,7 @@ function createSearchList(
     }
 }
 /**
- * Replace AutoComplete Form
+ * Replace AutoComplete Form for ModalVente InfoClient
  * @param {*} object - Object For Set Value
  * @param {*} form - Array with every input to set
  */
@@ -195,6 +197,7 @@ function defineAllInputValue(object, form) {
         for (let input of form) {
             if (ref == input.name) {
                 input.value = object[ref];
+                orderItem.setCustomer(object[ref], input.name);
             }
         }
     }
@@ -202,31 +205,42 @@ function defineAllInputValue(object, form) {
 
 function buildArrayOrderItem(array) {
     tableOrder.innerHTML = "";
-    let total = 0;
-    for (let ref of array) {
-        let row = document.createElement("tr");
-        let produitName = document.createElement("td");
-        let textName = document.createTextNode(ref.produit);
 
-        let produitQuantité = document.createElement("td");
-        let inputQuantité = document.createElement("input");
+    // for (const ref of array) {
+    //     tableOrder.insertAdjacentHTML('beforeend',
+    //     '<tr> <td>' + ref.produit +'</td> <td> <input type=\'number\' value=1 max=' +ref.quantity + ' min=0 onchange="orderItem.setNewQuantity(event.currentTarget.value, '+ref+');"/></input></td>'
+    //        +'<td>' + (ref.price_id * ref.discount * ref.orderQuantity).toFixed(2) +'</td>'
+    //        +'<td><input type=\'number\' value=1 max=1 min=0 onchange="orderItem.setNewDiscount(event.currentTarget.value,'+ ref +');"></input></td>'
+    //        +'<td><input type=\'button\' value=\'Supprimer\' onclick="orderItem.deleteOrderItem(ref);/></input></td>'
+    //     +'</tr>'
+    // )}
+    for (const ref of array) {
+        const row = document.createElement("tr");
+        const produitName = document.createElement("td");
+        const textName = document.createTextNode(ref.produit);
+        const produitQuantité = document.createElement("td");
+        const inputQuantité = document.createElement("input");
         inputQuantité.type = "number";
+        inputQuantité.name = "inputQuantity";
         inputQuantité.className = "quantity";
+        inputQuantité.id = Math.random();
         inputQuantité.max = ref.quantity;
         inputQuantité.min = 0;
         inputQuantité.value = ref.orderQuantity;
-        inputQuantité.onchange = event => {
+        inputQuantité.oninput = event => {
             orderItem.setNewQuantity(event.currentTarget.value, ref);
         };
 
-        let produitPrix = document.createElement("td");
-        let textprix = document.createTextNode(
-            ((ref.price_id * ref.discount) * ref.orderQuantity ).toFixed(2)*1
+        const produitPrix = document.createElement("td");
+        const textprix = document.createTextNode(
+            (ref.price_id * ref.discount * ref.orderQuantity).toFixed(2)
         );
-        let produitDiscount = document.createElement("td");
-        let inputDiscount = document.createElement("input");
+        const produitDiscount = document.createElement("td");
+        const inputDiscount = document.createElement("input");
         inputDiscount.type = "number";
+        inputDiscount.name = "discountInput";
         inputDiscount.className = "quantity";
+        inputDiscount.id = Math.random();
         inputDiscount.max = 1;
         inputDiscount.min = 0;
         inputDiscount.step = 0.05;
@@ -235,13 +249,15 @@ function buildArrayOrderItem(array) {
             orderItem.setNewDiscount(event.currentTarget.value, ref);
         };
 
-        let button =document.querySelector('input')
-        button.type='button'
-        button.value='Supprimer'
-        button.class='btn-warning'
-        button.onclick= () => {
-            orderItem.deleteOrderItem(ref)
-        }
+        const button = document.createElement("input");
+        button.type = "button";
+        button.value = "Supprimer";
+        button.class = "btn btn-danger";
+        button.name = "DeleteItem";
+        button.id = Math.random();
+        button.onclick = () => {
+            orderItem.deleteOrderItem(ref);
+        };
         produitName.appendChild(textName);
         produitQuantité.appendChild(inputQuantité);
         produitPrix.appendChild(textprix);
@@ -251,7 +267,52 @@ function buildArrayOrderItem(array) {
         row.appendChild(produitQuantité);
         row.appendChild(produitPrix);
         row.appendChild(produitDiscount);
-        row.appendChild(button)
+        row.appendChild(button);
         tableOrder.appendChild(row);
     }
 }
+
+function setFunctionToInput(cible, fonction) {
+    for (let input of cible) {
+        input.onchange = event => fonction(event);
+    }
+}
+
+function setCustomerInfoToOrder(event) {
+    console.log(event.currentTarget.value, event.currentTarget.name);
+    console.log(
+        orderItem.setCustomer(
+            event.currentTarget.value,
+            event.currentTarget.name
+        )
+    );
+    orderItem.setCustomer(event.currentTarget.value, event.currentTarget.name);
+    console.log(orderItem.customer);
+}
+
+function checkOrder() {
+    for (let input of infoClient) {
+        if (input.value) {
+            input.style.borderColor='green'
+            continue;
+        } else {
+            input.style.borderColor='red'
+            return false;
+        }
+    }
+    return true;
+}
+
+validOrder.onclick = () => {
+    if(checkOrder()){
+    let order = {};
+        if (orderItem.getOrderItem().length > 0 && orderItem.customer) {
+            order = orderItem.customer;
+            order["Item"] = { ...orderItem.getOrderItem() };
+            console.log(order);
+        }
+    newOrder(JSON.stringify(order));
+    }else{
+
+    }
+};

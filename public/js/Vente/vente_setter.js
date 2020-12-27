@@ -76,9 +76,12 @@ window.onload = async() => {
 
 export async function newOrder(newCommandObject){
 
-    const result = await fetch('',{
+    const result = await fetch('/vente/newOrder',{
         method: 'POST',
         "Content-Type": "application/json",
         Accept: "application/json",
-        body:null})
+        body:newCommandObject
+    })
+
+    const test = await result.json
     }

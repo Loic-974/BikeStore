@@ -13,7 +13,7 @@ class validLogin extends Controller
    public function loginCheck(Request $request){
 
      $staffData = staff::all();
-     $mail= $_POST['emailLogin'];
+     $mail=strtolower($_POST['emailLogin']);
      
         if(isset($_POST)){
     

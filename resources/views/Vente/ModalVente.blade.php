@@ -1,5 +1,6 @@
 
-    <div class ='containerInfoModalVente'>  
+    <div class ='containerInfoModalVente' id='infoClient'>  
+
             <h5> Informations Client </h5>
             <input type='texte' id='LastNameClient' class='form-control' name='LastName' value='' placeholder='Nom Client' required>
             <span id='searchListName' class='searchList'></span>                          
@@ -30,7 +31,7 @@
                 </tbody>
             </table>
         </div>
-        <input type='button' value='Confirmer la commande' class='btn-primary'>
+        <input type='button' value='Confirmer la commande' class='btn-primary' id='validOrder'>
     </div>
 
    

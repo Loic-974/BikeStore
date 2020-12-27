@@ -43,5 +43,20 @@ class orders_Controller extends Controller
      
         echo json_encode($json);
     }
+
+
+
+    function newOrder(Request $request){
+
+        $data = json_decode($request->getContent());
+        $insert=$this->modelOrders->newTransaction($data->FirstName, $data->LastName,$data->Phone,$data->Email,$data->Street,$data->City,$data->State,$data->ZipCode,session()->get('id'),$data->Item);
+    
+        $json=array();
+        foreach($insert as $value){
+            array_push($json, json_decode($value->toJSONPrivate(),true));
+        }
+     
+        echo json_encode($json);
+    }
     
 }

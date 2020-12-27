@@ -89,6 +89,9 @@ Route::get('/vente/getCustomer',[App\Http\Controllers\Vente\customers_Controller
 Route::get('/vente/getOrder',[App\Http\Controllers\Vente\orders_Controller::class,'getOrderData']);
 Route::get('/vente/getStock',[App\Http\Controllers\Vente\orders_Controller::class,'getStockOrder']);
 
+
+Route::post('/vente/newOrder',[App\Http\Controllers\Vente\orders_Controller::class,'newOrder']);
+
 // -------------------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------- Reporting ---------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------------

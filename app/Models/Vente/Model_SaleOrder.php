@@ -29,24 +29,49 @@ class Model_SaleOrder extends Model
         return $list;
     }
 
-    function newTransaction($firstName,$lastName,$phone,$email,$street,$city,$state,$zipCode,$idStaff,$productId,$quantity,$price,$discount){
+    function newTransaction($firstName,$lastName,$phone,$email,$street,$city,$state,$zipCode,$idStaff,$itemList){
 
         try{
-            
-            $transac->beginTransaction();
-            if(!empty(DB::select('SELECT * FROM sales.customers where last_name=? AND first_name=? AND email=? ',[$lastName,$firstName,$email]))){
-                $transac->exec(DB::insert('INSERT INTO sales.customers (first_name,last_name,phone,email,street,city,state,zipCode) Values (?,?,?,?,?,?,?,?)',[$firstName,$lastName,$phone,$email,$street,$city,$state,$zipCode]));
-                $transac->exec(DB::insert('INSERT INTO sales.order (customer_id,order_status,order_date,required_date,shipped_date,store_id,staff_id) VALUES ((SELECT IDENT_CURRENT(sales.customers)),3,?,?,?,(SELECT store_id from sales.staffs where staff_id = ?),?)',[date("d-m-Y"),date("d-m-Y",strtotime('+3 days')),date("d-m-Y",strtotime('+3 days')),$idStaff,$idStaff]));
-            }else{
-                $transac->exec(DB::insert('INSERT INTO sales.order (customer_id,order_status,order_date,required_date,shipped_date,store_id,staff_id) VALUES ((SELECT customer_id From sales.customers  where last_name=? AND first_name=? AND email=?),3,?,?,?,(SELECT store_id from sales.staffs where staff_id = ?),?)',[$lastName,$firstName,$email,date("d-m-Y"),date("d-m-Y",strtotime('+3 days')),date("d-m-Y",strtotime('+3 days')),$idStaff,$idStaff]));
+            // $transac = DB::connection()->getPdo();
+            // $transac->beginTransaction();
+
+           DB::beginTransaction();
+
+            if(empty(DB::select('SELECT * FROM sales.customers where last_name=? AND first_name=? AND email=? ',[$lastName,$firstName,$email]))){
+               DB::insert('INSERT INTO sales.customers (first_name,last_name,phone,email,street,city,"state",zip_code) Values (?,?,?,?,?,?,?,?)',[$firstName,$lastName,$phone,$email,$street,$city,$state,$zipCode]);
+                
+               DB::insert('INSERT INTO sales.orders (customer_id,order_status,order_date,required_date,shipped_date,store_id,staff_id) VALUES ((SELECT IDENT_CURRENT(\'sales.customers\')),3,?,?,?,(SELECT store_id from sales.staffs where staff_id = ?),?)',[date("d-m-Y"),date("d-m-Y",strtotime('+3 days')),date("d-m-Y",strtotime('+3 days')),$idStaff,$idStaff]);
+               $i=1; 
+               foreach($itemList as $item){  
+                     
+                DB::insert('INSERT INTO sales.order_items (order_id,item_id,product_id,quantity,list_price,discount) Values ((SELECT IDENT_CURRENT(\'sales.orders\')),?,?,?,?,?)',[$i,$item->product_id,$item->orderQuantity,$item->price_id,$item->discount]);
+                $i++;
             }
-           
+               
+               DB::commit();
+               return $this->getSaleOrder($idStaff);
+                
+            }else{
+                DB::insert('INSERT INTO sales.orders (customer_id,order_status,order_date,required_date,shipped_date,store_id,staff_id) VALUES ((SELECT customer_id From sales.customers  where last_name=? AND first_name=? AND email=?),3,?,?,?,(SELECT store_id from sales.staffs where staff_id = ?),?)',[$lastName,$firstName,$email,date("d-m-Y"),date("d-m-Y",strtotime('+3 days')),date("d-m-Y",strtotime('+3 days')),$idStaff,$idStaff]);
+                $i=1; 
+                foreach($itemList as $item){  
+                      
+                 DB::insert('INSERT INTO sales.order_items (order_id,item_id,product_id,quantity,list_price,discount) Values ((SELECT IDENT_CURRENT(\'sales.orders\')),?,?,?,?,?)',[$i,$item->product_id,$item->orderQuantity,$item->price_id,$item->discount]);
+                 $i++;
+             }
+                DB::commit();
+                return $this->getSaleOrder($idStaff);
+            }
+         
+        
            
         }catch(Exception $e){
-
-            $transac->rollBack();
+            DB::rollback();
+            // $transac->rollBack();
             echo "Failed".$e->getMessage();
         }
+
+     
 
     }
 
