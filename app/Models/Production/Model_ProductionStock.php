@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Production;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use App\Models\DAO\DAO_ProductionStock;
+use App\Models\DAO\Production\DAO_ProductionStock;
 
 class Model_ProductionStock extends Model
 {

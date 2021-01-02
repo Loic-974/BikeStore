@@ -159,7 +159,7 @@ h4 {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
- 
+
 }
 
 .form-container form .form-row {
@@ -190,6 +190,7 @@ h4 {
     padding: 0;
     font-size: small;
     height: 13%;
+    text-transform: capitalize;
   
 }
 .form-container .groupStock input{

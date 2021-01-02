@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Production;
 
 use Illuminate\Http\Request;
-use App\Models\Model_ProductionCat;
+use App\Http\Controllers\Controller;
+use App\Models\Production\Model_ProductionCat;
 
 class CategoryProdController extends Controller
 {

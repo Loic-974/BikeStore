@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace app\Http\Controllers\Production;
 
 use Illuminate\Http\Request;
-use App\Models\Model_ProductionBrands;
+use App\Http\Controllers\Controller;
+use App\Models\Production\Model_ProductionBrands;
 
 class brandController extends Controller
 {
