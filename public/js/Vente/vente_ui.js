@@ -1,7 +1,7 @@
-import { vente, customers, stock, newOrder } from "./vente_setter.js";
-import { buildModalOnClick, buildArray } from "../lib/buildFunction.js";
-// import { indexOf } from "lodash";
-// import {isEqual} from "lodash/isEqual";
+import { vente, customers, stock, newOrder,setCustomerData,setOrderData,setStockItem,updateCustomerData } from "./vente_setter.js";
+import { buildModalOnClick, buildArray,buildNotification } from "../lib/buildFunction.js";
+import {notification, getNotification, updateNotification} from '../GlobalSetter/notificationSetter.js';
+
 
 const orderItem = {
     value: [],
@@ -68,7 +68,8 @@ const customerLink = document.querySelector("#customersLink");
 const venteLink = document.querySelector("#venteLink");
 
 const ignoredString = "_id";
-
+const searchInput = document.querySelector('#searchInput');
+const searchList = document.querySelector('.searchList')
 const arrayVente = document.querySelector("#ArrayVente");
 const newVenteButton = document.querySelector("#btnAddDataBrand");
 
@@ -87,16 +88,36 @@ const productOrder = document.querySelector("#ProductOrder");
 const searchProductOrder = document.querySelector("#searchProductOrder");
 const tableOrder = document.querySelector("#orderItem tbody");
 
+const validUpdateModal = document.querySelector('#validUpdateModal')
+
 const validOrder = document.querySelector("#validOrder");
 // const formClient =  document.querySelector('#newCustomer')
 // const formOrder = document.querySelector('#newOrder')
 
+const tableNotification =  document.querySelector('#notificationList tbody')
+
+
+window.onload= async() => {
+    notification.setNotification(await getNotification())
+    customers.setCustomers(await setCustomerData())
+    vente.setVente(await setOrderData())
+    stock.setStock(await setStockItem())
+    customerLink.click()
+    buildNotification(notification.value, tableNotification, updateNotification)
+}
+
 customerLink.onclick = () => {
     buildArray(customers.value, arrayVente, openModal, ignoredString);
+    searchInput.oninput = (event) => 
+        buildArray(customers.value.filter((item)=> item['LastName'].includes(event.currentTarget.value)), arrayVente, openModal, ignoredString)
+    
 };
 
 venteLink.onclick = () => {
     buildArray(vente.value, arrayVente, openModal, ignoredString);
+    searchInput.oninput = (event) => 
+        buildArray(vente.value.filter((item)=> item['Name'].includes(event.currentTarget.value)), arrayVente, openModal, ignoredString)
+    
 };
 
 function openModal(item) {
@@ -135,6 +156,8 @@ lastNameClient.oninput = event => {
     );
 };
 
+lastNameClient.onblur = () =>searchListName.style.display='none'
+
 productOrder.oninput = event => {
     searchProductOrder.style.display = "block";
     createSearchList(
@@ -147,6 +170,11 @@ productOrder.oninput = event => {
         orderItem.setOrderItem
     );
 };
+
+productOrder.onblur= () => searchProductOrder.style.display='none'
+
+
+
 /**
  * Default Function for set SearchList and add function to option
  * @param {*} origin
@@ -166,6 +194,7 @@ function createSearchList(
     cible,
     setter
 ) {
+   
     origin.value = "";
     valueInput
         ? (origin.style.display = "block")
@@ -174,6 +203,7 @@ function createSearchList(
 
     for (let ref of arrayRef.value) {
         if (ref[propriete].toLowerCase().includes(valueInput)) {
+            
             let option = document.createElement("option");
             option.setAttribute(
                 "label",
@@ -181,12 +211,16 @@ function createSearchList(
             );
             option.setAttribute("value", ref[propriete]);
             option.onclick = () => {
-                setter(ref, cible), (origin.style.display = "none");
+                setter(ref, cible)
+                origin.style.display='none'
             };
             origin.append(option);
+        }else{
+            
         }
     }
 }
+
 /**
  * Replace AutoComplete Form for ModalVente InfoClient
  * @param {*} object - Object For Set Value
@@ -205,15 +239,6 @@ function defineAllInputValue(object, form) {
 
 function buildArrayOrderItem(array) {
     tableOrder.innerHTML = "";
-
-    // for (const ref of array) {
-    //     tableOrder.insertAdjacentHTML('beforeend',
-    //     '<tr> <td>' + ref.produit +'</td> <td> <input type=\'number\' value=1 max=' +ref.quantity + ' min=0 onchange="orderItem.setNewQuantity(event.currentTarget.value, '+ref+');"/></input></td>'
-    //        +'<td>' + (ref.price_id * ref.discount * ref.orderQuantity).toFixed(2) +'</td>'
-    //        +'<td><input type=\'number\' value=1 max=1 min=0 onchange="orderItem.setNewDiscount(event.currentTarget.value,'+ ref +');"></input></td>'
-    //        +'<td><input type=\'button\' value=\'Supprimer\' onclick="orderItem.deleteOrderItem(ref);/></input></td>'
-    //     +'</tr>'
-    // )}
     for (const ref of array) {
         const row = document.createElement("tr");
         const produitName = document.createElement("td");
@@ -290,21 +315,25 @@ function setCustomerInfoToOrder(event) {
     console.log(orderItem.customer);
 }
 
+
 function checkOrder() {
     for (let input of infoClient) {
         if (input.value) {
             input.style.borderColor='green'
             continue;
         } else {
+            
             input.style.borderColor='red'
+         
             return false;
         }
     }
     return true;
 }
 
-validOrder.onclick = () => {
+validOrder.onclick = (event) => {
     if(checkOrder()){
+      
     let order = {};
         if (orderItem.getOrderItem().length > 0 && orderItem.customer) {
             order = orderItem.customer;
@@ -312,7 +341,32 @@ validOrder.onclick = () => {
             console.log(order);
         }
     newOrder(JSON.stringify(order));
+    async () => notification.setNotification(await getNotification())
     }else{
-
+        return
     }
+    
+    buildArray(vente.value, arrayVente, openModal, ignoredString)
+    buildNotification(notification.value, tableNotification, updateNotification)
+    backModal.style.display = "none";
+    modalVente.style.display = "none";
+
 };
+
+function _buildObject(formHtml){
+    const arrayInput = formHtml.getElementsByTagName('input')
+    const object = {}
+    console.log(arrayInput)
+    for (let input of arrayInput){
+        if(!object[input.name]){
+            object[input.name]=input.value
+        }
+    }
+    console.log(object)
+    return object
+}
+
+validUpdateModal.onclick = async () => {
+    setCustomerData(await updateCustomerData(_buildObject(modalForm)))
+    buildArray(customers.value, arrayVente, openModal, ignoredString)
+}

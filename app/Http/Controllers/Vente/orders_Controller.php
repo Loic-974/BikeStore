@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Vente;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Vente\Model_SaleOrder;
-use App\Models\Model_ProductionStock;
+use App\Models\Production\Model_ProductionStock;
 
 class orders_Controller extends Controller
 {

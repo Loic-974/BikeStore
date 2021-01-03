@@ -27,7 +27,7 @@ class ProductProdController extends Controller
         $result= $request->getContent();
         $temp = json_decode($result);
 
-        $listProduct= $this->modelProduct->addProductProduction(htmlspecialchars($temp->product_name),htmlspecialchars($temp->brandSelected),htmlspecialchars($temp->catSelected),htmlspecialchars($temp->model_year),htmlspecialchars($temp->list_price));
+        $listProduct= $this->modelProduct->addProductProduction(htmlspecialchars($temp->product_name),htmlspecialchars($temp->brandSelected),htmlspecialchars($temp->catSelected),intval(htmlspecialchars($temp->model_year)),htmlspecialchars($temp->list_price));
         $json=array();
         foreach($listProduct as $value){
             array_push($json, json_decode($value->toJSONPrivate(),true));    

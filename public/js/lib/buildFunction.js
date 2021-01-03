@@ -91,5 +91,31 @@ export function buildModalOnClick(item,title,cible,ignore) {
     }
 }
 
+export function buildNotification(arrayNotification,cible,doItFunction){
+const ignoreProp ='_id'
+    cible.innerHTML=''
+    for (const notification of arrayNotification){
+       let row = document.createElement('tr')
+       let actionTd =document.createElement('td')
+       let actionTdButton = document.createElement('input')
+       actionTdButton.type='button'
+       actionTdButton.value='Traité'
+
+       actionTdButton.onclick = () => {
+           doItFunction(notification)
+       }
+       for (const prop in notification){
+           if(!prop.includes(ignoreProp)){
+               let td = document.createElement('td')
+               let tdText = document.createTextNode(notification[prop])
+               td.append(tdText)
+               row.append(td)
+           }
+       }
+       actionTd.append(actionTdButton)
+       row.append(actionTd)
+       cible.append(row)
+    }
+}
 
 

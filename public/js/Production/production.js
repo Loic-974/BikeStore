@@ -1,4 +1,5 @@
-import { buildModalOnClick, buildArray } from "../lib/buildFunction.js";
+import { buildModalOnClick, buildArray, buildNotification } from "../lib/buildFunction.js";
+import {notification, getNotification, updateNotification} from '../GlobalSetter/notificationSetter.js';
 
 let brands = [];
 let categorie = [];
@@ -71,6 +72,8 @@ const modalError = document.querySelector("#modalErrorProduction");
 const modalDeleteButton = document.querySelector("#modalDeleteProduction");
 
 const dontShowString = "_id";
+
+const notifList = document.querySelector('#notificationList tbody')
 
 // -----------------------------------------------------------------------
 //--------------------------------- Get Data ------------------------------
@@ -173,9 +176,11 @@ function getStock() {
             }
         });
 }
-window.onload = () => {
+window.onload =async () => {
     getBrands(), getCategory(), getProduct(), getStock();
     formSendButton.style.backgroundColor = "grey";
+    notification.setNotification(await getNotification())
+    buildNotification(notification.value,notifList,null)
 };
 // ----------------------------------------------------------------------------
 // --------------------------------- Build View -------------------------------
@@ -703,6 +708,8 @@ async function insertAjax(array) {
 modalUpdateButton.onclick = async () => {
     let data = await updateAjax();
     buildArray(data, ArrayOfItems, openModal, dontShowString);
+    notification.setNotification(await getNotification())
+    buildNotification(notification.value,notifList,null)
     modalProduction.style.display = "none";
     backModal.style.display = "none";
     modalFrom === "brands" ? setBrands(data) : null;

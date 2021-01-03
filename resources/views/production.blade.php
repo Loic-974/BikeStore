@@ -110,6 +110,20 @@
                 
                         <div class='notification-container'>
                             <h4> Notifications </h4>
+                            <table id='notificationList'>
+                                <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Date</th>
+                                        <th>Legende</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            
+                            </table>
                         </div>
                     </div>
         

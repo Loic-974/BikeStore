@@ -36,7 +36,6 @@ class Model_ProductionStock extends Model
     }
 
     function updateProductStock($store_id,$product_id,$quantity){
-        
         DB::update('UPDATE production.stocks set quantity=? where store_id=? AND product_id=?',[$quantity,$store_id,$product_id]);
     }
 

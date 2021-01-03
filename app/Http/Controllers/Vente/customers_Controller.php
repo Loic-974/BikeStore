@@ -29,4 +29,10 @@ class customers_Controller extends Controller
 
     }
 
+
+    function updateCustomer(){
+
+        
+    }
+
 }

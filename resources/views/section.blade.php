@@ -37,14 +37,10 @@
                       
                         <div class='filter-container'>
                             <h4>Filtres</h4>
-                            <!-- <select id='SelectBrand'></select>
-                            <select id='SelectCategorie'></select>
-                            <select id='SelectAnnee'><select>
-                            <select id='SelectStore'></select> -->
                             <input type='text' value='' id='searchInput' placeholder='Chercher un produit'>
                             <span class='searchList'></span>     
                         </div>
-                
+                        
                         <div class='form-container'>
                             @if (\Request::is('vente'))
                                 <h4> Ajouts </h4>
@@ -54,8 +50,22 @@
                                 </form>
                         </div>
                 
-                        <div class='notification-container'>
+                        <div class='notification-container' >
                             <h4> Notifications </h4>
+                            <table id='notificationList'>
+                                <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Date</th>
+                                        <th>Legende</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            
+                            </table>
                         </div>
                         @endif
                         
@@ -89,7 +99,11 @@
             </div>
         @endif
     </body>
+  
     <script type='module' src='js/lib/buildFunction.js'></script>
+    <script type='module' src='js/GlobalSetter/notificationSetter.js'></script>
+
+ 
     @if (\Request::is('vente')) 
         <script type='module' src="js/Vente/vente_setter.js"></script> 
         <script type='module' src="js/Vente/vente_ui.js"></script>

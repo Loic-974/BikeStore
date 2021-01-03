@@ -1,3 +1,5 @@
+
+
  export const vente = {
     value:[],
     getVente(){
@@ -43,7 +45,7 @@ export const stock = {
 
 // -------------------------------------------- AJAX GETTER ------------------------------------------------------- //
 
-async function setCustomerData(){
+export async function setCustomerData(){
 const result = await fetch('/vente/getCustomer',{
     method:'GET'
 })
@@ -51,26 +53,29 @@ const result = await fetch('/vente/getCustomer',{
     return resultReturn
 }
 
-async function setOrderData(){
+export async function setOrderData(){
     const result = await fetch('/vente/getOrder', {method:'GET'})
     const jsonResult = await result.json()
     return jsonResult
     
 }
 
-async function setStockItem(){
+export async function setStockItem(){
     const result = await fetch('/vente/getStock', {method:'GET'})
     const jsonResult = await result.json()
     return jsonResult
 }
 
-window.onload = async() => {
-   customers.setCustomers(await setCustomerData())
-   vente.setVente(await setOrderData())
-   stock.setStock(await setStockItem())
+export async function updateCustomerData(object){
+    const result = await fetch('/vente/updateCustomer',{
+        method:'POST',
+        Accept:'application/json',
+        "Content-Type":'application/json',
+        body:object
+    })
+    const jsonResult = await result.json()
+    return jsonResult
 }
-
-
 
 // ------------------------------------------------  AJAX SETTER  ------------------------------------- //
 
@@ -83,5 +88,6 @@ export async function newOrder(newCommandObject){
         body:newCommandObject
     })
 
-    const test = await result.json
+    const test = await result.json()
+  
     }
