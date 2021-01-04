@@ -15,41 +15,37 @@
      
      <div class='container-content'>
         <div class='sub-container'>
-            <div class='sub-container-left'>     
-                        <div class='nav'>
-                            <div class="btn-group" role="group">
-                            @if (\Request::is('vente')) 
-                                <button type="button" class="btn btn-secondary" id="customersLink">Clients</button>
-                                <button type="button" class="btn btn-secondary"  id="venteLink">Ventes</button>
-                                <button type="button" class="btn btn-secondary" id="factureLink">Factures</button>
-                              <!-- <button type="button" class="btn btn-secondary" id="livraisonLink">Livraison</button> -->
-                            @endif
-                            </div>
-                        </div>
-
-                        <div class='table-content-left'>
-                            <table  class ='table table-dark' id="ArrayVente">
-                            </table>
-                        </div>                
+            <div class='sub-container-left'>
+            @if (\Request::is('vente') || \Request::is('administration')) 
+                @if (\Request::is('vente'))    
+                    @include('/Vente/arrayVente')
+                @endif      
+            @endif     
+            @if (\Request::is('reporting'))  
+            @include('/Reporting/globalCharts')
+            @endif  
             </div>
                 <div class='sub-container-right'>   
                     <div class='content-right'>
-                      
+            @if (\Request::is('vente') || \Request::is('administration'))       
                         <div class='filter-container'>
                             <h4>Filtres</h4>
-                            <input type='text' value='' id='searchInput' placeholder='Chercher un produit'>
+                            @if (\Request::is('vente'))
+                            <input type='text' value='' id='searchInput' placeholder='Chercher un Client/Commande'>
+                            @endif
+                            @if (\Request::is('administration'))
+                            <input type='text' value='' id='searchInput' placeholder='Chercher un Collaborateur'>
+                            @endif
                             <span class='searchList'></span>     
                         </div>
-                        
-                        <div class='form-container'>
-                            @if (\Request::is('vente'))
+
+                        <div class='form-container'>                    
                                 <h4> Ajouts </h4>
                                 <form id='formProductionAdd'>
                                     <p id='errorFormProduction'></p>                          
                                     <input type='button' value='Nouvelle Vente' class='btn-primary' id='btnAddDataBrand'>                          
                                 </form>
-                        </div>
-                
+                        </div>                
                         <div class='notification-container' >
                             <h4> Notifications </h4>
                             <table id='notificationList'>
@@ -67,49 +63,50 @@
                             
                             </table>
                         </div>
-                        @endif
-                        
+                                  
                     </div>
+            @endif   
             </div>    
      </div>
-     
-        <div class='form-modal-table' id='modalProduction'>  
-            <div class="modal-header">
-                <h4 class='titreModal'></h4>
-            </div>
-            <div class="modal-body">
-                <p id="modalErrorProduction" class='warning'></p>
-                    <form>
-                        
-                    </form>
-                <input type="button" class="btn btn-primary" id="validUpdateModal" value="Valider les modifications">
+        @if (\Request::is('vente') || \Request::is('administration')) 
+            <div class='form-modal-table' id='modalProduction'>  
                 <div class="modal-header">
-                    <h4>Suppimer la référence</h4>
+                    <h4 class='titreModal'></h4>
                 </div>
                 <div class="modal-body">
-                    <p><span class='warning'>Attention cette action est définitive</span></p>
-                        <input type='button' class="btn btn-danger" value='Supprimer la référence' id='modalDeleteProduction'>
+                    <p id="modalErrorProduction" class='warning'></p>
+                        <form>
+                            
+                        </form>
+                    <input type="button" class="btn btn-primary" id="validUpdateModal" value="Valider les modifications">
+                    <div class="modal-header">
+                        <h4>Suppimer la référence</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p><span class='warning'>Attention cette action est définitive</span></p>
+                            <input type='button' class="btn btn-danger" value='Supprimer la référence' id='modalDeleteProduction'>
+                    </div>
+                </div>    
+            </div> 
+            <div id='backgroundModal'></div>
+            @if (\Request::is('vente')) 
+                <div id="modalVente" class='modal'>
+                    @include ('/Vente/ModalVente')
                 </div>
-            </div>    
-        </div> 
-        <div id='backgroundModal'></div>
-        @if (\Request::is('vente')) 
-            <div id="modalVente" class='modal'>
-                @include ('/Vente/ModalVente')
-            </div>
+            @endif
         @endif
     </body>
-  
-    <script type='module' src='js/lib/buildFunction.js'></script>
-    <script type='module' src='js/GlobalSetter/notificationSetter.js'></script>
+    @if (\Request::is('vente') || \Request::is('administration')) 
+        <script type='module' src='js/lib/buildFunction.js'></script>
+        <script type='module' src='js/GlobalSetter/notificationSetter.js'></script>
 
- 
-    @if (\Request::is('vente')) 
-        <script type='module' src="js/Vente/vente_setter.js"></script> 
-        <script type='module' src="js/Vente/vente_ui.js"></script>
+        @if (\Request::is('vente')) 
+            <script type='module' src="js/Vente/vente_setter.js"></script> 
+            <script type='module' src="js/Vente/vente_ui.js"></script>
+        @endif
     @endif
     
-
+<!-- -------------------------------------------- If not connected -------------------------------------------- -->
 
     @elseif(!session('id'))
 
