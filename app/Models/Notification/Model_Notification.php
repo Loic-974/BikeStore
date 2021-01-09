@@ -12,7 +12,7 @@ class Model_Notification extends Model
   
 
     function getNotification(){
-      $request =DB::select('SELECT * FROM sales.notifications WHERE store_id = (Select store_id from sales.staffs where staff_id = ?)',[session()->get('id')]);
+      $request =DB::select('SELECT * FROM sales.notifications WHERE store_id = (Select store_id from sales.staffs where staff_id = ?) and status = 0',[session()->get('id')]);
       $array=array();
 
       foreach($request as $value){

@@ -26,9 +26,12 @@
                             @endif
                             </div>
                         </div>
-
+                      
                         <div class='table-content-left'>
                             <table  class ='table table-dark' id="ArrayVente">
+                            <div class="spinner-border text-light" role="status" id='loader'>
+                                    <span class="sr-only">Loading...</span>
+                            </div>
                             </table>
                         </div>                
             </div>
@@ -63,6 +66,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                            
                                 </tbody>
                             
                             </table>
@@ -83,17 +87,23 @@
                         
                     </form>
                 <input type="button" class="btn btn-primary" id="validUpdateModal" value="Valider les modifications">
-                <div class="modal-header">
-                    <h4>Suppimer la référence</h4>
-                </div>
-                <div class="modal-body">
-                    <p><span class='warning'>Attention cette action est définitive</span></p>
-                        <input type='button' class="btn btn-danger" value='Supprimer la référence' id='modalDeleteProduction'>
-                </div>
+                @if (\Request::is('production') || (\Request::is('administration')) 
+                    <div class="modal-header">
+                        <h4>Suppimer la référence</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p><span class='warning'>Attention cette action est définitive</span></p>
+                            <input type='button' class="btn btn-danger" value='Supprimer la référence' id='modalDeleteProduction'>
+                    </div>
+                @endif
             </div>    
         </div> 
         <div id='backgroundModal'></div>
+        
         @if (\Request::is('vente')) 
+        <!------------------------------------------------------------------------------------------------------------------------>
+        <!-------------------------------------------------------  Modal Vente --------------------------------------------------->
+        <!------------------------------------------------------------------------------------------------------------------------>
             <div id="modalVente" class='modal'>
                 @include ('/Vente/ModalVente')
             </div>

@@ -19,6 +19,7 @@ export const customers = {
     },
    async setCustomers(newValue){
         this.value= newValue
+        console.log('value setted')
            // Ajout de fonction en cas de changement de valeur
     }
 }
@@ -71,7 +72,7 @@ export async function updateCustomerData(object){
         method:'POST',
         Accept:'application/json',
         "Content-Type":'application/json',
-        body:object
+        body:JSON.stringify(object)
     })
     const jsonResult = await result.json()
     return jsonResult

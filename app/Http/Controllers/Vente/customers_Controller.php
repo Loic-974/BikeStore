@@ -30,9 +30,12 @@ class customers_Controller extends Controller
     }
 
 
-    function updateCustomer(){
+    function updateCustomer(Request $request){
 
-        
+        $data= json_decode($request->getContent());
+
+        $result = $this->modelCustomers->updateCustomer($data->customer_id, $data->FirstName, $data->LastName, $data->Phone, $data->Email, $data->Street, $data->City, $data->State, $data->ZipCode);
+        $this -> getCustomers();
     }
-
+ 
 }

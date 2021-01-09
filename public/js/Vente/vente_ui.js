@@ -3,6 +3,7 @@ import { buildModalOnClick, buildArray,buildNotification } from "../lib/buildFun
 import {notification, getNotification, updateNotification} from '../GlobalSetter/notificationSetter.js';
 
 
+
 const orderItem = {
     value: [],
     customer: {},
@@ -66,6 +67,7 @@ const orderItem = {
 
 const customerLink = document.querySelector("#customersLink");
 const venteLink = document.querySelector("#venteLink");
+const loader = document.querySelector('#loader')
 
 const ignoredString = "_id";
 const searchInput = document.querySelector('#searchInput');
@@ -98,10 +100,12 @@ const tableNotification =  document.querySelector('#notificationList tbody')
 
 
 window.onload= async() => {
+    loader.style.display='block'
     notification.setNotification(await getNotification())
     customers.setCustomers(await setCustomerData())
     vente.setVente(await setOrderData())
     stock.setStock(await setStockItem())
+    loader.style.display='none'
     customerLink.click()
     buildNotification(notification.value, tableNotification, updateNotification)
 }
@@ -114,10 +118,8 @@ customerLink.onclick = () => {
 };
 
 venteLink.onclick = () => {
-    buildArray(vente.value, arrayVente, openModal, ignoredString);
-    searchInput.oninput = (event) => 
-        buildArray(vente.value.filter((item)=> item['Name'].includes(event.currentTarget.value)), arrayVente, openModal, ignoredString)
-    
+    buildArray(vente.value, arrayVente, noop, ignoredString);
+    searchInput.oninput = (event) => buildArray(vente.value.filter((item)=> item['Name'].includes(event.currentTarget.value)), arrayVente, noop, ignoredString)
 };
 
 function openModal(item) {
@@ -296,7 +298,9 @@ function buildArrayOrderItem(array) {
         tableOrder.appendChild(row);
     }
 }
-
+function noop(){
+    return
+}
 function setFunctionToInput(cible, fonction) {
     for (let input of cible) {
         input.onchange = event => fonction(event);
@@ -367,6 +371,10 @@ function _buildObject(formHtml){
 }
 
 validUpdateModal.onclick = async () => {
-    setCustomerData(await updateCustomerData(_buildObject(modalForm)))
+    const update = await updateCustomerData(_buildObject(modalForm))
+    customers.setCustomers(await update)
     buildArray(customers.value, arrayVente, openModal, ignoredString)
+    backModal.style.display = "none";
+    modalVente.style.display = "none";
+    modalProduction.style.display='none'
 }

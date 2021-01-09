@@ -385,3 +385,12 @@ p {
 #orderItem{
     color:#fff;
 }
+#loader {
+
+    position: fixed;
+    width: 150px;
+    height: 150px;
+    margin-left: 25%;
+    margin-top: 12.5%;
+    
+}

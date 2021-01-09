@@ -23,4 +23,8 @@ class Model_SaleCustomers extends Model{
         return $customerList;
     }
     
+    function updateCustomer($idCustomer,$FirstName, $Lastname, $phone, $email,$street,$city,$state,$zipCode){
+
+            DB::update('UPDATE sales.customers set first_name = ?, last_name = ?, phone = ?, email = ?, street = ?, city = ?, state = ?, zip_code = ? where customer_id = ?',[$FirstName, $Lastname, $phone, $email,$street,$city,$state,$zipCode,$idCustomer]);
+    }
 }
