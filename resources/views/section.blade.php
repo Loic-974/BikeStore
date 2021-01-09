@@ -37,22 +37,25 @@
             </div>
                 <div class='sub-container-right'>   
                     <div class='content-right'>
-                      
+                    @if (\Request::is('vente') || (\Request::is('administration')))       
                         <div class='filter-container'>
                             <h4>Filtres</h4>
-                            <input type='text' value='' id='searchInput' placeholder='Chercher un produit'>
+                                @if (\Request::is('vente'))
+                                    <input type='text' value='' id='searchInput' placeholder='Chercher un Client/Commande'>
+                                @endif
+                                @if (\Request::is('administration'))
+                                    <input type='text' value='' id='searchInput' placeholder='Chercher un Collaborateur'>
+                                @endif
                             <span class='searchList'></span>     
                         </div>
-                        
-                        <div class='form-container'>
-                            @if (\Request::is('vente'))
+
+                        <div class='form-container'>                    
                                 <h4> Ajouts </h4>
                                 <form id='formProductionAdd'>
                                     <p id='errorFormProduction'></p>                          
                                     <input type='button' value='Nouvelle Vente' class='btn-primary' id='btnAddDataBrand'>                          
                                 </form>
-                        </div>
-                
+                        </div>                
                         <div class='notification-container' >
                             <h4> Notifications </h4>
                             <table id='notificationList'>
@@ -71,9 +74,9 @@
                             
                             </table>
                         </div>
-                        @endif
-                        
+                        @endif            
                     </div>
+                   
             </div>    
      </div>
      
@@ -87,7 +90,7 @@
                         
                     </form>
                 <input type="button" class="btn btn-primary" id="validUpdateModal" value="Valider les modifications">
-                @if (\Request::is('production') || (\Request::is('administration')) 
+                @if (\Request::is('production') || (\Request::is('administration'))) 
                     <div class="modal-header">
                         <h4>Suppimer la référence</h4>
                     </div>
@@ -109,17 +112,17 @@
             </div>
         @endif
     </body>
-  
-    <script type='module' src='js/lib/buildFunction.js'></script>
-    <script type='module' src='js/GlobalSetter/notificationSetter.js'></script>
+    @if (\Request::is('vente') || \Request::is('administration')) 
+        <script type='module' src='js/lib/buildFunction.js'></script>
+        <script type='module' src='js/GlobalSetter/notificationSetter.js'></script>
 
- 
-    @if (\Request::is('vente')) 
-        <script type='module' src="js/Vente/vente_setter.js"></script> 
-        <script type='module' src="js/Vente/vente_ui.js"></script>
+        @if (\Request::is('vente')) 
+            <script type='module' src="js/Vente/vente_setter.js"></script> 
+            <script type='module' src="js/Vente/vente_ui.js"></script>
+        @endif
     @endif
     
-
+<!-- -------------------------------------------- If not connected -------------------------------------------- -->
 
     @elseif(!session('id'))
 
