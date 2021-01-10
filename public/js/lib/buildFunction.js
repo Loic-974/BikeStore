@@ -101,8 +101,10 @@ const ignoreProp ='_id'
        actionTdButton.type='button'
        actionTdButton.value='Traité'
 
-       actionTdButton.onclick = () => {
-           doItFunction(notification)
+       actionTdButton.onclick = async () => {
+           //recursive function
+        buildNotification(await doItFunction(JSON.stringify(notification)),cible,doItFunction)
+
        }
        for (const prop in notification){
            if(!prop.includes(ignoreProp)){

@@ -1,8 +1,23 @@
-import { vente, customers, stock, newOrder,setCustomerData,setOrderData,setStockItem,updateCustomerData } from "./vente_setter.js";
-import { buildModalOnClick, buildArray,buildNotification } from "../lib/buildFunction.js";
-import {notification, getNotification, updateNotification} from '../GlobalSetter/notificationSetter.js';
-
-
+import {
+    vente,
+    customers,
+    stock,
+    newOrder,
+    setCustomerData,
+    setOrderData,
+    setStockItem,
+    updateCustomerData
+} from "./vente_setter.js";
+import {
+    buildModalOnClick,
+    buildArray,
+    buildNotification
+} from "../lib/buildFunction.js";
+import {
+    notification,
+    getNotification,
+    updateNotification
+} from "../GlobalSetter/notificationSetter.js";
 
 const orderItem = {
     value: [],
@@ -15,7 +30,7 @@ const orderItem = {
     setCustomer(value, prop) {
         orderItem.customer[prop] = value;
 
-        console.log(orderItem.customer);
+        console.log("settedOrderItem", orderItem.customer);
     },
 
     getOrderItem() {
@@ -24,6 +39,7 @@ const orderItem = {
     setOrderItem(newValue) {
         console.log(newValue);
         if (!orderItem.notDuplicate(newValue)) {
+            console.log("ok");
             newValue.orderQuantity = 1;
             newValue.discount = 1;
             orderItem.value.push(newValue);
@@ -45,6 +61,7 @@ const orderItem = {
     notDuplicate(newValue) {
         for (let ref of this.value) {
             // if(isEqual(newValue,ref)){
+            console.log(newValue, this.value);
             if (JSON.stringify(newValue) === JSON.stringify(ref)) {
                 ref.orderQuantity++;
                 buildArrayOrderItem(orderItem.value);
@@ -67,11 +84,11 @@ const orderItem = {
 
 const customerLink = document.querySelector("#customersLink");
 const venteLink = document.querySelector("#venteLink");
-const loader = document.querySelector('#loader')
+const loader = document.querySelector("#loader");
 
 const ignoredString = "_id";
-const searchInput = document.querySelector('#searchInput');
-const searchList = document.querySelector('.searchList')
+const searchInput = document.querySelector("#searchInput");
+const searchList = document.querySelector(".searchList");
 const arrayVente = document.querySelector("#ArrayVente");
 const newVenteButton = document.querySelector("#btnAddDataBrand");
 
@@ -90,36 +107,53 @@ const productOrder = document.querySelector("#ProductOrder");
 const searchProductOrder = document.querySelector("#searchProductOrder");
 const tableOrder = document.querySelector("#orderItem tbody");
 
-const validUpdateModal = document.querySelector('#validUpdateModal')
+const validUpdateModal = document.querySelector("#validUpdateModal");
 
 const validOrder = document.querySelector("#validOrder");
 // const formClient =  document.querySelector('#newCustomer')
 // const formOrder = document.querySelector('#newOrder')
 
-const tableNotification =  document.querySelector('#notificationList tbody')
+const tableNotification = document.querySelector("#notificationList tbody");
 
-
-window.onload= async() => {
-    loader.style.display='block'
-    notification.setNotification(await getNotification())
-    customers.setCustomers(await setCustomerData())
-    vente.setVente(await setOrderData())
-    stock.setStock(await setStockItem())
-    loader.style.display='none'
-    customerLink.click()
-    buildNotification(notification.value, tableNotification, updateNotification)
-}
+window.onload = async () => {
+    loader.style.display = "block";
+    notification.setNotification(await getNotification());
+    customers.setCustomers(await setCustomerData());
+    vente.setVente(await setOrderData());
+    stock.setStock(await setStockItem());
+    loader.style.display = "none";
+    customerLink.click();
+    buildNotification(
+        notification.getNotificationValue(),
+        tableNotification,
+        updateNotification
+    );
+};
 
 customerLink.onclick = () => {
     buildArray(customers.value, arrayVente, openModal, ignoredString);
-    searchInput.oninput = (event) => 
-        buildArray(customers.value.filter((item)=> item['LastName'].includes(event.currentTarget.value)), arrayVente, openModal, ignoredString)
-    
+    searchInput.oninput = event =>
+        buildArray(
+            customers.value.filter(item =>
+                item["LastName"].includes(event.currentTarget.value)
+            ),
+            arrayVente,
+            openModal,
+            ignoredString
+        );
 };
 
 venteLink.onclick = () => {
     buildArray(vente.value, arrayVente, noop, ignoredString);
-    searchInput.oninput = (event) => buildArray(vente.value.filter((item)=> item['Name'].includes(event.currentTarget.value)), arrayVente, noop, ignoredString)
+    searchInput.oninput = event =>
+        buildArray(
+            vente.value.filter(item =>
+                item["Name"].includes(event.currentTarget.value)
+            ),
+            arrayVente,
+            noop,
+            ignoredString
+        );
 };
 
 function openModal(item) {
@@ -131,6 +165,7 @@ function openModal(item) {
 
 newVenteButton.onclick = () => {
     setFunctionToInput(infoClient, setCustomerInfoToOrder);
+    tableOrder.innerHTML='';
     backModal.style.display = "block";
     modalVente.style.display = "flex";
 };
@@ -158,7 +193,7 @@ lastNameClient.oninput = event => {
     );
 };
 
-lastNameClient.onblur = () =>searchListName.style.display='none'
+// lastNameClient.onblur = () =>searchListName.style.display='none'
 
 productOrder.oninput = event => {
     searchProductOrder.style.display = "block";
@@ -173,9 +208,7 @@ productOrder.oninput = event => {
     );
 };
 
-productOrder.onblur= () => searchProductOrder.style.display='none'
-
-
+// productOrder.onblur= () => searchProductOrder.style.display='none'
 
 /**
  * Default Function for set SearchList and add function to option
@@ -196,7 +229,6 @@ function createSearchList(
     cible,
     setter
 ) {
-   
     origin.value = "";
     valueInput
         ? (origin.style.display = "block")
@@ -205,7 +237,6 @@ function createSearchList(
 
     for (let ref of arrayRef.value) {
         if (ref[propriete].toLowerCase().includes(valueInput)) {
-            
             let option = document.createElement("option");
             option.setAttribute(
                 "label",
@@ -213,12 +244,11 @@ function createSearchList(
             );
             option.setAttribute("value", ref[propriete]);
             option.onclick = () => {
-                setter(ref, cible)
-                origin.style.display='none'
+                setter(ref, cible);
+                origin.style.display = "none";
             };
             origin.append(option);
-        }else{
-            
+        } else {
         }
     }
 }
@@ -240,6 +270,7 @@ function defineAllInputValue(object, form) {
 }
 
 function buildArrayOrderItem(array) {
+    console.log("buildrrayItem");
     tableOrder.innerHTML = "";
     for (const ref of array) {
         const row = document.createElement("tr");
@@ -298,11 +329,12 @@ function buildArrayOrderItem(array) {
         tableOrder.appendChild(row);
     }
 }
-function noop(){
-    return
+function noop() {
+    return;
 }
 function setFunctionToInput(cible, fonction) {
     for (let input of cible) {
+        input.value=''
         input.onchange = event => fonction(event);
     }
 }
@@ -319,62 +351,66 @@ function setCustomerInfoToOrder(event) {
     console.log(orderItem.customer);
 }
 
-
 function checkOrder() {
     for (let input of infoClient) {
         if (input.value) {
-            input.style.borderColor='green'
+            input.style.borderColor = "green";
             continue;
         } else {
-            
-            input.style.borderColor='red'
-         
+            input.style.borderColor = "red";
+
             return false;
         }
     }
     return true;
 }
 
-validOrder.onclick = (event) => {
-    if(checkOrder()){
-      
-    let order = {};
+validOrder.onclick = async (event) => {
+    if (checkOrder()) {
+        let order = {};
         if (orderItem.getOrderItem().length > 0 && orderItem.customer) {
             order = orderItem.customer;
             order["Item"] = { ...orderItem.getOrderItem() };
-            console.log(order);
         }
-    newOrder(JSON.stringify(order));
-    async () => notification.setNotification(await getNotification())
-    }else{
-        return
+        vente.setVente( await newOrder(JSON.stringify(order)));
+
+   
+         
+            notification.setNotification(await getNotification());
+      
+            buildArray(vente.value, arrayVente, openModal, ignoredString);
+            buildNotification(
+                notification.getNotificationValue(),
+                tableNotification,
+                updateNotification
+            );
+     
+    } else {
+        return;
     }
-    
-    buildArray(vente.value, arrayVente, openModal, ignoredString)
-    buildNotification(notification.value, tableNotification, updateNotification)
+   
     backModal.style.display = "none";
     modalVente.style.display = "none";
-
 };
 
-function _buildObject(formHtml){
-    const arrayInput = formHtml.getElementsByTagName('input')
-    const object = {}
-    console.log(arrayInput)
-    for (let input of arrayInput){
-        if(!object[input.name]){
-            object[input.name]=input.value
+function _buildObject(formHtml) {
+    const arrayInput = formHtml.getElementsByTagName("input");
+    const object = {};
+    console.log(arrayInput);
+    for (let input of arrayInput) {
+        if (!object[input.name]) {
+            object[input.name] = input.value;
         }
     }
-    console.log(object)
-    return object
+    console.log(object);
+    return object;
 }
 
 validUpdateModal.onclick = async () => {
-    const update = await updateCustomerData(_buildObject(modalForm))
-    customers.setCustomers(await update)
-    buildArray(customers.value, arrayVente, openModal, ignoredString)
+    const update = await updateCustomerData(_buildObject(modalForm));
+    customers.setCustomers(await update);
+    buildArray(customers.value, arrayVente, openModal, ignoredString);
     backModal.style.display = "none";
     modalVente.style.display = "none";
-    modalProduction.style.display='none'
-}
+    modalProduction.style.display = "none";
+};

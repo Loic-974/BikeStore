@@ -55,6 +55,7 @@ Auth::routes();
 // -------------------------------------------------------------------------------------------------------------------------
 
 Route::get('/notification', [App\Http\Controllers\Notification\Controller_Notification::class,'getNotification']);
+Route::post('/notificationUpdate',[App\Http\Controllers\Notification\Controller_Notification::class,'notificationUpdate']);
 
 // -------------------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------- Production ---------------------------------------------------------

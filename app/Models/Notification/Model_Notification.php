@@ -23,5 +23,8 @@ class Model_Notification extends Model
       return $array;
     }
 
+    function updateNotification($idNotification){
+      DB::update('UPDATE sales.notifications SET status = 1 where notification_id=?', [$idNotification]);
+    }
 
 }

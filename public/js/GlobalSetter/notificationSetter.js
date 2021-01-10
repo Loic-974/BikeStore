@@ -8,9 +8,7 @@ export const notification = {
     setNotification(newValue){
         this.value=newValue
     },
-
 };
-
 
 export async function getNotification(){
 
@@ -20,9 +18,8 @@ export async function getNotification(){
 }
 
 export async function updateNotification(newObject){
-
     const tempResult = await fetch('/notificationUpdate',{
-        Method:'POST',
+        method:'POST',
         Accept: "application/json",
         "Content-Type": "application/json",
         body:newObject

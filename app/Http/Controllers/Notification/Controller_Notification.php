@@ -21,7 +21,6 @@ class Controller_Notification extends Controller
 
         if(!Empty($result)){
          
-
             $json=array();
 
                 foreach($result as $value){
@@ -30,7 +29,17 @@ class Controller_Notification extends Controller
                 }
 
             echo json_encode($json);
+        }else{
+            return array();
         }
+    }
+
+
+    function notificationUpdate(Request $request){
+
+        $data = json_decode($request->getContent());
+        $this->modelNotif-> updateNotification($data->notification_id);
+        $this->getNotification();
     }
 
 }

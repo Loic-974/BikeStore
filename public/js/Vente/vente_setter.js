@@ -19,7 +19,7 @@ export const customers = {
     },
    async setCustomers(newValue){
         this.value= newValue
-        console.log('value setted')
+        
            // Ajout de fonction en cas de changement de valeur
     }
 }
@@ -88,7 +88,6 @@ export async function newOrder(newCommandObject){
         Accept: "application/json",
         body:newCommandObject
     })
-
     const test = await result.json()
-  
+    return test
     }
