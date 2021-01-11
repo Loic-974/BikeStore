@@ -107,3 +107,5 @@ Route::post('/vente/updateCustomer',[App\Http\Controllers\Vente\customers_Contro
 Route::get('/reporting', function(){
     return view('section');
 })->name('reporting');
+
+Route::get('/Reporting/GetReporting', [App\Http\Controllers\Reporting\Controller_Reporting::class,'getReportingData']);

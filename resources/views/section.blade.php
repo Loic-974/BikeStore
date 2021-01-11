@@ -26,14 +26,15 @@
                             @endif
                             </div>
                         </div>
-                      
-                        <div class='table-content-left'>
-                            <table  class ='table table-dark' id="ArrayVente">
-                            <div class="spinner-border text-light" role="status" id='loader'>
-                                    <span class="sr-only">Loading...</span>
-                            </div>
-                            </table>
-                        </div>                
+                        @if (\Request::is('vente') || (\Request::is('administration')))  
+                            <div class='table-content-left'>
+                                <table  class ='table table-dark' id="ArrayVente">
+                                    <div class="spinner-border text-light" role="status" id='loader'>
+                                            <span class="sr-only">Loading...</span>
+                                    </div>
+                                </table>
+                            </div>   
+                        @endif             
             </div>
                 <div class='sub-container-right'>   
                     <div class='content-right'>
@@ -111,15 +112,36 @@
                 @include ('/Vente/ModalVente')
             </div>
         @endif
+
+
     </body>
+ <!-------------------------------------------------------------------------------------------------------------------->
+ <!-----------------------------------------------  Common Module  ---------------------------------------------------->
+ <!-------------------------------------------------------------------------------------------------------------------->
     @if (\Request::is('vente') || \Request::is('administration')) 
         <script type='module' src='js/lib/buildFunction.js'></script>
         <script type='module' src='js/GlobalSetter/notificationSetter.js'></script>
-
+         <!------------------------------------------------------------------------------------->
+        <!--------------------------------  Selling Module  ------------------------------------>
+        <!-------------------------------------------------------------------------------------->
         @if (\Request::is('vente')) 
             <script type='module' src="js/Vente/vente_setter.js"></script> 
             <script type='module' src="js/Vente/vente_ui.js"></script>
         @endif
+
+        <!-------------------------------------------------------------------------------------->
+        <!-------------------------  Administration Module  ------------------------------------>
+        <!-------------------------------------------------------------------------------------->
+    @endif
+
+ <!-------------------------------------------------------------------------------------------------------------------->
+ <!--------------------------------------------  Reporting Module  ---------------------------------------------------->
+ <!-------------------------------------------------------------------------------------------------------------------->
+
+    @if(\Request::is('reporting'))
+
+    <script type='module' src="js/Reporting/reporting_ui.js"></script>
+
     @endif
     
 <!-- -------------------------------------------- If not connected -------------------------------------------- -->
