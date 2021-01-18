@@ -13,13 +13,14 @@
     <body>
      @include('header')
      
-     <div class='container-content'>
+    <div class='container-content'>
         <div class='sub-container'>
         @if(\Request::is('reporting'))
 
             @include('/Reporting/globalCharts')
 
         @endif
+        @if (\Request::is('vente') || (\Request::is('administration')))  
             <div class='sub-container-left'>     
                         <div class='nav'>
                             <div class="btn-group" role="group">
@@ -31,7 +32,7 @@
                             @endif
                             </div>
                         </div>
-                        @if (\Request::is('vente') || (\Request::is('administration')))  
+                        <!-- @if (\Request::is('vente') || (\Request::is('administration')))   -->
                             <div class='table-content-left'>
                                 <table  class ='table table-dark' id="ArrayVente">
                                     <div class="spinner-border text-light" role="status" id='loader'>
@@ -39,11 +40,11 @@
                                     </div>
                                 </table>
                             </div>   
-                        @endif             
+                        <!-- @endif              -->
             </div>
                 <div class='sub-container-right'>   
                     <div class='content-right'>
-                    @if (\Request::is('vente') || (\Request::is('administration')))       
+                    <!-- @if (\Request::is('vente') || (\Request::is('administration')))        -->
                         <div class='filter-container'>
                             <h4>Filtres</h4>
                                 @if (\Request::is('vente'))
@@ -80,11 +81,11 @@
                             
                             </table>
                         </div>
-                        @endif            
+                        <!-- @endif             -->
                     </div>
-                   
-            </div>    
-     </div>
+            @endif    
+        </div>    
+    </div>
      
         <div class='form-modal-table' id='modalProduction'>  
             <div class="modal-header">
@@ -145,6 +146,9 @@
 
     @if(\Request::is('reporting'))
 
+
+    <script type='module' src="js/Chart.min.js"></script>
+    <script type='module' src="js/Reporting/reporting_setter.js"></script>
     <script type='module' src="js/Reporting/reporting_ui.js"></script>
 
     @endif
