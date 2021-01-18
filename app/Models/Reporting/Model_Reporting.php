@@ -30,29 +30,25 @@ class Model_Reporting extends Model
         $month = DB::select('sales.monthlyReporting ?',array($date));
         $panier = DB::select('sales.panierMoyen');
         $finalArray=array($week,$month,$panier);
-        $merged = array();
-       
-        foreach ($finalArray as $value=>$test) { 
-                array_push($merged, $value=$test);
-        }
-        return $merged;
+ 
+        return $this->_array_flatten($finalArray);
    
-
     }
 
-    function _array_flatten($array) { 
+    function _array_flatten($array):array{ 
+  
         if (!is_array($array)) { 
           return false; 
         } 
-        $result = array(); 
-        foreach ($array as $key => $value) { 
-          if (is_array($value)) { 
-            $result = array_merge($result, array_flatten($value)); 
-          } else { 
-            $result = array_merge($result, array($key => $value));
-          } 
-        } 
-        return $result; 
+        $tempObject;
+        foreach ($array as $subArray){
+          foreach($subArray as $value){
+            foreach($value as $key=>$ref){
+             $tempObject[$key] = $ref;
+            }     
+          }
+        }
+        return $tempObject; 
       }
 
 }

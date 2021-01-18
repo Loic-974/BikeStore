@@ -15,6 +15,11 @@
      
      <div class='container-content'>
         <div class='sub-container'>
+        @if(\Request::is('reporting'))
+
+            @include('/Reporting/globalCharts')
+
+        @endif
             <div class='sub-container-left'>     
                         <div class='nav'>
                             <div class="btn-group" role="group">

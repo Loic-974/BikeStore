@@ -37,12 +37,9 @@ class Controller_Reporting extends Controller
 
     function getReportingData(){
         $date = date('Y-m-d H:i:s');
-        // $week = $this->getWeeklyReporting();
-        // $month = $this->getMonthlyReporting();
-        // $panier = $this->getPanierMoyen();
         $test = $this->modelReporting->getReportingDataModel($date);
-        // DD($week,$month,$panier);
-        DD($test);
-    
+        return json_encode($test);
     }
+
+    
 }
