@@ -30,7 +30,7 @@ export const factures = {
     getFacture(){
         return this.value
     },
-    setFacture(newValue){
+   async setFacture(newValue){
         this.value=newValue
         // Ajout de fonction en cas de changement de valeur
     }
@@ -91,3 +91,15 @@ export async function newOrder(newCommandObject){
     const test = await result.json()
     return test
     }
+
+
+export async function newFacture(orderId){
+    const resultTemp = await fetch('/vente/getFacture',{
+        method:'POST',
+        Accept:'application/json',
+        "Content-Type":'application/json',
+        body:orderId
+    })
+    const result = await resultTemp.json()
+    return result
+}

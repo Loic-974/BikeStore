@@ -100,7 +100,7 @@ Route::get('/vente/getStock',[App\Http\Controllers\Vente\orders_Controller::clas
 
 Route::post('/vente/newOrder',[App\Http\Controllers\Vente\orders_Controller::class,'newOrder']);
 Route::post('/vente/updateCustomer',[App\Http\Controllers\Vente\customers_Controller::class,'updateCustomer']);
-
+Route::post('/vente/getFacture', [App\Http\Controllers\Vente\facture_Controller::class,'getFactureData']);
 // -------------------------------------------------------------------------------------------------------------------------
 // --------------------------------------------------- Reporting ---------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------------

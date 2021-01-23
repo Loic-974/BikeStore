@@ -6,8 +6,12 @@ import {
     setCustomerData,
     setOrderData,
     setStockItem,
-    updateCustomerData
+    updateCustomerData,
+    newFacture
 } from "./vente_setter.js";
+
+import {openModalFacture} from "./vente_facture.js";
+
 import {
     buildModalOnClick,
     buildArray,
@@ -110,8 +114,8 @@ const tableOrder = document.querySelector("#orderItem tbody");
 const validUpdateModal = document.querySelector("#validUpdateModal");
 
 const validOrder = document.querySelector("#validOrder");
-// const formClient =  document.querySelector('#newCustomer')
-// const formOrder = document.querySelector('#newOrder')
+
+const modalFacture = document.querySelector('#modalFacture')
 
 const tableNotification = document.querySelector("#notificationList tbody");
 
@@ -128,6 +132,7 @@ window.onload = async () => {
         tableNotification,
         updateNotification
     );
+     newFacture(5)
 };
 
 customerLink.onclick = () => {
@@ -144,14 +149,14 @@ customerLink.onclick = () => {
 };
 
 venteLink.onclick = () => {
-    buildArray(vente.value, arrayVente, noop, ignoredString);
+    buildArray(vente.value, arrayVente, openModalFacture, ignoredString);
     searchInput.oninput = event =>
         buildArray(
             vente.value.filter(item =>
                 item["Name"].includes(event.currentTarget.value)
             ),
             arrayVente,
-            noop,
+            openModalFacture,
             ignoredString
         );
 };
@@ -174,6 +179,7 @@ backModal.onclick = () => {
     backModal.style.display = "none";
     modalVente.style.display = "none";
     modalProduction.style.display = "none";
+    modalFacture.style.display='none';
 };
 
 // ----------------------------------------------------------------------------------------------------- //

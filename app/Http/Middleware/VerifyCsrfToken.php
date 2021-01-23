@@ -43,7 +43,7 @@ class VerifyCsrfToken extends Middleware
 
 '/vente/newOrder',
 '/vente/updateCustomer',
-
+'/vente/getFacture',
 
 
 //----------------------------------------------------------//

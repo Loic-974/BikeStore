@@ -117,6 +117,9 @@
             <div id="modalVente" class='modal'>
                 @include ('/Vente/ModalVente')
             </div>
+            <div id="modalFacture" class='modal'>
+                @include ('/Vente/facture')
+            </div>
         @endif
 
 
@@ -133,6 +136,7 @@
         @if (\Request::is('vente')) 
             <script type='module' src="js/Vente/vente_setter.js"></script> 
             <script type='module' src="js/Vente/vente_ui.js"></script>
+            <script type='module' src="js/Vente/vente_facture.js"></script>
         @endif
 
         <!-------------------------------------------------------------------------------------->
