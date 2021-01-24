@@ -134,9 +134,12 @@
         <!--------------------------------  Selling Module  ------------------------------------>
         <!-------------------------------------------------------------------------------------->
         @if (\Request::is('vente')) 
+       
+            <script src="js/html2pdf.bundle.min.js"></script> 
             <script type='module' src="js/Vente/vente_setter.js"></script> 
             <script type='module' src="js/Vente/vente_ui.js"></script>
             <script type='module' src="js/Vente/vente_facture.js"></script>
+     
         @endif
 
         <!-------------------------------------------------------------------------------------->

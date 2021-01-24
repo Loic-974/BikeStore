@@ -1,15 +1,12 @@
-<div class='factureContainer'>
-
+<div class='factureContainer' id='factureContain'>
+    <h3> Facture </h3>
     <div class='infoSection'>
         <div class='clientSection' id="clientSection">
-
         </div>
 
         <div class='storeSection' id="storeSection">
-
         </div>
     </div>
-
     <div class ='listItemSection' id="listItemSection" >
         <table>
             <thead>
@@ -25,17 +22,17 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan=3> Montant </td>
+                    <!-- <td colspan=3> Montant </td> -->
                 </tr>
             <tfoot>
-        </table>
-
-
-            
+        </table>        
     </div>
 
+    <!-- <input type='button' value='Fermer' id="closeButton" class='"btn btn-danger"'>
+    <input type="button" value="Télécharger" id="download" class ='btn'> -->
+</div>
 
-    <input type='button' value='Fermer' id="closeButton" class='"btn btn-danger"'>
-    <input type="button" value="Télécharger" id="download" class ='btn'>
-
+<div class='group-button'>
+    <input type='button' value='Fermer' id="closeButton" class='btn-primary button'>
+    <input type="button" value="Télécharger" id="download" class ='btn-primary button'>
 </div>

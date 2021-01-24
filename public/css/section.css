@@ -262,6 +262,27 @@ h4 {
    
 }
 
+.button{
+    min-width: 25%;
+    border-radius: 4px;
+    padding: 6px 12px 6px 12px;
+    border: none;
+    font-weight: bold;
+    color:#F5f5f5
+}
+.button :hover{
+    background-color: #27A599; 
+}
+
+.group-button{
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-bottom: 2%;
+}
+
 .containerInfoModalVente{
     width: 45%;
     height: 90%;
@@ -399,9 +420,99 @@ p {
     display:none;
     width: 80%;
     height: 80%;
+    margin-top: 5%;
     margin-left:10%;
-    background-color: #071521;
+    background-color: #e2e2e2;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
+    color:#000;
+
+}
+
+#factureContain{
+    width: 100%;
+    height: 95%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    overflow-y: auto;
+}
+
+#factureContain h3{
+    padding-top: 0.5%;
+    text-align: center;
+    width: 100%;
+    min-height: 6%;
+    background-color: #152c3f;
+    color: #e2e2e2;
+}
+
+#clientSection p{
+    color:#000;
+   text-align: left;
+}
+.infoSection{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    color:#000;
+    border-bottom: 6px solid #152c3f;
+}
+
+#clientSection{
+    width: 45%;
+    height: 95%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-self: left; 
+    align-self: start;
+   
+}
+#clientSection p{
+    font-size: large;
+    color:#000;
+   text-align: left;
+}
+
+#storeSection{
+    width: 45%;
+    height: 95%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-self:right; 
+    align-self: flex-end;
+}
+#storeSection p{
+    font-size: large;
+    color:#000;
+    text-align: right;
+}
+
+#listItemSection{
+    overflow: auto;
+}
+
+#listItemSection table{
+    margin-top: 2%;
+    margin-left: 2.5%;
+    font-size: large;
+    width: 95%;
+    text-align: center;
+    border-collapse:separate; 
+    border-spacing: 0 1em;
+}
+
+#listItemSection th {
+    background-color: #0b1f31;
+    color:#fff;
+    padding: 22px;
+}
+#listItemSection tfoot td {
+    background-color: #0b1f31;
+    color:#fff;
+    padding: 12px;
 }
