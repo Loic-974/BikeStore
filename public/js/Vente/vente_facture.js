@@ -22,6 +22,7 @@ export async function openModalFacture(ref) {
     const listItem = factureArray.slice(0, -1);
 
     for (const infoGroup of infoClientStore) {
+        sectionClient.innerHTML = ''
         sectionClient.innerHTML = `
         <p><b>Nom :</b> ${infoGroup.lastName}</p>
         <p><b>Prenom :</b> ${infoGroup.firstName}</p>
@@ -31,7 +32,7 @@ export async function openModalFacture(ref) {
         <p><b>Code Postal :</b> ${infoGroup.zipCodeCustomer}</p>
         <p><b>Pays :</b> ${infoGroup.stateCustomer}</p>
         `;
-
+        sectionEntreprise.innerHTML=''
         sectionEntreprise.innerHTML=`
         <p><b>${infoGroup.storeName}</b> </p>
         <p>${infoGroup.storeEmail} </p>
@@ -42,6 +43,7 @@ export async function openModalFacture(ref) {
         `
     }
     let totalFacture = 0
+    sectionItem.innerHTML=''
     for (const item of listItem){
         totalFacture +=(+item.total)
         sectionItem.innerHTML += `
@@ -53,7 +55,7 @@ export async function openModalFacture(ref) {
         </tr>
         `
     }
-    sectionTotal.innerHTML=`  <td colspan=3> Montant </td> <td>${totalFacture.toFixed(2)}€</td>`
+    sectionTotal.innerHTML=`<td colspan=3> Montant </td> <td>${totalFacture.toFixed(2)}€</td>`
     // sectionTotal.insertAdjacentHTML('beforeend',`<td>${totalFacture}</td>`)
 }
 

@@ -384,7 +384,7 @@ validOrder.onclick = async (event) => {
          
             notification.setNotification(await getNotification());
       
-            buildArray(vente.value, arrayVente, openModal, ignoredString);
+            buildArray(vente.value, arrayVente, openModalFacture, ignoredString);
             buildNotification(
                 notification.getNotificationValue(),
                 tableNotification,
