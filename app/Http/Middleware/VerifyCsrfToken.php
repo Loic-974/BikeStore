@@ -52,7 +52,7 @@ class VerifyCsrfToken extends Middleware
 
 '/notificationUpdate',
 
-
+'/Reporting/GetReporting',
 
     ];
 }

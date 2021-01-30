@@ -108,4 +108,4 @@ Route::get('/reporting', function(){
     return view('section');
 })->name('reporting');
 
-Route::get('/Reporting/GetReporting', [App\Http\Controllers\Reporting\Controller_Reporting::class,'getReportingData']);
+Route::post('/Reporting/GetReporting', [App\Http\Controllers\Reporting\Controller_Reporting::class,'getReportingData']);

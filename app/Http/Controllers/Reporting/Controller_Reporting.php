@@ -35,8 +35,8 @@ class Controller_Reporting extends Controller
         return $panier;
     }
 
-    function getReportingData(){
-        $date = date('Y-m-d H:i:s');
+    function getReportingData(Request $request){
+       $date = $request->getContent()? date($request->getContent()): date('Y-m-d H:i:s');
         $test = $this->modelReporting->getReportingDataModel($date);
         return json_encode($test);
     }

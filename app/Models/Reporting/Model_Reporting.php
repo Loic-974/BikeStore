@@ -30,7 +30,7 @@ class Model_Reporting extends Model
         $month = DB::select('sales.monthlyReporting ?',array($date));
         $panier = DB::select('sales.panierMoyen');
         $finalArray=array($week,$month,$panier);
- 
+    
         return $this->_array_flatten($finalArray);
    
     }
