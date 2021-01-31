@@ -19,7 +19,7 @@ class updatePassword extends Controller
         if(isset($password)){
 
             if((!empty($password)) && ($password != $result)){
-                $password=password_hash($password);
+                $password=password_hash($password,PASSWORD_DEFAULT);
                 $new= DB::update('update sales.staffs set first_connect = 1 where staff_id=?',[$idUser]);
                 $newpwd = DB::update('update sales.staffs set password=? where staff_id=?',[$password,$idUser]);
 
