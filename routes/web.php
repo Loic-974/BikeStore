@@ -109,3 +109,11 @@ Route::get('/reporting', function(){
 })->name('reporting');
 
 Route::post('/Reporting/GetReporting', [App\Http\Controllers\Reporting\Controller_Reporting::class,'getReportingData']);
+
+// -------------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------- Administration ------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------
+
+Route::get('/administration', function(){
+    return view('section');
+})->name('administration');

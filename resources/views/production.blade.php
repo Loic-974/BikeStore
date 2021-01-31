@@ -14,7 +14,7 @@
    
     <body>
      @include('header')
-     
+   
      <div class='container-content'>
         <div class='sub-container'>
             <div class='sub-container-left'>     
@@ -132,6 +132,7 @@
             </div>   
      
      </div>
+    
     </body>
     <script type='module' src='js/lib/buildFunction.js'></script>
     <script type='module' src="js/Production/production.js"></script>

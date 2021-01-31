@@ -22,25 +22,18 @@
         @endif
         @if (\Request::is('vente') || (\Request::is('administration')))  
             <div class='sub-container-left'>     
-                        <div class='nav'>
-                            <div class="btn-group" role="group">
-                            @if (\Request::is('vente')) 
-                                <button type="button" class="btn btn-secondary" id="customersLink">Clients</button>
-                                <button type="button" class="btn btn-secondary"  id="venteLink">Ventes</button>
-                                <button type="button" class="btn btn-secondary" id="factureLink">Factures</button>
-                              <!-- <button type="button" class="btn btn-secondary" id="livraisonLink">Livraison</button> -->
+            
+                            @if (\Request::is('vente'))
+
+                              @include('/Vente/arrayVente')
+
                             @endif
-                            </div>
-                        </div>
-                        <!-- @if (\Request::is('vente') || (\Request::is('administration')))   -->
-                            <div class='table-content-left'>
-                                <table  class ='table table-dark' id="ArrayVente">
-                                    <div class="spinner-border text-light" role="status" id='loader'>
-                                            <span class="sr-only">Loading...</span>
-                                    </div>
-                                </table>
-                            </div>   
-                        <!-- @endif              -->
+                        
+                         @if(\Request::is('administration'))
+
+                             @include('/Administration/arrayAdministration')
+                    
+                         @endif              
             </div>
                 <div class='sub-container-right'>   
                     <div class='content-right'>

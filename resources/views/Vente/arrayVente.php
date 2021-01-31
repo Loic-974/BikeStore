@@ -9,6 +9,9 @@
 </div>
 
 <div class='table-content-left'>
-    <table  class ='table table-dark' id="ArrayVente">
-    </table>
-</div>   
+                                <table  class ='table table-dark' id="ArrayVente">
+                                    <div class="spinner-border text-light" role="status" id='loader'>
+                                            <span class="sr-only">Loading...</span>
+                                    </div>
+                                </table>
+                            </div>   
