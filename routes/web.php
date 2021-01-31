@@ -117,3 +117,12 @@ Route::post('/Reporting/GetReporting', [App\Http\Controllers\Reporting\Controlle
 Route::get('/administration', function(){
     return view('section');
 })->name('administration');
+
+Route::get('/administration/getStaffUser', [App\Http\Controllers\Administration\Administration_Controller::class,'getStaffData']);
+
+Route::post('/administration/stopStaffUser', [App\Http\Controllers\Administration\Administration_Controller::class,'stopStaffUser']);
+Route::post('/administration/activeStaffUser', [App\Http\Controllers\Administration\Administration_Controller::class,'activeStaffUser']);
+
+Route::post('/administration/updateStaffUser', [App\Http\Controllers\Administration\Administration_Controller::class,'updateStaffUser']);
+Route::post('/administration/reiniStaffMDP', [App\Http\Controllers\Administration\Administration_Controller::class,'reiniPassword']);
+Route::post('/administration/addStaff', [App\Http\Controllers\Administration\Administration_Controller::class,'addNewUser']);

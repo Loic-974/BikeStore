@@ -31,10 +31,9 @@
                 </a>
                 @endif
                 @if(session('roleManager')<(2))
-                <div class="card-container">
-                    <h3>Administration</h3>
-                    <a href="#">lorem ipsum</a>             
-                </div>
+                <a class="card-container" href="/administration">
+                    <h3>Administration</h3>        
+                </a>
                 @endif
         @endif
         @if($firstConnect!=1)

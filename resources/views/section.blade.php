@@ -37,7 +37,7 @@
             </div>
                 <div class='sub-container-right'>   
                     <div class='content-right'>
-                    <!-- @if (\Request::is('vente') || (\Request::is('administration')))        -->
+       
                         <div class='filter-container'>
                             <h4>Filtres</h4>
                                 @if (\Request::is('vente'))
@@ -51,10 +51,22 @@
 
                         <div class='form-container'>                    
                                 <h4> Ajouts </h4>
-                                <form id='formProductionAdd'>
-                                    <p id='errorFormProduction'></p>                          
-                                    <input type='button' value='Nouvelle Vente' class='btn-primary' id='btnAddDataBrand'>                          
-                                </form>
+                                @if(session('roleManager')<(4))
+                                    @if (\Request::is('vente'))
+                                        <form id='formProductionAdd'>
+                                            <p id='errorFormProduction'></p>                          
+                                            <input type='button' value='Nouvelle Vente' class='btn-primary' id='btnAddDataBrand'>                          
+                                        </form>
+                                    @endif
+                                @endif
+                                @if(session('roleManager')<(2))
+                                    @if (\Request::is('administration'))
+                                        <form id='formProductionAdd'>
+                                            <p id='errorFormProduction'></p>                          
+                                            <input type='button' value='Nouveau Collaborateur' class='btn-primary' id='btnAddColab'>                          
+                                        </form>
+                                    @endif
+                                @endif
                         </div>                
                         <div class='notification-container' >
                             <h4> Notifications </h4>
@@ -74,12 +86,16 @@
                             
                             </table>
                         </div>
-                        <!-- @endif             -->
+                     
                     </div>
             @endif    
         </div>    
     </div>
-     
+    @if (\Request::is('administration')) 
+
+        @include('/Administration/modalGestionStaff')
+
+    @endif
         <div class='form-modal-table' id='modalProduction'>  
             <div class="modal-header">
                 <h4 class='titreModal'></h4>
@@ -90,31 +106,23 @@
                         
                     </form>
                 <input type="button" class="btn btn-primary" id="validUpdateModal" value="Valider les modifications">
-                @if (\Request::is('production') || (\Request::is('administration'))) 
-                    <div class="modal-header">
-                        <h4>Suppimer la référence</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p><span class='warning'>Attention cette action est définitive</span></p>
-                            <input type='button' class="btn btn-danger" value='Supprimer la référence' id='modalDeleteProduction'>
-                    </div>
-                @endif
+               
             </div>    
         </div> 
         <div id='backgroundModal'></div>
-        
-        @if (\Request::is('vente')) 
-        <!------------------------------------------------------------------------------------------------------------------------>
-        <!-------------------------------------------------------  Modal Vente --------------------------------------------------->
-        <!------------------------------------------------------------------------------------------------------------------------>
-            <div id="modalVente" class='modal'>
-                @include ('/Vente/ModalVente')
-            </div>
-            <div id="modalFacture" class='modal'>
-                @include ('/Vente/facture')
-            </div>
+        @if(session('roleManager')<(4))
+            @if (\Request::is('vente')) 
+            <!------------------------------------------------------------------------------------------------------------------------>
+            <!-------------------------------------------------------  Modal Vente --------------------------------------------------->
+            <!------------------------------------------------------------------------------------------------------------------------>
+                <div id="modalVente" class='modal'>
+                    @include ('/Vente/ModalVente')
+                </div>
+                <div id="modalFacture" class='modal'>
+                    @include ('/Vente/facture')
+                </div>
+            @endif
         @endif
-
 
     </body>
  <!-------------------------------------------------------------------------------------------------------------------->
@@ -138,6 +146,14 @@
         <!-------------------------------------------------------------------------------------->
         <!-------------------------  Administration Module  ------------------------------------>
         <!-------------------------------------------------------------------------------------->
+        @if (\Request::is('administration')) 
+
+            <script type='module' src="js/Administration/administration_setter.js"></script> 
+            <script type='module' src="js/Administration/administration_ui.js"></script>
+
+        @endif
+
+      
     @endif
 
  <!-------------------------------------------------------------------------------------------------------------------->

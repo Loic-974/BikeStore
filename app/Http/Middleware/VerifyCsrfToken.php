@@ -54,5 +54,15 @@ class VerifyCsrfToken extends Middleware
 
 '/Reporting/GetReporting',
 
+//----------------------------------------------------------//
+//-------------------- Administration ------------------------//    
+//----------------------------------------------------------//
+
+'/administration/stopStaffUser',
+'/administration/activeStaffUser',
+'/administration/updateStaffUser',
+'/administration/reiniStaffMDP',
+'/administration/addStaff'
+
     ];
 }

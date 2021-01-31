@@ -22,7 +22,7 @@ class DAO_User extends Model
     private $roleUser;
 
 
-    private function __construct($user_id,$firstName,$lastName,$email,$phone,$active,$store_id,$manager_id,$manager_firstName,$manager_lastName,$password,$firstConnect,$roleUser){
+    function __construct($user_id,$firstName,$lastName,$email,$phone,$active,$store_id,$manager_id,$manager_firstName,$manager_lastName,$password,$firstConnect,$roleUser){
        $this->user_id = $user_id;
        $this->firstName = $firstName;
         $this ->lastName = $lastName;
