@@ -76,5 +76,12 @@ export async function addNewStaff(data){
     })
 }
 
-
+export async function deleteStaffUser(id){
+    const result = await fetch('/administration/deleteStaff',{
+        method:'POST',
+        accept:'application/json',
+        "content-type":'application/json',
+        body:id
+    })
+}
 

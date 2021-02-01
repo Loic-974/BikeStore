@@ -62,7 +62,8 @@ class VerifyCsrfToken extends Middleware
 '/administration/activeStaffUser',
 '/administration/updateStaffUser',
 '/administration/reiniStaffMDP',
-'/administration/addStaff'
+'/administration/addStaff',
+'/administration/deleteStaff'
 
     ];
 }

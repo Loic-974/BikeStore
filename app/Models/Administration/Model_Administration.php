@@ -62,4 +62,8 @@ class Model_Administration extends Model
         DB::insert('INSERT INTO sales.staffs (first_name,last_name,email,phone,active,store_id,manager_id,password,first_connect,role_user) VALUES(?,?,?,?,1,?,?,?,0,?)',[$firstName,$lastName,$email,$phone,$tempIdStore,$manager_id,'azerty',$roleUser]);
     }
 
+    function deleteUser($id){
+        DB::delete('DELETE FROM sales.staffs where staff_id=?',[$id]);
+    }
+
 }

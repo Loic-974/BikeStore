@@ -126,3 +126,4 @@ Route::post('/administration/activeStaffUser', [App\Http\Controllers\Administrat
 Route::post('/administration/updateStaffUser', [App\Http\Controllers\Administration\Administration_Controller::class,'updateStaffUser']);
 Route::post('/administration/reiniStaffMDP', [App\Http\Controllers\Administration\Administration_Controller::class,'reiniPassword']);
 Route::post('/administration/addStaff', [App\Http\Controllers\Administration\Administration_Controller::class,'addNewUser']);
+Route::post('/administration/deleteStaff', [App\Http\Controllers\Administration\Administration_Controller::class,'deleteStaffUser']);

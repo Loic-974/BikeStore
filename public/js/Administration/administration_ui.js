@@ -5,7 +5,8 @@ import {
     reiniPassword,
     activeStaff,
     updateStaffData,
-    addNewStaff
+    addNewStaff,
+    deleteStaffUser
 } from "./administration_setter.js";
 import {
     buildModalOnClick,
@@ -94,6 +95,12 @@ function openModal(item) {
         await getDataUser();
         buildArray(staffUser.value, arrayAdmin, openModal, ignoreString);
     };
+
+    deleteStaff.onclick=async ()=>{
+        await deleteStaffUser((staff_id))
+        await getDataUser()
+        buildArray(staffUser.value, arrayAdmin, openModal, ignoreString)
+    } 
     // buildModalOnClick(item, titleModal, modalForm, ignoreString);
     // modalValue = item;
 }

@@ -43,7 +43,6 @@ class Administration_Controller extends Controller
         $this->modelStaff->reinitialisePasswordStaff($id);
     }
 
-
     function updateStaffUser(Request $request){
        $data = json_decode($request->getContent());
     
@@ -53,5 +52,10 @@ class Administration_Controller extends Controller
     function addNewUser(Request $request){
         $data = json_decode($request->getContent());
         $this->modelStaff->addNewStaff($data->firstName,$data->lastName,$data->email,$data->phone,$data->responsable,$data->role);
+    }
+
+    function deleteStaffUser(Request $request){
+        $id = $request->getContent();
+        $this->modelStaff->deleteUser($id);
     }
 }
