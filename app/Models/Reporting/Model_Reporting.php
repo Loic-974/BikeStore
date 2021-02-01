@@ -26,11 +26,12 @@ class Model_Reporting extends Model
     }
 
     function getReportingDataModel($date){
-        $week = DB::select('sales.weeklyReporting ?',array($date));
-        $month = DB::select('sales.monthlyReporting ?',array($date));
-        $panier = DB::select('sales.panierMoyen');
+
+        $week = DB::select('sales.weeklyReporting ?',[$date]);
+        $month = DB::select('sales.monthlyReporting ?',[$date]);
+        $panier = DB::select('sales.panierMoyen ?',[$date]);
         $finalArray=array($week,$month,$panier);
-    
+        
         return $this->_array_flatten($finalArray);
    
     }
@@ -48,6 +49,7 @@ class Model_Reporting extends Model
             }     
           }
         }
+        
         return $tempObject; 
       }
 

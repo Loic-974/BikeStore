@@ -13,7 +13,7 @@ export const dataFromReporting = {
 
 
 export async function getDataReporting(date) {
-
+    console.log(date)
     const tempResult = await fetch('/Reporting/GetReporting', 
     {method:'POST',
     accept:'application/json',
@@ -21,6 +21,7 @@ export async function getDataReporting(date) {
     body:date
     })
     const result = await tempResult.json()
+    console.log(result)
     return result
 }
 
