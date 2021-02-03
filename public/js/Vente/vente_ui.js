@@ -168,18 +168,20 @@ function openModal(item) {
     modalValue = item;
 }
 
-newVenteButton.onclick = () => {
-    setFunctionToInput(infoClient, setCustomerInfoToOrder);
-    tableOrder.innerHTML='';
-    backModal.style.display = "block";
-    modalVente.style.display = "flex";
-};
+
 
 backModal.onclick = () => {
     backModal.style.display = "none";
     modalVente.style.display = "none";
     modalProduction.style.display = "none";
     modalFacture.style.display='none';
+};
+
+newVenteButton.onclick = () => {
+    setFunctionToInput(infoClient, setCustomerInfoToOrder);
+    tableOrder.innerHTML='';
+    backModal.style.display = "block";
+    modalVente.style.display = "flex";
 };
 
 // ----------------------------------------------------------------------------------------------------- //

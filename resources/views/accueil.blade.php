@@ -42,10 +42,10 @@
             <form id="changePassword" method='POST' action='/accueil'>
                 @csrf
                 <p id="errorUpdate" class='error'><p>
-                <div class="form-group row">
+                <div class="form-group-column">
                     <input type="password" id='newPassword' name="newPassword" value="" placeholder="Entrez votre nouveau mot de passe">
                     <input type="password" id='confirmNewPassword' value="" placeholder="Confirmer votre mot de passe">
-                    <input type="submit" id="validUpdate" value="Valider la modification">
+                    <input type="submit" class='btn primary buttonConnexion' id="validUpdate" value="Valider la modification">
                 </div>
             </form>
         </div>

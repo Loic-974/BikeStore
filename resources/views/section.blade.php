@@ -1,4 +1,5 @@
 @if(session('id'))
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -7,7 +8,7 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/home.css') }}" rel="stylesheet">
         <link href="{{ asset('css/section.css') }}" rel="stylesheet">
-        <link href="{{asset('css/bootstrap.min.css')}}" rel='stylesheet'>
+      
     </head>
 
     <body>
@@ -15,7 +16,7 @@
      
     <div class='container-content'>
         <div class='sub-container'>
-        @if(\Request::is('reporting'))
+        @if(\Request::is('reporting')&& session('roleManager')<(3))
 
             @include('/Reporting/globalCharts')
 
@@ -29,7 +30,7 @@
 
                             @endif
                         
-                         @if(\Request::is('administration'))
+                         @if(\Request::is('administration') && session('roleManager')<(2))
 
                              @include('/Administration/arrayAdministration')
                     
@@ -43,7 +44,7 @@
                                 @if (\Request::is('vente'))
                                     <input type='text' value='' id='searchInput' placeholder='Chercher un Client/Commande'>
                                 @endif
-                                @if (\Request::is('administration'))
+                                @if (\Request::is('administration')&& session('roleManager')<(2))
                                     <input type='text' value='' id='searchInput' placeholder='Chercher un Collaborateur'>
                                 @endif
                             <span class='searchList'></span>     
@@ -55,7 +56,7 @@
                                     @if (\Request::is('vente'))
                                         <form id='formProductionAdd'>
                                             <p id='errorFormProduction'></p>                          
-                                            <input type='button' value='Nouvelle Vente' class='btn-primary' id='btnAddDataBrand'>                          
+                                            <input type='button' value='Nouvelle Vente' class='btn-primary buttonNewRef' id='btnAddDataBrand'>                          
                                         </form>
                                     @endif
                                 @endif
@@ -63,11 +64,12 @@
                                     @if (\Request::is('administration'))
                                         <form id='formProductionAdd'>
                                             <p id='errorFormProduction'></p>                          
-                                            <input type='button' value='Nouveau Collaborateur' class='btn-primary' id='btnAddColab'>                          
+                                            <input type='button' value='Nouveau Collaborateur' class='btn-primary buttonNewRef' id='btnAddColab'>                          
                                         </form>
                                     @endif
                                 @endif
-                        </div>                
+                        </div>   
+                                     
                         <div class='notification-container' >
                             <h4> Notifications </h4>
                             <table id='notificationList'>
@@ -91,11 +93,12 @@
             @endif    
         </div>    
     </div>
-    @if (\Request::is('administration')) 
+    @if (\Request::is('administration') && session('roleManager')<(2)) 
 
         @include('/Administration/modalGestionStaff')
 
     @endif
+    @if (\Request::is('vente') || (\Request::is('administration'))&& session('roleManager')<(4)) 
         <div class='form-modal-table' id='modalProduction'>  
             <div class="modal-header">
                 <h4 class='titreModal'></h4>
@@ -109,8 +112,9 @@
                
             </div>    
         </div> 
+        @endif
         <div id='backgroundModal'></div>
-        @if(session('roleManager')<(4))
+    
             @if (\Request::is('vente')) 
             <!------------------------------------------------------------------------------------------------------------------------>
             <!-------------------------------------------------------  Modal Vente --------------------------------------------------->
@@ -122,7 +126,7 @@
                     @include ('/Vente/facture')
                 </div>
             @endif
-        @endif
+      
 
     </body>
  <!-------------------------------------------------------------------------------------------------------------------->
@@ -146,7 +150,7 @@
         <!-------------------------------------------------------------------------------------->
         <!-------------------------  Administration Module  ------------------------------------>
         <!-------------------------------------------------------------------------------------->
-        @if (\Request::is('administration')) 
+        @if (\Request::is('administration') && session('roleManager')<(2) ) 
 
             <script type='module' src="js/Administration/administration_setter.js"></script> 
             <script type='module' src="js/Administration/administration_ui.js"></script>

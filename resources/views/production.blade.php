@@ -7,7 +7,7 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/home.css') }}" rel="stylesheet">
         <link href="{{ asset('css/section.css') }}" rel="stylesheet">
-        <link href="{{asset('css/bootstrap.min.css')}}" rel='stylesheet'>
+        <!-- <link href="{{asset('css/bootstrap.min.css')}}" rel='stylesheet'> -->
     </head>
 
   
@@ -21,10 +21,10 @@
                 
                         <div class='nav'>
                             <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-secondary" id="brandLink">Marques</button>
-                                <button type="button" class="btn btn-secondary"  id="CategorieLink">Categories</button>
-                                <button type="button" class="btn btn-secondary" id="ProductLink">Produits</button>
-                                <button type="button" class="btn btn-secondary" id="StockLink">Stock</button>
+                                <button type="button" class="btn buttonTable" id="brandLink">Marques</button>
+                                <button type="button" class="btn buttonTable"  id="CategorieLink">Categories</button>
+                                <button type="button" class="btn buttonTable" id="ProductLink">Produits</button>
+                                <button type="button" class="btn buttonTable" id="StockLink">Stock</button>
                             </div>
                         </div>
 
@@ -32,10 +32,11 @@
                             <table  class ='table table-dark' id="ArrayProduction">
                             </table>
                         </div>
-                
+            
                 <div id='backgroundModal'></div>
 
                     <div class='form-modal-table' id='modalProduction'>  
+                
                         <div class="modal-header">
                             <h4 class='titreModal'></h4>
                         </div>
@@ -53,6 +54,7 @@
                                 <input type='button' class="btn btn-danger" value='Supprimer la référence' id='modalDeleteProduction'>
                             </div>
                         </div>    
+                 
                     </div>
                 
                
@@ -68,9 +70,9 @@
                             <select id='SelectAnnee'><select>
                             <select id='SelectStore'></select>
                             <input type='text' value='' id='searchInput' placeholder='Chercher un produit'>
-                            <span class='searchList'></span>     
+                            <span class='searchList searchListFilter'></span>     
                         </div>
-                        @if(session('roleManager')<(3) || session('roleManager')==(4))
+                      
                             <div class='form-container'>
                                 <h4> Ajouts </h4>
                                 <form id='formProductionAdd'>
@@ -99,15 +101,15 @@
                                         <select name='catSelected' id='SelectCategorieForm'></select>
                                     </div>
                                     <div class='form-row group-selectProduct groupStock'>
-                                        <input type='text' name='selectedProduct' id='selectProduct'></select>
-                                        <span id = 'searchList' class='searchList'></span>
+                                        <input type='text' name='selectedProduct' id='selectProduct' placeholder=' Sélectionnez un modèle '></select>
+                                        <span id = 'searchList' class='searchList searchListUpdateStock'></span>
                                         <select name='selectedStore' id='selectStore'></select>
                                     </div>
                                     <input type='button' value='Confirmer' class='btn-primary' id='btnAddDataBrand'>
                                 </form>
                             
                             </div>
-                        @endif
+                       
                         <div class='notification-container'>
                             <h4> Notifications </h4>
                             <table id='notificationList'>

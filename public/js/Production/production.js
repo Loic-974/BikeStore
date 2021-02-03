@@ -178,28 +178,25 @@ function getStock() {
 }
 window.onload =async () => {
     getBrands(), getCategory(), getProduct(), getStock();
-    formSendButton.style.backgroundColor = "grey";
+    formSendButton? formSendButton.style.backgroundColor = "grey":null;
     notification.setNotification(await getNotification())
-    buildNotification(notification.value,notifList,null)
+    buildNotification(notification.value,notifList,updateNotification)
 };
 // ----------------------------------------------------------------------------
 // --------------------------------- Build View -------------------------------
 // ----------------------------------------------------------------------------
 
 
-formBrandName.style.display = "inline";
-formCatName.style.display = "none";
-formProductName.style.display = "none";
-formYearInput.style.display = "none";
-formPriceInput.style.display = "none";
-formBrandName.style.display = "none"
-formCatName.style.display = "none"
-formProductName.style.display = "none"
-formYearInput.style.display = "none"
-formPriceInput.style.display = "none"
-formGroupSelect.style.display = "none"
-formQuantity.style.display = "none"
-formSelectStock.style.display = "none"
+formBrandName?formBrandName.style.display = "inline":null;
+formCatName?formCatName.style.display = "none":null;
+formProductName?formProductName.style.display = "none":null;
+formYearInput?formYearInput.style.display = "none":null;
+formPriceInput?formPriceInput.style.display = "none":null;
+// formBrandName.style.display = "none"
+// formCatName.style.display = "none"
+formGroupSelect?formGroupSelect.style.display = "none":null
+formQuantity?formQuantity.style.display = "none":null
+formSelectStock?formSelectStock.style.display = "none":null
 
 // selectedStore.style.display = "none"
 // selectedProduct.style.display = "none"
@@ -252,10 +249,11 @@ LinkCategorie.onclick = () => {
 };
 
 LinkProduct.onclick = () => {
+    buildArray(produits, ArrayOfItems, openModal, dontShowString);
     insertSelectBrand([selectBrand, selectBrandForm]);
     insertSelectCategorie([selectCategorie, selectCatForm]),
         insertSelectYears(produits);
-    buildArray(produits, ArrayOfItems, openModal, dontShowString);
+    
     modalFrom = "product";
     formBrandName.style.display = "none";
     formCatName.style.display = "none";
@@ -323,7 +321,7 @@ function allowSelectFilter(filter) {
  * @param {*} select - array of objects
  */
 function insertSelectBrand(select) {
-    console.log(brands);
+ 
     for (let input of select) {
         input.innerHTML = "";
         input.innerHTML = "<option value=''>Marque du produit</option>";
@@ -578,7 +576,7 @@ backModal.onclick = () => {
     modalProduction.style.display = "none";
 };
 
-formBrandName.onchange = () => {
+formBrandName?formBrandName.onchange = () => {
     console.log(formBrandName.value);
     validInputValue(brands, formBrandName.value)
         // ? ((document.querySelector("#errorFormProduction").innerHTML = ""),
@@ -588,9 +586,9 @@ formBrandName.onchange = () => {
         //       "La marque existe déjà !"),
         //   (formSendButton.disabled = true),
         //   (formSendButton.style.backgroundColor = "grey"));
-};
+}:null;
 
-formCatName.onchange = () => {
+formCatName?formCatName.onchange = () => {
     validInputValue(categorie, formCatName.value)
         // ? ((document.querySelector("#errorFormProduction").innerHTML = ""),
         //   (formSendButton.disabled = false),
@@ -599,9 +597,9 @@ formCatName.onchange = () => {
         //       "La Categorie existe déjà !"),
         //   (formSendButton.disabled = true),
         //   (formSendButton.style.backgroundColor = "grey"));
-};
+}:null;
 
-formProductName.onchange = () => {
+formProductName?formProductName.onchange = () => {
     validInputValue(produits, formProductName.value)
         // ? ((document.querySelector("#errorFormProduction").innerHTML = ""),
         //   (formSendButton.disabled = false),
@@ -610,7 +608,7 @@ formProductName.onchange = () => {
         //       "Le produit existe déjà !"),
         //   (formSendButton.disabled = true),
         //   (formSendButton.style.backgroundColor = "grey"));
-};
+}:null;
 
 // ---------------------------- AJAX POST -------------------------------- //
 
@@ -661,7 +659,7 @@ const urlDelete = () => {
 
 //-------- New Ajout Référence ----------//
 
-formSendButton.onclick = async () => {
+formSendButton?formSendButton.onclick = async () => {
     let data = await insertAjax();
     if(data){
     buildArray(data, ArrayOfItems, openModal, dontShowString);
@@ -670,7 +668,7 @@ formSendButton.onclick = async () => {
     modalFrom === "product" ? setProduct(data) : null;
     modalFrom === "stock" ? setStock(data) : null;
     }
-};
+}:null;
 
 async function insertAjax(array) {
     let input = document
@@ -709,7 +707,7 @@ modalUpdateButton.onclick = async () => {
     let data = await updateAjax();
     buildArray(data, ArrayOfItems, openModal, dontShowString);
     notification.setNotification(await getNotification())
-    buildNotification(notification.value,notifList,null)
+    buildNotification(notification.value,notifList,updateNotification)
     modalProduction.style.display = "none";
     backModal.style.display = "none";
     modalFrom === "brands" ? setBrands(data) : null;

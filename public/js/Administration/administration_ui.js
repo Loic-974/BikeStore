@@ -82,24 +82,32 @@ function openModal(item) {
         await suspendStaff(staff_id);
         await getDataUser();
         buildArray(staffUser.value, arrayAdmin, openModal, ignoreString);
+        gestionModal.style.display = "none";
+        backModal.style.display = "none";
     };
 
     ActiveStaff.onclick = async () => {
         await activeStaff(staff_id);
         await getDataUser();
         buildArray(staffUser.value, arrayAdmin, openModal, ignoreString);
+        gestionModal.style.display = "none";
+        backModal.style.display = "none";
     };
 
     MdpStaff.onclick = async () => {
         await reiniPassword(staff_id);
         await getDataUser();
         buildArray(staffUser.value, arrayAdmin, openModal, ignoreString);
+        gestionModal.style.display = "none";
+        backModal.style.display = "none";
     };
 
     deleteStaff.onclick=async ()=>{
         await deleteStaffUser((staff_id))
         await getDataUser()
         buildArray(staffUser.value, arrayAdmin, openModal, ignoreString)
+        gestionModal.style.display = "none";
+        backModal.style.display = "none";
     } 
     // buildModalOnClick(item, titleModal, modalForm, ignoreString);
     // modalValue = item;
